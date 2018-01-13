@@ -54,7 +54,7 @@ export default class Home {
   }
 }
 
-document.getElementById("blacklistSubmit").addEventListener("click", Home.submitNewUrl);
+document.getElementById("blacklistSubmit").addEventListener("click", () => Home.submitNewUrl());
 document.getElementById("blacklistInput").addEventListener("keypress", (e) => {if(e.keyCode === 13) Home.submitNewUrl();});//submitNewUrl);
 
 window.addEventListener("load", function load(event){ 
