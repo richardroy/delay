@@ -12,11 +12,11 @@ export default class TabNavigation {
   }
 
   static getBackgroundUrl() {
-    return this.getUrl("./src/background.html");
+    return this.getUrl("/src/background.html");
   }
   
   static getHomeUrl() {
-    return this.getUrl("./src/home.html");  
+    return this.getUrl("/src/home.html");  
   }
 
   static redirectToOriginalUrl(tabId) {

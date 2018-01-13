@@ -3,6 +3,7 @@ import Delay from "./Delay.js"
 import Tab from "./Tab.js"
 
 function intervalCompleted(tabId) {
+  console.log("intervalCompleted");
   Tab.onHomeRedirectToOriginal(tabId);
   clearInterval(window["interval"+parseInt(tabId)]);
 }
