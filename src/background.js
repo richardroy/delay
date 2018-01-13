@@ -9,7 +9,7 @@ function intervalCompleted(tabId) {
 }
 
 chrome.webNavigation["onBeforeNavigate"].addListener(data => {
-  if (typeof data) {
+  if (data.parentFrameId === -1) {
     if(Blacklist.containsUrl(data.url)) {
       var tabId = data.tabId;
       const delay = Delay.loadDelay();            
@@ -19,8 +19,7 @@ chrome.webNavigation["onBeforeNavigate"].addListener(data => {
         window["interval"+parseInt(tabId)] = setInterval( () => intervalCompleted(tabId), 5000 );
       }
     }
-  } else
-    console.error(chrome.i18n.getMessage('inHandlerError'), e);
+  }
 });
 
 chrome.browserAction.onClicked.addListener(function (tab) {
