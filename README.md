@@ -1,4 +1,5 @@
-# [delay](https://chrome.google.com/webstore/detail/delay/fbhbfbladmbgakfkccbfjpbabagjcmid) 
+![logo](https://github.com/richardroy/delay/blob/master/icon.png)  
+[delay](https://chrome.google.com/webstore/detail/delay/fbhbfbladmbgakfkccbfjpbabagjcmid) 
 
 Identify and remove the habits that have you habitually opening websites.
 
