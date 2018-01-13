@@ -3,7 +3,6 @@ import Delay from "./Delay"
 export default class TabNavigation {
 
   static redirectTab(tabId, url) {
-    console.log(`redirectTab: ${url}`);
     chrome.tabs.update(tabId, {url:url});
   }
 
@@ -13,11 +12,11 @@ export default class TabNavigation {
   }
 
   static getBackgroundUrl() {
-    return this.getUrl("background.html");
+    return this.getUrl("./src/background.html");
   }
   
   static getHomeUrl() {
-    return this.getUrl("home.html");  
+    return this.getUrl("./src/home.html");  
   }
 
   static redirectToOriginalUrl(tabId) {

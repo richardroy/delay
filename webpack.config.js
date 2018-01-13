@@ -1,7 +1,7 @@
 module.exports = {
   entry: {
-    background: './background.js',
-    home: './Home.js'
+    background: './src/background.js',
+    home: './src/Home.js'
   },
   output: {
     filename: './build/[name].js'

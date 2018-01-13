@@ -22,7 +22,6 @@ export default class Blacklist {
 
   static addNewUrl(url) {
     const blacklist = this.load();
-    console.log(blacklist);
     blacklist.push(url);
     this.save(blacklist);
   }
