@@ -1,0 +1,19 @@
+{
+  "name":           "delay",
+  "author":         "roy",
+  "version":        "0.1.1",
+  "description":    "Delay certain urls from displaying",
+  "default_locale": "en",
+  "background": {
+    "persistent": false,
+    "page": "background.html"
+  },
+  "browser_action": {
+    "default_icon": "icon.png"
+  },
+  "permissions":    [
+    "webNavigation", "storage", "tabs"
+  ],
+  "manifest_version": 2,
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"  
+}

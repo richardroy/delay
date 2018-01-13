@@ -1,0 +1,50 @@
+<!doctype html>
+<!--
+ * Copyright (c) 2011 The Chromium Authors. All rights reserved.  Use of this
+ * source code is governed by a BSD-style license that can be found in the
+ * LICENSE file.
+-->
+
+<html>
+  <head>
+    <title>WebNavigation Tech Demo Popup</title>
+  </head>
+
+  <style>
+    body {
+      padding-top: 80px;
+      text-align: center;
+      font-family: monaco, monospace;
+      background-size: cover;
+    }
+    
+    h2 {
+      font-size: 20px;
+    }
+    
+    li {
+      list-style: none;
+    }
+    
+    #deleteButton {
+      margin-left: 10px;
+      margin-bottom: 3px;
+      border: none;
+    }
+  </style>
+
+  <body>
+    <div>
+      <img src="./icon.png" />
+      <h2>Blacklist</h2>
+    </div>
+    <ul id="urlBlacklist">
+    </ul>
+    <input name="urlInput" id="blacklistInput" type="text">
+    <button id="blacklistSubmit">Add</button>
+    <p id="description">Url's added to the above list  will have a delay each time they are opened.</p>
+    <p id="description">e.g. www.facebook.com</p>
+
+    <script src="./build/home.js"></script>    
+  </body>
+</html>
