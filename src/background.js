@@ -1,4 +1,5 @@
 import Blacklist from "./Blacklist.js"
+import Config from "./Config.js"
 import Delay from "./Delay.js"
 import Tab from "./Tab.js"
 
@@ -16,7 +17,7 @@ chrome.webNavigation["onBeforeNavigate"].addListener(data => {
       if(!Delay.isTabIdInDelay(delay, tabId)){
         Delay.addNewTabToDelay(delay, data.url, tabId);
         Tab.redirectTabToBackground(tabId);
-        window["interval"+parseInt(tabId)] = setInterval( () => intervalCompleted(tabId), 5000 );
+        window["interval"+parseInt(tabId)] = setInterval( () => intervalCompleted(tabId), Config.getDelayTime() * 1000 );
       }
     }
   }
