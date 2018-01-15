@@ -11,10 +11,12 @@ function intervalCompleted(tabId) {
 
 chrome.webNavigation["onBeforeNavigate"].addListener(data => {
   if (data.parentFrameId === -1) {
-    if(Blacklist.containsUrl(data.url)) {
+    const blacklistObject = Blacklist.getWithUrl(data.url);
+    if(blacklistObject) {
       var tabId = data.tabId;
       const delay = Delay.loadDelay();            
       if(!Delay.isTabIdInDelay(delay, tabId)){
+        Blacklist.increaseCount(blacklistObject);        
         Delay.addNewTabToDelay(delay, data.url, tabId);
         Tab.redirectTabToBackground(tabId);
         window["interval"+parseInt(tabId)] = setInterval( () => intervalCompleted(tabId), Config.getDelayTime() * 1000 );

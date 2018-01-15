@@ -12,11 +12,37 @@ export default class Blacklist {
     return false;
   }
 
-  static convertOldStructure() {
+  static getWithUrl(url) {
+    const blacklist = this.load();
+    for(const listIndex in blacklist) {
+      if(url.includes(blacklist[listIndex].url))
+        return blacklist[listIndex];
+    }
+    return null;
+  }
+
+  static increaseCount(blacklistObject) {
+    blacklistObject.count += 1;
+
+    const blacklist = this.load();
+    for(const listIndex in blacklist) {
+      if(blacklist[listIndex].id === blacklistObject.id){
+        blacklist[listIndex] = blacklistObject;
+        break;
+      }
+    }
+    this.save(blacklist);
+  }
+
+  static convertOldStructure(blacklist) {
     //to persist list over data structure change
     const newBlacklist = []
     for(const listIndex in blacklist) {
-      newBlacklist.push({url: blacklist[listIndex], id: shortId.generate()});
+      newBlacklist.push({
+        url: blacklist[listIndex], 
+        id: shortId.generate(),
+        count: 0
+      });
     }
   
     this.save(newBlacklist);
@@ -28,7 +54,7 @@ export default class Blacklist {
     
     //to persist string list data structure change
     if(blacklist && typeof blacklist[0] === "string") {      
-      return this.convertOldStructure(black);
+      return this.convertOldStructure(blacklist);
     }
 
     return blacklist;
@@ -40,7 +66,11 @@ export default class Blacklist {
 
   static addNewUrl(url) {
     const blacklist = this.load();
-    blacklist.push({url, id: shortId.generate()});
+    blacklist.push({
+      url, 
+      id: shortId.generate(),
+      count: 0
+    });
     this.save(blacklist);
   }
 } 
