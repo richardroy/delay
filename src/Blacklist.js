@@ -21,10 +21,7 @@ export default class Blacklist {
     return null;
   }
 
-  static increaseNavigatedCount(blacklistObject) {
-    blacklistObject.navigatedCount += 1;
-
-    const blacklist = this.load();
+  static updateEntry(blacklistObject) {
     for(const listIndex in blacklist) {
       if(blacklist[listIndex].id === blacklistObject.id){
         blacklist[listIndex] = blacklistObject;
@@ -34,17 +31,14 @@ export default class Blacklist {
     this.save(blacklist);
   }
 
+  static increaseNavigatedCount(blacklistObject) {
+    blacklistObject.navigatedCount += 1;
+    this.updateEntry(blacklistObject);
+  }
+
   static increaseLoadedCount(blacklistObject) {
     blacklistObject.loadedCount += 1;
-    
-        const blacklist = this.load();
-        for(const listIndex in blacklist) {
-          if(blacklist[listIndex].id === blacklistObject.id){
-            blacklist[listIndex] = blacklistObject;
-            break;
-          }
-        }
-        this.save(blacklist);
+    this.updateEntry(blacklistObject);    
   }
 
   static convertOldStructure(blacklist) {
@@ -83,7 +77,8 @@ export default class Blacklist {
     blacklist.push({
       url, 
       id: shortId.generate(),
-      count: 0
+      navigatedCount: 0,
+      loadedCount: 0
     });
     this.save(blacklist);
   }

@@ -40,7 +40,7 @@ export default class TabNavigation {
     const backgrounUrl = this.getBackgroundUrl();
     chrome.tabs.get(tabId, tab => {
       if(tab.url === backgrounUrl){
-        Blacklist.increaseLoadedCount(tabId, blacklistObject);
+        Blacklist.increaseLoadedCount(blacklistObject);
         this.redirectToOriginalUrl(tabId);
       }
     });

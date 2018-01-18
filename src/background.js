@@ -16,7 +16,7 @@ chrome.webNavigation["onBeforeNavigate"].addListener(data => {
       var tabId = data.tabId;
       const delay = Delay.loadDelay();            
       if(!Delay.isTabIdInDelay(delay, tabId)){
-        Blacklist.increaseActivatedCount(blacklistObject);        
+        Blacklist.increaseNavigatedCount(blacklistObject);        
         Delay.addNewTabToDelay(delay, data.url, tabId);
         Tab.redirectTabToBackground(tabId);
         window["interval"+parseInt(tabId)] = setInterval( () => intervalCompleted(tabId, blacklistObject), Config.getDelayTime() * 1000 );
