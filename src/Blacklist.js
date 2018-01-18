@@ -18,17 +18,20 @@ export default class Blacklist {
       if(url.includes(blacklist[listIndex].url))
         return blacklist[listIndex];
     }
-    return null;
+    return {};
   }
 
   static updateEntry(blacklistObject) {
+    const blacklist = this.load();
+    let updated = false;
     for(const listIndex in blacklist) {
       if(blacklist[listIndex].id === blacklistObject.id){
         blacklist[listIndex] = blacklistObject;
+        updated = true;
         break;
       }
     }
-    this.save(blacklist);
+    if(updated) this.save(blacklist);
   }
 
   static increaseNavigatedCount(blacklistObject) {

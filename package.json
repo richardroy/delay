@@ -4,7 +4,8 @@
   "description": "",
   "main": "Browser.js",
   "scripts": {
-    "watch": "webpack --watch"
+    "watch": "webpack --watch",
+    "test": "jest --watch --coverage"
   },
   "author": "",
   "license": "ISC",
@@ -12,6 +13,7 @@
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
+    "jest": "^22.1.2",
     "webpack": "^3.10.0"
   },
   "dependencies": {
