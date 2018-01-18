@@ -83,7 +83,7 @@ export default class Home {
   static buildInitialBlacklist() {
     const blacklist = Blacklist.load();
     for(let index in blacklist) {
-      const url = blacklist[index];
+      const url = blacklist[index].url;
       this.addNewUrlElementToBlacklist(url);
     }
   }
