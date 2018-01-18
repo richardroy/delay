@@ -1,3 +1,4 @@
+import Blacklist from "./Blacklist"
 import Delay from "./Delay"
 
 export default class TabNavigation {
@@ -35,10 +36,11 @@ export default class TabNavigation {
     this.redirectTab(tabId, homePageUrl);          
   }
 
-  static onHomeRedirectToOriginal(tabId) {
+  static onHomeRedirectToOriginal(tabId, blacklistObject) {
     const backgrounUrl = this.getBackgroundUrl();
     chrome.tabs.get(tabId, tab => {
       if(tab.url === backgrounUrl){
+        Blacklist.increaseLoadedCount(tabId, blacklistObject);
         this.redirectToOriginalUrl(tabId);
       }
     });

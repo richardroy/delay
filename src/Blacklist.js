@@ -21,8 +21,8 @@ export default class Blacklist {
     return null;
   }
 
-  static increaseCount(blacklistObject) {
-    blacklistObject.count += 1;
+  static increaseNavigatedCount(blacklistObject) {
+    blacklistObject.navigatedCount += 1;
 
     const blacklist = this.load();
     for(const listIndex in blacklist) {
@@ -34,6 +34,19 @@ export default class Blacklist {
     this.save(blacklist);
   }
 
+  static increaseLoadedCount(blacklistObject) {
+    blacklistObject.loadedCount += 1;
+    
+        const blacklist = this.load();
+        for(const listIndex in blacklist) {
+          if(blacklist[listIndex].id === blacklistObject.id){
+            blacklist[listIndex] = blacklistObject;
+            break;
+          }
+        }
+        this.save(blacklist);
+  }
+
   static convertOldStructure(blacklist) {
     //to persist list over data structure change
     const newBlacklist = []
@@ -41,7 +54,8 @@ export default class Blacklist {
       newBlacklist.push({
         url: blacklist[listIndex], 
         id: shortId.generate(),
-        count: 0
+        navigatedCount: 0,
+        loadedCount: 0        
       });
     }
   

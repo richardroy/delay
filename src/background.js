@@ -3,9 +3,9 @@ import Config from "./Config.js"
 import Delay from "./Delay.js"
 import Tab from "./Tab.js"
 
-function intervalCompleted(tabId) {
+function intervalCompleted(tabId, blacklistObject) {
   console.log("intervalCompleted");
-  Tab.onHomeRedirectToOriginal(tabId);
+  Tab.onHomeRedirectToOriginal(tabId, blacklistObject);
   clearInterval(window["interval"+parseInt(tabId)]);
 }
 
@@ -16,10 +16,10 @@ chrome.webNavigation["onBeforeNavigate"].addListener(data => {
       var tabId = data.tabId;
       const delay = Delay.loadDelay();            
       if(!Delay.isTabIdInDelay(delay, tabId)){
-        Blacklist.increaseCount(blacklistObject);        
+        Blacklist.increaseActivatedCount(blacklistObject);        
         Delay.addNewTabToDelay(delay, data.url, tabId);
         Tab.redirectTabToBackground(tabId);
-        window["interval"+parseInt(tabId)] = setInterval( () => intervalCompleted(tabId), Config.getDelayTime() * 1000 );
+        window["interval"+parseInt(tabId)] = setInterval( () => intervalCompleted(tabId, blacklistObject), Config.getDelayTime() * 1000 );
       }
     }
   }
