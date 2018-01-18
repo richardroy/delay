@@ -1,0 +1,29 @@
+.delay-body {
+  margin: 0;
+  height: 100%;
+  
+  background: #FFE3E4;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to top, #FFDDFF, #FFE3E4);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to top, #FFDDFF, #FFE3E4); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+}
+
+.home-body {
+  padding-top: 80px;
+  text-align: center;
+  font-family: monaco, monospace;
+  background-size: cover;
+}
+
+h2 {
+  font-size: 20px;
+}
+
+li {
+  list-style: none;
+}
+
+#deleteButton {
+  margin-left: 10px;
+  margin-bottom: 3px;
+  border: none;
+}
