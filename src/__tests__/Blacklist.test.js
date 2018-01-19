@@ -26,7 +26,7 @@ test("containsUrl: Does contain the url", () => {
 });
 
 test("containsUrl: Does not contain the url", () => {
-  LocalStorage.loadObject = jest.fn().mockReturnValue([...BLACKLIST]);
+  LocalStorage.loadObject = jest.fn().mockReturnValue([BLACKLIST]);
   const containsUrl = Blacklist.containsUrl(URL_TWITTER.url);
   expect(containsUrl).toBeFalsy();
 });
