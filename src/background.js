@@ -12,7 +12,7 @@ function intervalCompleted(tabId, blacklistObject) {
 chrome.webNavigation["onBeforeNavigate"].addListener(data => {
   if (data.parentFrameId === -1) {
     const blacklistObject = Blacklist.getWithUrl(data.url);
-    if(blacklistObject) {
+    if(blacklistObject && !(Object.keys(blacklistObject).length === 0 && blacklistObject.constructor === Object)) {
       var tabId = data.tabId;
       const delay = Delay.loadDelay();            
       if(!Delay.isTabIdInDelay(delay, tabId)){
