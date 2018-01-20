@@ -6,11 +6,11 @@ const INITIAL_DELAY_TIME = 15;
 export default class Config {
 
   static load() {
-    return LocalStorage.loadObject(CONFIG, {delayTime: INITIAL_DELAY_TIME});
+    return LocalStorageService.loadObject(CONFIG, {delayTime: INITIAL_DELAY_TIME});
   }
   
   static save(blacklist) {
-    LocalStorage.saveObject(CONFIG, blacklist);
+    LocalStorageService.saveObject(CONFIG, blacklist);
   }
 
   static getDelayTime() {

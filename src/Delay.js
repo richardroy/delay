@@ -1,4 +1,4 @@
-import LocalStorage from "./LocalStorage";
+import LocalStorageService from "./services/LocalStorageService";
 
 const DELAY = "delay";
 
@@ -14,11 +14,11 @@ export default class Delay {
   }
 
   static saveDelay(delay) {
-    LocalStorage.saveObject(DELAY, delay)
+    LocalStorageService.saveObject(DELAY, delay)
   }
 
   static loadDelay() {
-    return LocalStorage.loadObject(DELAY, {sites: []});
+    return LocalStorageService.loadObject(DELAY, {sites: []});
   }
 
   static isTabIdInDelay(delay, tabId) {
@@ -34,5 +34,5 @@ export default class Delay {
     delay.sites.push({actualUrl: actualUrl, tabId: tabId});  
     this.saveDelay(delay);
   }
-  
+
 }
