@@ -1,14 +1,15 @@
+import BrowserService from "./BrowserService"
 import Blacklist from "./Blacklist"
 import Delay from "./Delay"
 
 export default class TabNavigation {
 
   static redirectTab(tabId, url) {
-    chrome.tabs.update(tabId, {url:url});
+    BrowserService.updateTabUrl(tabId, url);
   }
 
   static getUrl(filename) {
-    const url = chrome.extension.getURL(filename);    
+    const url = BrowserService.getExtensionUrl(filename);
     return url;
   }
 
@@ -36,13 +37,15 @@ export default class TabNavigation {
     this.redirectTab(tabId, homePageUrl);          
   }
 
+  static checkUrlAndRedirect(tab) {
+    if(tab.url === backgrounUrl){
+      Blacklist.increaseLoadedCount(blacklistObject);
+      this.redirectToOriginalUrl(tabId);
+    }
+  }
+
   static onHomeRedirectToOriginal(tabId, blacklistObject) {
     const backgrounUrl = this.getBackgroundUrl();
-    chrome.tabs.get(tabId, tab => {
-      if(tab.url === backgrounUrl){
-        Blacklist.increaseLoadedCount(blacklistObject);
-        this.redirectToOriginalUrl(tabId);
-      }
-    });
+    BrowserService.getTab(tabId, checkUrlAndRedirect);
   }
 }
