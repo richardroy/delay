@@ -3,6 +3,7 @@ import LocalStorage from "./LocalStorage";
 const DELAY = "delay";
 
 export default class Delay {
+
   static getSite(delay, tabId) {
     for(var siteIndex in delay.sites) {
       const site = delay.sites[siteIndex];
@@ -33,4 +34,5 @@ export default class Delay {
     delay.sites.push({actualUrl: actualUrl, tabId: tabId});  
     this.saveDelay(delay);
   }
+  
 }

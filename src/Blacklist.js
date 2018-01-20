@@ -1,4 +1,4 @@
-import LocalStorage from "./LocalStorage";
+import LocalStorageService from "./services/LocalStorageService";
 import shortId from "shortid";
 const BLACKLIST = "blacklist";
 
@@ -61,7 +61,7 @@ export default class Blacklist {
   }
 
   static load() {
-    const blacklist = LocalStorage.loadObject(BLACKLIST, []);
+    const blacklist = LocalStorageService.loadObject(BLACKLIST, []);
     
     //to persist string list data structure change
     if(blacklist && typeof blacklist[0] === "string") {      
@@ -72,7 +72,7 @@ export default class Blacklist {
   }
   
   static save(blacklist) {
-    LocalStorage.saveObject(BLACKLIST, blacklist);
+    LocalStorageService.saveObject(BLACKLIST, blacklist);
   }
 
   static addNewUrl(url) {

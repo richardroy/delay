@@ -39,4 +39,5 @@ export default class TabNavigation {
     const backgrounUrl = this.getBackgroundUrl();
     BrowserService.getTab(tabId, checkUrlAndRedirect);
   }
+  
 }

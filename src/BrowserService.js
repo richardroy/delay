@@ -1,4 +1,5 @@
 export default class BrowserService {
+
   static updateTabUrl(tabId, url) {
     chrome.tabs.update(tabId, {url:url});
   }
@@ -10,4 +11,5 @@ export default class BrowserService {
   static getTab(tabId, callback) {
     chrome.tabs.get(tabId, callback);
   }
+  
 }

@@ -1,4 +1,4 @@
-import LocalStorage from "./LocalStorage";
+import LocalStorageService from "./services/LocalStorageService";
 
 const CONFIG = "config";
 const INITIAL_DELAY_TIME = 15;
