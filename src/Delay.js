@@ -4,7 +4,8 @@ const DELAY = "delay";
 
 export default class Delay {
 
-  static getSite(delay, tabId) {
+  static getSite(tabId) {
+    let delay = Delay.loadDelay();    
     for(var siteIndex in delay.sites) {
       const site = delay.sites[siteIndex];
       if (site.tabId === tabId)
