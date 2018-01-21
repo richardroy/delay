@@ -1,4 +1,4 @@
-import BrowserService from "./BrowserService"
+import BrowserService from "./services/BrowserService"
 import Blacklist from "./Blacklist"
 import Delay from "./Delay"
 
@@ -28,16 +28,18 @@ export default class TabNavigation {
     BrowserService.updateTabUrl(tabId, homePageUrl);    
   }
 
-  static checkUrlAndRedirect(tab) {
-    if(tab.url === backgrounUrl){
-      Blacklist.increaseLoadedCount(blacklistObject);
-      this.redirectToOriginalUrl(tabId);
-    }
-  }
+  //Need to refactor chrome out, having trouble getting blacklist entry into the callback function.
+  static onHomeRedirectToOriginal(tabId, blacklistEntry) {
+    const backgroundUrl = this.getBackgroundUrl();
 
-  static onHomeRedirectToOriginal(tabId, blacklistObject) {
-    const backgrounUrl = this.getBackgroundUrl();
-    BrowserService.getTab(tabId, checkUrlAndRedirect);
+    function callback(tab) {
+      if(tab.url === backgroundUrl){
+        Blacklist.increaseLoadedCount(blacklistEntry);
+        TabNavigation.redirectToOriginalUrl(tabId);
+      }
+    }
+
+    BrowserService.getTab(tabId, callback)
   }
   
 }
