@@ -36,7 +36,7 @@ export default class CoreService {
     }
   }
 
-  static initiateDelay(url, delay, tabId, blacklistEntry) {
+  static initiateDelay(url, tabId, blacklistEntry) {
     TabNavigation.redirectTabToBackground(tabId);
     Blacklist.increaseNavigatedCount(blacklistEntry);           
     if(Delay.isTabIdInDelay(tabId)) return;
