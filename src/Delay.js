@@ -22,7 +22,8 @@ export default class Delay {
     return LocalStorageService.loadObject(DELAY, {sites: []});
   }
 
-  static isTabIdInDelay(delay, tabId) {
+  static isTabIdInDelay(tabId) {
+    const delay = this.load();
     for(var siteIndex in delay.sites) {
       const site = delay.sites[siteIndex];
       if (site.tabId === tabId)
@@ -31,7 +32,8 @@ export default class Delay {
     return false;
   }
 
-  static isTabIdAllowed(delay, tabId) {
+  static isTabIdAllowed(tabId) {
+    const delay = this.load();
     for(var siteIndex in delay.sites) {
       const site = delay.sites[siteIndex];
       if (site.tabId === tabId){
@@ -51,7 +53,8 @@ export default class Delay {
     this.save(delay);
   }
 
-  static addNewTabToDelay(delay, actualUrl, tabId) {
+  static addNewTabToDelay(actualUrl, tabId) {
+    const delay = this.load();
     delay.sites.push({actualUrl: actualUrl, tabId: tabId, allowed: false});  
     this.save(delay);
   }

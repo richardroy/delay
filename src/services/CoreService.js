@@ -31,17 +31,16 @@ export default class CoreService {
 
   static navigatedToBlacklistEntry(data, blacklistEntry) {
     var tabId = data.tabId;
-    const delay = Delay.load(); 
-    if(!Delay.isTabIdAllowed(delay, tabId)){
-      CoreService.initiateDelay(data.url, delay, tabId, blacklistEntry);
+    if(!Delay.isTabIdAllowed(tabId)){
+      CoreService.initiateDelay(data.url, tabId, blacklistEntry);
     }
   }
 
   static initiateDelay(url, delay, tabId, blacklistEntry) {
     TabNavigation.redirectTabToBackground(tabId);
     Blacklist.increaseNavigatedCount(blacklistEntry);           
-    if(Delay.isTabIdInDelay(delay, tabId)) return;
-    Delay.addNewTabToDelay(delay, url, tabId);
+    if(Delay.isTabIdInDelay(tabId)) return;
+    Delay.addNewTabToDelay(url, tabId);
     window["interval"+parseInt(tabId)] = setTimeout( () => CoreService.intervalCompleted(tabId, blacklistEntry), Config.getDelayTime() * 1000 )
   }
   
