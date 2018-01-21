@@ -17,7 +17,6 @@ export default class TabNavigation {
         TabNavigation.redirectToOriginalUrl(tabId);
       }
     }
-    
     BrowserService.getTab(tabId, callback)
   }
 

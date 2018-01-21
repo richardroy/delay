@@ -5,7 +5,7 @@ const DELAY = "delay";
 export default class Delay {
 
   static getSite(tabId) {
-    let delay = Delay.loadDelay();    
+    let delay = Delay.load();    
     for(var siteIndex in delay.sites) {
       const site = delay.sites[siteIndex];
       if (site.tabId === tabId)
@@ -14,11 +14,11 @@ export default class Delay {
     return {};
   }
 
-  static saveDelay(delay) {
+  static save(delay) {
     LocalStorageService.saveObject(DELAY, delay)
   }
 
-  static loadDelay() {
+  static load() {
     return LocalStorageService.loadObject(DELAY, {sites: []});
   }
 
@@ -31,21 +31,29 @@ export default class Delay {
     return false;
   }
 
+  static isTabIdAllowed(delay, tabId) {
+    for(var siteIndex in delay.sites) {
+      const site = delay.sites[siteIndex];
+      if (site.tabId === tabId){
+        return site.allowed;
+      }
+    }
+    return false;
+  }
+
+  static setAllowed(tabId) {
+    const delay = this.load();
+    for(var siteIndex in delay.sites) {
+      const site = delay.sites[siteIndex];
+      if (site.tabId === tabId)
+        site.allowed = true;
+    }
+    this.save(delay);
+  }
+
   static addNewTabToDelay(delay, actualUrl, tabId) {
     delay.sites.push({actualUrl: actualUrl, tabId: tabId, allowed: false});  
-    this.saveDelay(delay);
+    this.save(delay);
   }
 
 }
-
-/*
-{
-  "sites":[
-    {
-      "actualUrl":"https://www.reddit.com/",
-      "tabId":3178,
-      "allowed": false
-    }
-  ]
-}
-*/

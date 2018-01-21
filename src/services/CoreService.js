@@ -7,6 +7,7 @@ import Delay from "../Delay.js"
 
 export default class CoreService {
   static intervalCompleted(tabId, blacklistEntry) {
+    Delay.setAllowed(tabId);
     TabNavigation.onBackgroundRedirectToOriginal(tabId, blacklistEntry);
     clearTimeout(window["interval"+parseInt(tabId)]);
   }
@@ -30,16 +31,17 @@ export default class CoreService {
 
   static navigatedToBlacklistEntry(data, blacklistEntry) {
     var tabId = data.tabId;
-    const delay = Delay.loadDelay();            
-    if(!Delay.isTabIdInDelay(delay, tabId)){
+    const delay = Delay.load(); 
+    if(!Delay.isTabIdAllowed(delay, tabId)){
       CoreService.initiateDelay(data.url, delay, tabId, blacklistEntry);
     }
   }
 
   static initiateDelay(url, delay, tabId, blacklistEntry) {
-    Blacklist.increaseNavigatedCount(blacklistEntry);        
-    Delay.addNewTabToDelay(delay, url, tabId);
     TabNavigation.redirectTabToBackground(tabId);
+    Blacklist.increaseNavigatedCount(blacklistEntry);           
+    if(Delay.isTabIdInDelay(delay, tabId)) return;
+    Delay.addNewTabToDelay(delay, url, tabId);
     window["interval"+parseInt(tabId)] = setTimeout( () => CoreService.intervalCompleted(tabId, blacklistEntry), Config.getDelayTime() * 1000 )
   }
   
