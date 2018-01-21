@@ -32,8 +32,20 @@ export default class Delay {
   }
 
   static addNewTabToDelay(delay, actualUrl, tabId) {
-    delay.sites.push({actualUrl: actualUrl, tabId: tabId});  
+    delay.sites.push({actualUrl: actualUrl, tabId: tabId, allowed: false});  
     this.saveDelay(delay);
   }
 
 }
+
+/*
+{
+  "sites":[
+    {
+      "actualUrl":"https://www.reddit.com/",
+      "tabId":3178,
+      "allowed": false
+    }
+  ]
+}
+*/
