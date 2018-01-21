@@ -1,4 +1,4 @@
-import LocalStorage from "./LocalStorage";
+import LocalStorageService from "./services/LocalStorageService";
 import shortId from "shortid";
 const BLACKLIST = "blacklist";
 
@@ -21,12 +21,12 @@ export default class Blacklist {
     return {};
   }
 
-  static updateEntry(blacklistObject) {
+  static updateEntry(blacklistEntry) {
     const blacklist = this.load();
     let updated = false;
     for(const listIndex in blacklist) {
-      if(blacklist[listIndex].id === blacklistObject.id){
-        blacklist[listIndex] = blacklistObject;
+      if(blacklist[listIndex].id === blacklistEntry.id){
+        blacklist[listIndex] = blacklistEntry;
         updated = true;
         break;
       }
@@ -34,14 +34,14 @@ export default class Blacklist {
     if(updated) this.save(blacklist);
   }
 
-  static increaseNavigatedCount(blacklistObject) {
-    blacklistObject.navigatedCount += 1;
-    this.updateEntry(blacklistObject);
+  static increaseNavigatedCount(blacklistEntry) {
+    blacklistEntry.navigatedCount += 1;
+    this.updateEntry(blacklistEntry);
   }
 
-  static increaseLoadedCount(blacklistObject) {
-    blacklistObject.loadedCount += 1;
-    this.updateEntry(blacklistObject);    
+  static increaseLoadedCount(blacklistEntry) {
+    blacklistEntry.loadedCount += 1;
+    this.updateEntry(blacklistEntry);    
   }
 
   static convertOldStructure(blacklist) {
@@ -61,7 +61,7 @@ export default class Blacklist {
   }
 
   static load() {
-    const blacklist = LocalStorage.loadObject(BLACKLIST, []);
+    const blacklist = LocalStorageService.loadObject(BLACKLIST, []);
     
     //to persist string list data structure change
     if(blacklist && typeof blacklist[0] === "string") {      
@@ -72,7 +72,7 @@ export default class Blacklist {
   }
   
   static save(blacklist) {
-    LocalStorage.saveObject(BLACKLIST, blacklist);
+    LocalStorageService.saveObject(BLACKLIST, blacklist);
   }
 
   static addNewUrl(url) {

@@ -1,48 +1,47 @@
+import BrowserService from "./services/BrowserService"
 import Blacklist from "./Blacklist"
 import Delay from "./Delay"
 
+export const BACKGROUND_FILE = "/src/background.html";
+export const HOME_FILE = "/src/home.html";
+
+
 export default class TabNavigation {
 
-  static redirectTab(tabId, url) {
-    chrome.tabs.update(tabId, {url:url});
+  static onBackgroundRedirectToOriginal(tabId, blacklistEntry) {
+    const backgroundUrl = this.getBackgroundUrl();
+
+    function callback(tab) {
+      if(tab.url === backgroundUrl){
+        Blacklist.increaseLoadedCount(blacklistEntry);
+        TabNavigation.redirectToOriginalUrl(tabId);
+      }
+    }
+    
+    BrowserService.getTab(tabId, callback)
   }
 
-  static getUrl(filename) {
-    const url = chrome.extension.getURL(filename);    
-    return url;
-  }
-
-  static getBackgroundUrl() {
-    return this.getUrl("/src/background.html");
-  }
-  
-  static getHomeUrl() {
-    return this.getUrl("/src/home.html");  
-  }
-
-  static redirectToOriginalUrl(tabId) {
-    let delay = Delay.loadDelay();
-    const site = Delay.getSite(delay, tabId);
-    this.redirectTab(tabId, site.actualUrl);
-  }
-  
   static redirectTabToBackground(tabId) {
     const backgroundPageUrl = this.getBackgroundUrl(); 
-    this.redirectTab(tabId, backgroundPageUrl);          
+    BrowserService.updateTabUrl(tabId, backgroundPageUrl)
   }
   
   static redirectTabToHome(tabId) {
     const homePageUrl = this.getHomeUrl(); 
-    this.redirectTab(tabId, homePageUrl);          
+    BrowserService.updateTabUrl(tabId, homePageUrl);    
   }
 
-  static onHomeRedirectToOriginal(tabId, blacklistObject) {
-    const backgrounUrl = this.getBackgroundUrl();
-    chrome.tabs.get(tabId, tab => {
-      if(tab.url === backgrounUrl){
-        Blacklist.increaseLoadedCount(blacklistObject);
-        this.redirectToOriginalUrl(tabId);
-      }
-    });
+  static redirectToOriginalUrl(tabId) {
+    const site = Delay.getSite(tabId);
+    BrowserService.updateTabUrl(tabId, site.actualUrl);
   }
+
+  static getBackgroundUrl() {
+    return BrowserService.getExtensionUrl(BACKGROUND_FILE);
+  }
+  
+  static getHomeUrl() {
+    return BrowserService.getExtensionUrl(HOME_FILE);    
+  }
+  
 }

@@ -1,4 +1,4 @@
-export default class LocalStorage {
+export default class LocalStorageService {
 
   static loadObject(identifier, baseObject) {
     let loadedObject = localStorage.getItem(identifier);
