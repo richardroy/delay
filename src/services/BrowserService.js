@@ -1,7 +1,7 @@
 export default class BrowserService {
 
   static updateTabUrl(tabId, url) {
-    chrome.tabs.update(tabId, {url:url});
+    chrome.tabs.update(tabId, {url});
   }
 
   static getExtensionUrl(filename) {
