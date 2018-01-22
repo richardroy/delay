@@ -59,4 +59,14 @@ export default class Delay {
     this.save(delay);
   }
 
+  static removeDelayEntry(tabId) {
+    const delay = this.load();    
+    for(var siteIndex in delay.sites) {
+      const site = delay.sites[siteIndex];
+      if (site.tabId === tabId)
+        delay.sites.splice(siteIndex, 1);
+    }
+    this.save(delay);
+  }
+
 }

@@ -20,7 +20,7 @@ export default class BrowserService {
     chrome.webNavigation["onBeforeNavigate"].addListener(listener);
   }
 
-  static onClosed(listener) {
+  static setOnClosedEvent(listener) {
     chrome.tabs.onRemoved.addListener(listener);
   }
   
