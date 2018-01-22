@@ -45,9 +45,6 @@ export default class CoreService {
   }
 
   static onTabClosed(tabId, removeInfo) {
-    console.log("onTabClosed");
-    console.log(tabId);
-    console.log(removeInfo);
     if(Delay.isTabIdInDelay(tabId))
       Delay.removeDelayEntry(tabId);
   }
