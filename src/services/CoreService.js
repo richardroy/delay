@@ -43,5 +43,10 @@ export default class CoreService {
     Delay.addNewTabToDelay(url, tabId);
     window["interval"+parseInt(tabId)] = setTimeout( () => CoreService.intervalCompleted(tabId, blacklistEntry), Config.getDelayTime() * 1000 )
   }
+
+  static onTabClosed(tabId, removeInfo) {
+    if(Delay.isTabIdInDelay(tabId))
+      Delay.removeDelayEntry(tabId);
+  }
   
 }
