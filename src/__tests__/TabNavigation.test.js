@@ -36,7 +36,7 @@ test("redirectTabToHome", () => {
 
 test("onBackgroundRedirectToOriginal: still on home Url", () => {
   BrowserService.getExtensionUrl = jest.fn().mockReturnValue(BACKGROUND_URL);
-  Blacklist.increaseLoadedCount = jest.fn();
+  Blacklist.addLoadedEvent = jest.fn();
   
   Delay.getSite = jest.fn().mockReturnValue(DELAY_ENTRY_REDDIT);
   BrowserService.updateTabUrl = jest.fn(); 
@@ -48,8 +48,8 @@ test("onBackgroundRedirectToOriginal: still on home Url", () => {
   expect(BrowserService.getTab).toHaveBeenCalledTimes(1);
   expect(BrowserService.getTab).toHaveBeenCalledWith(TAB_ID, expect.any(Function));
 
-  expect(Blacklist.increaseLoadedCount).toHaveBeenCalledTimes(1);
-  expect(Blacklist.increaseLoadedCount).toHaveBeenCalledWith(BLACKLIST_ENTRY_REDDIT);  
+  expect(Blacklist.addLoadedEvent).toHaveBeenCalledTimes(1);
+  expect(Blacklist.addLoadedEvent).toHaveBeenCalledWith(BLACKLIST_ENTRY_REDDIT);  
 
   expect(Delay.getSite).toHaveBeenCalledTimes(1);
   expect(Delay.getSite).toHaveBeenCalledWith(TAB_ID);
