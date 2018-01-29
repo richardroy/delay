@@ -1,17 +1,16 @@
 
 import LocalStorageService from '../services/LocalStorageService';
 import Blacklist from '../Blacklist';
+import NavEvents from '../NavEvents';
+import NavEvent from '../NavEvent';
 import shortId from "shortid";
 
-const URL_REDDIT_OLD = "www.reddit.com";
-const OLD_BLACKLIST = [URL_REDDIT_OLD];
-
-const URL_REDDIT = {id: 1, url: "wwww.reddit.com", navigatedCount: 0, loadedCount: 0};
-const URL_REDDIT_CLICKED = {...URL_REDDIT, navigatedCount: 1};
-const URL_REDDIT_LOADED = {...URL_REDDIT_CLICKED, loadedCount: 1};
-const URL_FACEBOOK = {id: 2, url: "wwww.facebook.com", navigatedCount: 0};
-const URL_TWITTER = {id: 3, url: "wwww.twitter.com", navigatedCount: 0, loadedCount: 0};
-const URL_TWITTER_CLICKED = {...URL_TWITTER, navigatedCount: 1, loadedCount: 1};
+const URL_REDDIT = {id: 1, url: "wwww.reddit.com", navEvents: []};
+const URL_REDDIT_CLICKED = {...URL_REDDIT};
+const URL_REDDIT_LOADED = {...URL_REDDIT_CLICKED};
+const URL_FACEBOOK = {id: 2, url: "wwww.facebook.com", navEvents: []};
+const URL_TWITTER = {id: 3, url: "wwww.twitter.com", navEvents: []};
+const URL_TWITTER_CLICKED = {...URL_TWITTER};
 
 const BLACKLIST = [URL_REDDIT, URL_FACEBOOK];
 const UPDATED_BLACKLIST = [...BLACKLIST, URL_TWITTER];
@@ -55,42 +54,28 @@ test("updateEntry: updates existing entry", () => {
 test("updateEntry: entry doesn't exist, doesn't update blacklist", () => {
   LocalStorageService.loadObject = jest.fn().mockReturnValue(BLACKLIST);
   LocalStorageService.saveObject = jest.fn();
-  Blacklist.updateEntry({ ...URL_TWITTER, navigatedCount: 1 });
+  Blacklist.updateEntry({ ...URL_TWITTER });
 
   expect(LocalStorageService.saveObject).toHaveBeenCalledTimes(0);
 })
 
-test("increaseNavigatedCount", () => {
+test("addNavigatedEvent", () => {
   LocalStorageService.loadObject = jest.fn().mockReturnValue([...BLACKLIST]);  
   LocalStorageService.saveObject = jest.fn();
-  
-  Blacklist.increaseNavigatedCount(URL_REDDIT);
+  NavEvent.create = jest.fn().mockReturnValue({id: 1});
+  NavEvents.add = jest.fn();
+  Blacklist.addNavigatedEvent(URL_REDDIT);
   expect(LocalStorageService.saveObject).toHaveBeenCalledTimes(1);
   expect(LocalStorageService.saveObject).toHaveBeenCalledWith("blacklist", CLICKED_BLACKLIST);
 })
 
-test("increaseLoadedCount", () => {
+test("addLoadedEvent", () => {
   LocalStorageService.loadObject = jest.fn().mockReturnValue([...BLACKLIST]);  
   LocalStorageService.saveObject = jest.fn();
   
-  Blacklist.increaseLoadedCount(URL_REDDIT_CLICKED);
+  Blacklist.addLoadedEvent(URL_REDDIT_CLICKED);
   expect(LocalStorageService.saveObject).toHaveBeenCalledTimes(1);
   expect(LocalStorageService.saveObject).toHaveBeenCalledWith("blacklist", LOADED_BLACKLIST);
-})
-
-test("convertOldStructure", () => {
-  LocalStorageService.saveObject = jest.fn();
-  const updatedBlacklist = [{
-    id: expect.anything(),
-    url: URL_REDDIT_OLD,
-    loadedCount: 0,
-    navigatedCount: 0
-  }];
-
-  Blacklist.convertOldStructure(OLD_BLACKLIST);
-
-  expect(LocalStorageService.saveObject).toHaveBeenCalledTimes(1);
-  expect(LocalStorageService.saveObject).toHaveBeenCalledWith("blacklist", updatedBlacklist);
 })
 
 test("load: standard load", () => {
@@ -98,16 +83,6 @@ test("load: standard load", () => {
   LocalStorageService.saveObject = jest.fn();
 
   const blacklist = Blacklist.load()
-  expect(blacklist).toEqual(BLACKLIST);
-})
-
-test("load: loads in old format", () => {
-  LocalStorageService.loadObject = jest.fn()
-    .mockReturnValueOnce(OLD_BLACKLIST)
-    .mockReturnValueOnce([...BLACKLIST]);
-    LocalStorageService.saveObject = jest.fn();
-    
-    const blacklist = Blacklist.load()
   expect(blacklist).toEqual(BLACKLIST);
 })
 

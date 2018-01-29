@@ -51,31 +51,8 @@ export default class Blacklist {
     this.updateEntry(blacklistEntry);    
   }
 
-  static convertOldStructure(blacklist) {
-    //to persist list over data structure change
-    const newBlacklist = []
-    for(const listIndex in blacklist) {
-      newBlacklist.push({
-        url: blacklist[listIndex], 
-        id: shortId.generate(),
-        navigatedCount: 0,
-        loadedCount: 0,
-        navEvents: []  
-      });
-    }
-  
-    this.save(newBlacklist);
-    return this.load();
-  }
-
   static load() {
     const blacklist = LocalStorageService.loadObject(BLACKLIST, []);
-    
-    //to persist string list data structure change
-    if(blacklist && typeof blacklist[0] === "string") {      
-      return this.convertOldStructure(blacklist);
-    }
-
     return blacklist;
   }
   
@@ -88,8 +65,6 @@ export default class Blacklist {
     blacklist.push({
       url, 
       id: shortId.generate(),
-      navigatedCount: 0,
-      loadedCount: 0,
       navEvents: []
     });
     this.save(blacklist);
