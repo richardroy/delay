@@ -1,5 +1,8 @@
 import LocalStorageService from "./services/LocalStorageService";
+import NavEvents from "./NavEvents";
+import NavEvent, {LOADED, NAVIGATED} from "./NavEvent";
 import shortId from "shortid";
+
 const BLACKLIST = "blacklist";
 
 export default class Blacklist {
@@ -34,40 +37,22 @@ export default class Blacklist {
     if(updated) this.save(blacklist);
   }
 
-  static increaseNavigatedCount(blacklistEntry) {
-    blacklistEntry.navigatedCount += 1;
+  static addNavigatedEvent(blacklistEntry) {
+    const navEvent = NavEvent.create(LOADED);
+    NavEvents.add(navEvent);    
+    blacklistEntry.navEvents.push(navEvent.id)
     this.updateEntry(blacklistEntry);
   }
 
-  static increaseLoadedCount(blacklistEntry) {
-    blacklistEntry.loadedCount += 1;
+  static addLoadedEvent(blacklistEntry) {
+    const navEvent = NavEvent.create(NAVIGATED);
+    NavEvents.add(navEvent);    
+    blacklistEntry.navEvents.push(navEvent.id);
     this.updateEntry(blacklistEntry);    
-  }
-
-  static convertOldStructure(blacklist) {
-    //to persist list over data structure change
-    const newBlacklist = []
-    for(const listIndex in blacklist) {
-      newBlacklist.push({
-        url: blacklist[listIndex], 
-        id: shortId.generate(),
-        navigatedCount: 0,
-        loadedCount: 0        
-      });
-    }
-  
-    this.save(newBlacklist);
-    return this.load();
   }
 
   static load() {
     const blacklist = LocalStorageService.loadObject(BLACKLIST, []);
-    
-    //to persist string list data structure change
-    if(blacklist && typeof blacklist[0] === "string") {      
-      return this.convertOldStructure(blacklist);
-    }
-
     return blacklist;
   }
   
@@ -80,8 +65,7 @@ export default class Blacklist {
     blacklist.push({
       url, 
       id: shortId.generate(),
-      navigatedCount: 0,
-      loadedCount: 0
+      navEvents: []
     });
     this.save(blacklist);
   }
