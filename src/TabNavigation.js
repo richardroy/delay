@@ -13,7 +13,7 @@ export default class TabNavigation {
 
     function callback(tab) {
       if(tab.url === backgroundUrl){
-        Blacklist.increaseLoadedCount(blacklistEntry);
+        Blacklist.addLoadedEvent(blacklistEntry);
         TabNavigation.redirectToOriginalUrl(tabId);
       }
     }

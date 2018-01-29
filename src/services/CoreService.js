@@ -38,7 +38,7 @@ export default class CoreService {
 
   static initiateDelay(url, tabId, blacklistEntry) {
     TabNavigation.redirectTabToBackground(tabId);
-    Blacklist.increaseNavigatedCount(blacklistEntry);           
+    Blacklist.addNavigatedEvent(blacklistEntry);           
     if(Delay.isTabIdInDelay(tabId)) return;
     Delay.addNewTabToDelay(url, tabId);
     window["interval"+parseInt(tabId)] = setTimeout( () => CoreService.intervalCompleted(tabId, blacklistEntry), Config.getDelayTime() * 1000 )
