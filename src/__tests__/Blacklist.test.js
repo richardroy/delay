@@ -72,8 +72,12 @@ test("addNavigatedEvent", () => {
 test("addLoadedEvent", () => {
   LocalStorageService.loadObject = jest.fn().mockReturnValue([...BLACKLIST]);  
   LocalStorageService.saveObject = jest.fn();
-  
+  NavEvent.create = jest.fn().mockReturnValue({id: 1});
+  NavEvents.add = jest.fn();
   Blacklist.addLoadedEvent(URL_REDDIT_CLICKED);
+  expect(NavEvent.create).toHaveBeenCalledTimes(1);
+  expect(NavEvents.add).toHaveBeenCalledTimes(1);
+  expect(NavEvents.add).toHaveBeenCalledWith({id: 1});
   expect(LocalStorageService.saveObject).toHaveBeenCalledTimes(1);
   expect(LocalStorageService.saveObject).toHaveBeenCalledWith("blacklist", LOADED_BLACKLIST);
 })
