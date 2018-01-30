@@ -5,7 +5,8 @@
   "main": "Browser.js",
   "scripts": {
     "watch": "webpack --watch",
-    "test": "jest --watch --coverage"
+    "test": "jest --coverage",        
+    "test-watch": "jest --watch --coverage"
   },
   "author": "",
   "license": "ISC",

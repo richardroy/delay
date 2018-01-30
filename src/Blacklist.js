@@ -1,6 +1,6 @@
 import LocalStorageService from "./services/LocalStorageService";
 import NavEvents from "./NavEvents";
-import NavEvent, {LOADED, NAVIGATED} from "./NavEvent";
+import NavEvent from "./NavEvent";
 import shortId from "shortid";
 
 const BLACKLIST = "blacklist";
@@ -38,14 +38,14 @@ export default class Blacklist {
   }
 
   static addNavigatedEvent(blacklistEntry) {
-    const navEvent = NavEvent.create(LOADED);
+    const navEvent = NavEvent.create("loaded");
     NavEvents.add(navEvent);    
     blacklistEntry.navEvents.push(navEvent.id)
     this.updateEntry(blacklistEntry);
   }
 
   static addLoadedEvent(blacklistEntry) {
-    const navEvent = NavEvent.create(NAVIGATED);
+    const navEvent = NavEvent.create("navigated");
     NavEvents.add(navEvent);    
     blacklistEntry.navEvents.push(navEvent.id);
     this.updateEntry(blacklistEntry);    
