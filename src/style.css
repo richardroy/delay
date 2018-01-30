@@ -8,7 +8,7 @@
 }
 
 .home-body {
-  padding-top: 80px;
+  padding-top: 40px;
   text-align: center;
   font-family: monaco, monospace;
   background-size: cover;
@@ -26,4 +26,11 @@ li {
   margin-left: 10px;
   margin-bottom: 3px;
   border: none;
+}
+
+canvas {
+  padding: 0;
+  margin: auto;
+  display: block;
+  width: 800px;
 }
