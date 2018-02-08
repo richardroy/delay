@@ -101,7 +101,8 @@ export default class Home {
 }
 
 function getDateString(millis) {
-  const date = new Date(millis);
+  console.log(+millis);
+  const date = new Date(+millis);
   const dateString = date.getFullYear().toString() + date.getMonth().toString() + date.getDate().toString();
   return dateString;
 }
@@ -185,7 +186,10 @@ function getDateString(millis) {
             }
           }],
           xAxes: [{
-            type: 'time'
+            type: 'time',
+            time: {
+              unit: 'day'
+            }
           }]
         },
         responsive: false
