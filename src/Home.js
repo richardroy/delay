@@ -101,17 +101,19 @@ export default class Home {
 }
 
 function getDateString(millis) {
-  console.log(+millis);
   const date = new Date(+millis);
   const dateString = date.getFullYear().toString() + date.getMonth().toString() + date.getDate().toString();
   return dateString;
 }
+
+
   const navEvents = NavEvents.load();  
   const loadedTimes = [];
   const navigatedTimes = [];
   const loadedEvents = {};
   const navigatedEvents = {};
   
+  let navCount = 0;
 
   for(const index in navEvents) {
     if(navEvents[index].type === "loaded") {
@@ -125,6 +127,7 @@ function getDateString(millis) {
       }
       loadedTimes.push({x: new Date(navEvents[index].time), y:1});
     } else if(navEvents[index].type === "navigated") {
+      navCount ++;
       const uniqueDate = getDateString(navEvents[index].time);
       if(navigatedEvents[uniqueDate]) {
         navigatedEvents[uniqueDate].count += 1;
@@ -149,46 +152,52 @@ function getDateString(millis) {
     navigatedLineData.push({x: navigatedEvents[navigatedEventKeys[index]].date, y: navigatedEvents[navigatedEventKeys[index]].count});
   }
 
-
   var ctx = document.getElementById("myChart");
   var myChart = new Chart(ctx, {
       type: 'line',
       data: {
           datasets: [{
-              data: loadedLineData,
-              backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)'
-              ],
-              borderColor: [
-                'rgba(255,99,132,1)'
-              ],
-              borderWidth: 1
+            data: loadedLineData,
+            label: '# Navigated',
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)'
+            ],
+            borderColor: [
+              'rgba(255,99,132,1)'
+            ],
+            pointBackgroundColor: 'rgba(255,99,132,1)',            
+            borderWidth: 1
           },{
             data: navigatedLineData,
-            pointHitRadius: 0,
+            label: '# Loaded',
             backgroundColor: [
                 'rgba(99, 132, 255, 0.2)'
             ],
             borderColor: [
               'rgba(99, 132, 255, 1)'
             ],
-            borderWidth: 1
+            pointBackgroundColor: 'rgba(99, 132, 255, 1)',
+            borderWidth: 1            
         }]
       },
       options: {
+        hover: {
+          mode: 'single'
+        },
         legend: {
           display: false
         },
         scales: {
           yAxes: [{
             ticks: {
-              beginAtZero:true
+              beginAtZero: true
             }
           }],
           xAxes: [{
             type: 'time',
             time: {
-              unit: 'day'
+              unit: 'day',
+              tooltipFormat: 'll'
             }
           }]
         },
@@ -204,4 +213,4 @@ document.getElementById("delayTimeSubmit").addEventListener("click", () => Home.
 window.addEventListener("load", function load(event){ 
   Home.buildInitialBlacklist();
   Home.setInitalDelayTimeElement();
-})
+});

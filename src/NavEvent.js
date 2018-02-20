@@ -6,6 +6,7 @@ export const NAVIGATED = "navigated";
 
 export default class NavEvent {
   static create(type) {
+    console.log(type);
     const shortId = shortid.generate();
     const navEvent =  {
       id: shortId,
