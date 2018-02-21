@@ -1,5 +1,8 @@
+import NavEventChart from './NavEventChart';
 import Blacklist from "./Blacklist";
+import NavEvents from "./NavEvents";
 import Config from "./Config";
+import Chart from 'chart.js';
 
 export default class Home {
   static getBlacklistInputElement() {
@@ -106,4 +109,6 @@ document.getElementById("delayTimeSubmit").addEventListener("click", () => Home.
 window.addEventListener("load", function load(event){ 
   Home.buildInitialBlacklist();
   Home.setInitalDelayTimeElement();
-})
+});
+
+NavEventChart.initialiseGraph();

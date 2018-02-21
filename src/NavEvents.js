@@ -19,4 +19,37 @@ export default class NavEvents {
     return LocalStorageService.loadObject(NAV_EVENTS, []);
   }
 
+  static filterEventList() {
+    const navEvents = this.load();
+    const loadedEvents = {};
+    const navigatedEvents = {};
+    
+    for(const index in navEvents) {
+      const event = navEvents[index];
+      if(event.type === "navigated") {
+        this.addFilteredEvent(event.time, loadedEvents);
+      } else if(event.type === "loaded") {
+        this.addFilteredEvent(event.time, navigatedEvents);
+      }
+    }
+
+    return { loadedEvents, navigatedEvents };
+  }
+
+  static addFilteredEvent(eventTime, filteredEvent) {
+    const uniqueDate = this.getDateString(eventTime);
+    if(filteredEvent[uniqueDate]) {
+      filteredEvent[uniqueDate].count += 1;
+    } else {
+      filteredEvent[""+uniqueDate] = {}
+      filteredEvent[""+uniqueDate].date = eventTime;
+      filteredEvent[""+uniqueDate].count = 1;
+    }
+  }
+
+  static getDateString(millis) {
+    const date = new Date(+millis);
+    const dateString = date.getFullYear().toString() + date.getMonth().toString() + date.getDate().toString();
+    return dateString;
+  }
 }
