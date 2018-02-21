@@ -14,11 +14,11 @@
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
-    "chart.js": "^2.7.1",
     "jest": "^22.1.2",
     "webpack": "^3.10.0"
   },
   "dependencies": {
+    "chart.js": "^2.7.1",
     "moment": "^2.20.1",
     "shortid": "^2.2.8"
   }
