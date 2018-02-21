@@ -34,3 +34,12 @@ canvas {
   display: block;
   width: 800px;
 }
+
+#eventChart {
+  margin-top: 50px;
+}
+
+#delayTimeInput {
+  margin-top: 5px;
+  width: 40px;
+}

@@ -19,7 +19,7 @@ export default class NavEventChart {
       navigatedLineData.push({x: roundedEventDate, y: navigatedEvents[navigatedEventKeys[index]].count});
     }
 
-    var ctx = document.getElementById("myChart");
+    var ctx = document.getElementById("eventChart");
     var myChart = new Chart(ctx, {
         type: 'line',
         data: {
