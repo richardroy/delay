@@ -4,17 +4,16 @@ import NavEvents from "./NavEvents";
 import Config from "./Config";
 import Chart from 'chart.js';
 import Element from './Element'
+
+const BLACKLIST_ID = "urlBlacklist";
+const BLACKLIST_INPUT_ID = "blackListInput";
+const DELAY_TIME_INPUT_ID = "delayTimeInput";
+const DELAY_TIME_OUTPUT_ID = "delayTimeOutput";
+
 export default class Home {
 
-  constructor() {
-    BLACKLIST_INPUT_ID = "blackListInput";
-    BLACKLIST_ID = "urlBlacklist";
-    DELAY_TIME_INPUT_ID = "delayTimeInput";
-    DELAY_TIME_OUTPUT_ID = "delayTimeOutput";
-  }
-
   static clearBlacklistUrlInput() {
-    const blackListInput = Element.getElementById(this.BLACKLIST_INPUT_ID);
+    const blackListInput = Element.getElementById(BLACKLIST_INPUT_ID);
     blackListInput.value = '';
   }
   
@@ -43,13 +42,14 @@ export default class Home {
   }
   
   static addNewUrlElementToBlacklist(url) {
-    const urlBlacklist = Element.getById(this.BLACKLIST_ID);
+    console.log(BLACKLIST_ID);
+    const urlBlacklist = Element.getById(BLACKLIST_ID);
     const newUrlLi = this.createNewBlacklistLiElement(url);
     urlBlacklist.appendChild(newUrlLi);
   }
   
   static submitNewUrl() {
-    const url = Element.getValueFromId(this.BLACKLIST_INPUT_ID);
+    const url = Element.getValueFromId(BLACKLIST_INPUT_ID);
     this.addNewUrlElementToBlacklist(url);
     Blacklist.addNewUrl(url);  
     this.clearBlacklistUrlInput();

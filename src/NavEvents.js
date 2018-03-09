@@ -53,9 +53,6 @@ export default class NavEvents {
       String("0" + date.getFullYear().toString()).slice(-2) +
       String("0" + date.getMonth().toString()).slice(-2) +
       String("0" + date.getDate().toString()).slice(-2);
-    console.log(date.getFullYear().toString())
-    console.log(date.getMonth().toString())
-    console.log(date.getDate().toString())
     return dateString;
   }
 }
