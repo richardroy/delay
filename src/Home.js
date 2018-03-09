@@ -70,7 +70,7 @@ export default class Home {
   }
 
   static setDelayTimeOutputElement(time) {
-    const delayTimeElement = this.getDelayTimeOuputElement();
+    const delayTimeElement = Element.getById(DELAY_TIME_OUTPUT_ID);
     delayTimeElement.textContent = time;  
   }
 
