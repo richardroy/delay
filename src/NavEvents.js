@@ -49,7 +49,13 @@ export default class NavEvents {
 
   static getDateString(millis) {
     const date = new Date(+millis);
-    const dateString = date.getFullYear().toString() + date.getMonth().toString() + date.getDate().toString();
+    const dateString = 
+      String("0" + date.getFullYear().toString()).slice(-2) +
+      String("0" + date.getMonth().toString()).slice(-2) +
+      String("0" + date.getDate().toString()).slice(-2);
+    console.log(date.getFullYear().toString())
+    console.log(date.getMonth().toString())
+    console.log(date.getDate().toString())
     return dateString;
   }
 }

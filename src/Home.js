@@ -3,40 +3,18 @@ import Blacklist from "./Blacklist";
 import NavEvents from "./NavEvents";
 import Config from "./Config";
 import Chart from 'chart.js';
-
+import Element from './Element'
 export default class Home {
-  static getBlacklistInputElement() {
-    const blackListInput = document.getElementById("blacklistInput");
-    return blackListInput;
+
+  constructor() {
+    BLACKLIST_INPUT_ID = "blackListInput";
+    BLACKLIST_ID = "urlBlacklist";
+    DELAY_TIME_INPUT_ID = "delayTimeInput";
+    DELAY_TIME_OUTPUT_ID = "delayTimeOutput";
   }
 
-  static getDelayTimeInputElement() {
-    const delayTimeInput = document.getElementById("delayTimeInput");
-    return delayTimeInput;
-  }
-
-  static getDelayTimeOuputElement() {
-    const delayTimeOutput = document.getElementById("delayTimeOutput");
-    return delayTimeOutput;
-  }
-  
-  static getBlacklistInputValue() {
-    const blackListInput = this.getBlacklistInputElement();
-    return blackListInput.value;
-  }
-
-  static getDelayTimeInputValue() {
-    const dealyTimeInput = this.getDelayTimeInputElement();
-    return delayTimeInput.value;
-  }
-
-  static getDelayTimeOutputValue() {
-    const delayTimeOutput = this.getDelayTimeOuputElement();
-    return delayTimeOutput.value;
-  }
-  
   static clearBlacklistUrlInput() {
-    const blackListInput = this.getBlacklistInputElement();
+    const blackListInput = Element.getElementById(this.BLACKLIST_INPUT_ID);
     blackListInput.value = '';
   }
   
@@ -65,20 +43,20 @@ export default class Home {
   }
   
   static addNewUrlElementToBlacklist(url) {
-    const urlBlacklist = document.getElementById("urlBlacklist");
+    const urlBlacklist = Element.getById(this.BLACKLIST_ID);
     const newUrlLi = this.createNewBlacklistLiElement(url);
     urlBlacklist.appendChild(newUrlLi);
   }
   
   static submitNewUrl() {
-    const url = this.getBlacklistInputValue();
+    const url = Element.getValueFromId(this.BLACKLIST_INPUT_ID);
     this.addNewUrlElementToBlacklist(url);
     Blacklist.addNewUrl(url);  
     this.clearBlacklistUrlInput();
   }
 
   static setDelayTime() {
-    const time = this.getDelayTimeInputValue();
+    const time = Element.getValueFromId(DELAY_TIME_INPUT_ID);
     Config.setDelayTime(time);
     this.setDelayTimeOutputElement(time);
   }

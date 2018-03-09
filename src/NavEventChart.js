@@ -5,6 +5,7 @@ export default class NavEventChart {
   static initialiseGraph() {
 
     let { loadedEvents, navigatedEvents } = NavEvents.filterEventList();
+    console.log(loadedEvents);
     const loadedLineData = [];
     const loadedEventKeys = Object.keys(loadedEvents);
     for(const index in loadedEventKeys){
