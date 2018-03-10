@@ -1,5 +1,5 @@
 import LocalStorageService from "./services/LocalStorageService";
-
+import Config from "./Config";
 const DELAY = "delay";
 
 export default class Delay {
@@ -54,12 +54,28 @@ export default class Delay {
   }
 
   static addNewTabToDelay(actualUrl, tabId) {
+    const created = Date.now();
     const delay = this.load();
-    delay.sites.push({actualUrl: actualUrl, tabId: tabId, allowed: false});  
+    delay.sites.push({actualUrl: actualUrl, tabId: tabId, created, allowed: false});  
     this.save(delay);
   }
 
-  static removeDelayEntry(tabId) {
+  static clean() {
+    const sitesToRemove = [];
+    const delay = this.load();
+    for(var siteIndex in delay.sites) {
+      const site = delay.sites[siteIndex];
+      if ((Date.now() - site.created) > 1000 * 60 * 15) {
+        sitesToRemove.push(site.tabId);
+      }
+    }
+    
+    for(var index in sitesToRemove) {
+      this.removeDelayEntryWithTabId(sitesToRemove[index]);
+    }
+  }
+
+  static removeDelayEntryWithTabId(tabId) {
     const delay = this.load();    
     for(var siteIndex in delay.sites) {
       const site = delay.sites[siteIndex];

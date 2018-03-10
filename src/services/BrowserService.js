@@ -23,5 +23,13 @@ export default class BrowserService {
   static setOnClosedEvent(listener) {
     chrome.tabs.onRemoved.addListener(listener);
   }
-  
+
+  static getAllWindows(callback) {
+    chrome.windows.getAll(callback)
+  }
+
+  static getAllTabs(windowId, callback) {
+    chrome.tabs.getAllInWindow(windowId, callback)
+  }
+
 }

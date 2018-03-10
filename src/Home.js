@@ -4,6 +4,7 @@ import NavEvents from "./NavEvents";
 import Config from "./Config";
 import Chart from 'chart.js';
 import Element from './Element'
+import BrowserService from './services/BrowserService';
 
 const BLACKLIST_ID = "urlBlacklist";
 const BLACKLIST_INPUT_ID = "blackListInput";
@@ -42,7 +43,6 @@ export default class Home {
   }
   
   static addNewUrlElementToBlacklist(url) {
-    console.log(BLACKLIST_ID);
     const urlBlacklist = Element.getById(BLACKLIST_ID);
     const newUrlLi = this.createNewBlacklistLiElement(url);
     urlBlacklist.appendChild(newUrlLi);

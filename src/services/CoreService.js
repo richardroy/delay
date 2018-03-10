@@ -4,7 +4,6 @@ import Blacklist from "../Blacklist.js"
 import Config from "../Config.js"
 import Delay from "../Delay.js"
 
-
 export default class CoreService {
   static intervalCompleted(tabId, blacklistEntry) {
     Delay.setAllowed(tabId);
@@ -18,6 +17,16 @@ export default class CoreService {
       if(CoreService.existsInBlacklist(blacklistEntry)) {
         CoreService.navigatedToBlacklistEntry(data, blacklistEntry);
       }
+    }
+    this.cleanDelay();
+  }
+
+  static cleanDelay() {
+    const cleanTime = Config.getLastCleanDelay();
+    if(!cleanTime) {
+      Config.setCleanDelay(Date.now());
+    } else if((new Date - cleanTime) < 1000 * 60 * 15){
+      Delay.clean();
     }
   }
   
@@ -46,7 +55,7 @@ export default class CoreService {
 
   static onTabClosed(tabId, removeInfo) {
     if(Delay.isTabIdInDelay(tabId))
-      Delay.removeDelayEntry(tabId);
+      Delay.removeDelayEntryWithTabId(tabId);
   }
   
 }
