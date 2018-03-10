@@ -1,7 +1,7 @@
 {
   "name":           "delay",
   "author":         "roy",
-  "version":        "0.1.6",
+  "version":        "0.1.7",
   "description":    "Delay certain urls from displaying",
   "background": {
     "persistent": false,
