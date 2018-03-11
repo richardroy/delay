@@ -4,6 +4,7 @@
   "description": "",
   "main": "Browser.js",
   "scripts": {
+    "build": "zip -r --exclude=.git* --exclude=node_modules* ../delay.zip ./",
     "watch": "webpack --watch",
     "test": "jest --coverage",
     "test-watch": "jest --watch --coverage"
