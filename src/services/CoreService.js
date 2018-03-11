@@ -18,7 +18,7 @@ export default class CoreService {
         CoreService.navigatedToBlacklistEntry(data, blacklistEntry);
       }
     }
-    this.cleanDelay();
+    CoreService.cleanDelay();
   }
 
   static cleanDelay() {

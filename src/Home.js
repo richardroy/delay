@@ -7,7 +7,7 @@ import Element from './Element'
 import BrowserService from './services/BrowserService';
 
 const BLACKLIST_ID = "urlBlacklist";
-const BLACKLIST_INPUT_ID = "blackListInput";
+const BLACKLIST_INPUT_ID = "blacklistInput";
 const DELAY_TIME_INPUT_ID = "delayTimeInput";
 const DELAY_TIME_OUTPUT_ID = "delayTimeOutput";
 
