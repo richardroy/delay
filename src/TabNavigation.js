@@ -17,10 +17,10 @@ export default class TabNavigation {
     //https://stackoverflow.com/questions/28431505/unchecked-runtime-lasterror-when-using-chrome-api
     function callback(tab) {
       if(chrome.runtime.lastError) {
-        //Could be triggered if tab has been closed before delay ends.
+        //Could be triggered if tab has been closed before delay
         console.warn("TabNavigation Error: " + chrome.runtime.lastError.message);
       } else {
-        if(tab.url === backgroundUrl){
+        if(tab && tab.url === backgroundUrl){
           Blacklist.addLoadedEvent(blacklistEntry);
           TabNavigation.redirectToOriginalUrl(tabId);
         }
