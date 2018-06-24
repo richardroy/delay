@@ -13,7 +13,7 @@ export default class BrowserService {
   }
 
   static getTab(tabId, callback, blacklistEntry) {
-    chrome.tabs.get(tabId, callback);
+    chrome.tabs.get(tabId, callback);      
   }
 
   static setOnExtensionClickedEvent(listener) {

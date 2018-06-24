@@ -12,7 +12,6 @@ export default class CoreService {
   }
 
   static onNavigationEventTrigged (data) {
-    console.log('onNavigationEventTrigge')
     if (CoreService.isTopLevelFrame(data)) {
       const blacklistEntry = Blacklist.getWithUrl(data.url);
       if(CoreService.existsInBlacklist(blacklistEntry)) {
@@ -36,7 +35,6 @@ export default class CoreService {
   }
   
   static existsInBlacklist(blacklistEntry) {
-    console.log('existsInBlacklist');
     return blacklistEntry && !(Object.keys(blacklistEntry).length === 0 && blacklistEntry.constructor === Object)
   }
 

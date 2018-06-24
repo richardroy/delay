@@ -14,10 +14,16 @@ export default class TabNavigation {
   static redirectToOriginal(tabId, blacklistEntry) {
     const backgroundUrl = this.getBackgroundUrl();
 
+    //https://stackoverflow.com/questions/28431505/unchecked-runtime-lasterror-when-using-chrome-api
     function callback(tab) {
-      if(tab.url === backgroundUrl){
-        Blacklist.addLoadedEvent(blacklistEntry);
-        TabNavigation.redirectToOriginalUrl(tabId);
+      if(chrome.runtime.lastError) {
+        //Could be triggered if tab has been closed before delay ends.
+        console.warn("TabNavigation Error: " + chrome.runtime.lastError.message);
+      } else {
+        if(tab.url === backgroundUrl){
+          Blacklist.addLoadedEvent(blacklistEntry);
+          TabNavigation.redirectToOriginalUrl(tabId);
+        }
       }
     }
     BrowserService.getTab(tabId, callback)
