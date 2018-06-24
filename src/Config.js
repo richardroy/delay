@@ -1,9 +1,13 @@
 import LocalStorageService from "./services/LocalStorageService";
 
 const CONFIG = "config";
-const CLEAN_DELAY = "cleanDelay";
 const INITIAL_DELAY_TIME = 15;
 
+/**
+ * Config is saved in the LocalStorage
+ * Used to control:
+ *    - delayTime: The time a delay persists
+ */
 export default class Config {
 
   static load() {

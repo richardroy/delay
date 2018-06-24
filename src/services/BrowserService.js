@@ -1,3 +1,7 @@
+
+/**
+ * Used to interact with Chrome Browser API
+ */
 export default class BrowserService {
 
   static updateTabUrl(tabId, url) {

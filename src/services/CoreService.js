@@ -7,11 +7,12 @@ import Delay from "../Delay.js"
 export default class CoreService {
   static intervalCompleted(tabId, blacklistEntry) {
     Delay.setAllowed(tabId);
-    TabNavigation.onBackgroundRedirectToOriginal(tabId, blacklistEntry);
+    TabNavigation.redirectToOriginal(tabId, blacklistEntry);
     clearTimeout(window["interval"+parseInt(tabId)]);
   }
 
   static onNavigationEventTrigged (data) {
+    console.log('onNavigationEventTrigge')
     if (CoreService.isTopLevelFrame(data)) {
       const blacklistEntry = Blacklist.getWithUrl(data.url);
       if(CoreService.existsInBlacklist(blacklistEntry)) {
@@ -35,6 +36,7 @@ export default class CoreService {
   }
   
   static existsInBlacklist(blacklistEntry) {
+    console.log('existsInBlacklist');
     return blacklistEntry && !(Object.keys(blacklistEntry).length === 0 && blacklistEntry.constructor === Object)
   }
 
@@ -54,6 +56,7 @@ export default class CoreService {
   }
 
   static onTabClosed(tabId, removeInfo) {
+    console.log('onTabClosed');
     if(Delay.isTabIdInDelay(tabId))
       Delay.removeDelayEntryWithTabId(tabId);
   }

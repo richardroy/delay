@@ -5,10 +5,13 @@ import Delay from "./Delay"
 export const BACKGROUND_FILE = "/src/background.html";
 export const HOME_FILE = "/src/home.html";
 
-
+/**
+ * Controls the navigation events.
+ * Use this to trigger a navigation.
+ */
 export default class TabNavigation {
 
-  static onBackgroundRedirectToOriginal(tabId, blacklistEntry) {
+  static redirectToOriginal(tabId, blacklistEntry) {
     const backgroundUrl = this.getBackgroundUrl();
 
     function callback(tab) {
