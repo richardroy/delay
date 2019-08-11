@@ -6,8 +6,6 @@ import Delay from "../Delay.js"
 
 export default class CoreService {
   static intervalCompleted(tabId, blacklistEntry) {
-    console.log('interval Completed');
-    console.log(tabId);
     Delay.setAllowed(tabId);
     TabNavigation.redirectToOriginal(tabId, blacklistEntry);
     clearTimeout(window["interval"+parseInt(tabId)]);
@@ -56,7 +54,6 @@ export default class CoreService {
   }
 
   static onTabClosed(tabId, removeInfo) {
-    console.log('onTabClosed');
     if(Delay.isTabIdInDelay(tabId))
       Delay.removeDelayEntryWithTabId(tabId);
   }

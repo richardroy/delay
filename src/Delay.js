@@ -94,7 +94,6 @@ export default class Delay {
       const site = delay.sites[siteIndex];
       if (site.tabId === tabId) {
         delay.sites.splice(siteIndex, 1);
-        console.log('removed')
         break;
       }
     }

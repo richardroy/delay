@@ -20,8 +20,6 @@ export default class TabNavigation {
         //Could be triggered if tab has been closed before delay
         console.warn("TabNavigation Error: " + chrome.runtime.lastError.message);
       } else {
-        console.log(tab);
-        console.log(backgroundUrl);
         if(tab && tab.url === backgroundUrl){
           Blacklist.addLoadedEvent(blacklistEntry);
           TabNavigation.redirectToOriginalUrl(tabId);
