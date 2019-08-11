@@ -50,7 +50,7 @@ export default class CoreService {
     Blacklist.addNavigatedEvent(blacklistEntry);           
     if(Delay.isTabIdInDelay(tabId)) return;
     Delay.addNewTabToDelay(url, tabId);
-    window["interval"+parseInt(tabId)] = setTimeout( () => CoreService.intervalCompleted(tabId, blacklistEntry), Config.getDelayTime() )
+    window["interval"+parseInt(tabId)] = setTimeout( () => CoreService.intervalCompleted(tabId, blacklistEntry), Config.getDelayTime() * 1000 )
   }
 
   static onTabClosed(tabId, removeInfo) {
