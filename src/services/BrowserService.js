@@ -15,7 +15,6 @@ export default class BrowserService {
   }
 
   static getOpenTabs() {
-    console.log('getOpenTabs');
   }
 
   static getExtensionUrl(filename) {

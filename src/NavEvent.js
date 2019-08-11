@@ -1,4 +1,3 @@
-import NavEvents from "./NavEvents";
 import shortid from "shortid";
 
 export const LOADED = "loaded"; 

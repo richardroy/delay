@@ -14,10 +14,13 @@ export default class NavEventChart {
 
     const navigatedLineData = [];
     const navigatedEventKeys = Object.keys(navigatedEvents);
-    for(const index in loadedEventKeys){
+    for(const index in navigatedEventKeys){
       const roundedEventDate = new Date(navigatedEvents[navigatedEventKeys[index]].date).setHours(0,0,0,0);    
       navigatedLineData.push({x: roundedEventDate, y: navigatedEvents[navigatedEventKeys[index]].count});
     }
+
+    console.log(navigatedLineData)
+    console.log(loadedLineData)
 
     var ctx = document.getElementById("eventChart");
     var myChart = new Chart(ctx, {

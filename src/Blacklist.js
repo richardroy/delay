@@ -39,16 +39,16 @@ export default class Blacklist {
 
   static addNavigatedEvent(blacklistEntry) {
     const navEvent = NavEvent.create("loaded");
-    NavEvents.add(navEvent);    
+    NavEvents.add(navEvent);
     blacklistEntry.navEvents.push(navEvent.id)
     this.updateEntry(blacklistEntry);
   }
 
   static addLoadedEvent(blacklistEntry) {
     const navEvent = NavEvent.create("navigated");
-    NavEvents.add(navEvent);    
+    NavEvents.add(navEvent);
     blacklistEntry.navEvents.push(navEvent.id);
-    this.updateEntry(blacklistEntry);    
+    this.updateEntry(blacklistEntry);
   }
 
   static load() {
