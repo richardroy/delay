@@ -25,7 +25,7 @@ export default class CoreService {
     const cleanTime = Config.getLastCleanDelay();
     if(!cleanTime) {
       Config.setCleanDelay(Date.now());
-    } else if((new Date - cleanTime) < 1000 * 60 * 15){
+    } else if(((new Date().getTime()) - cleanTime) > 1000 * 60 * 15){
       Delay.clean();
     }
   }
