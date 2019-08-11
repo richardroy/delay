@@ -20,7 +20,9 @@ export default class Config {
 
   static getDelayTime() {
     const config = this.load();
-    return config.delayTime;
+    const delayTimeSeconds = config.delayTime;
+    const delayTimeMillis = delayTimeSeconds * 1000;
+    return delayTimeSeconds;
   }
 
   static setDelayTime(time) {

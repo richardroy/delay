@@ -5,7 +5,7 @@
 export default class BrowserService {
 
   static updateTabUrl(tabId, url) {
-    console.log(chrome.runtime)
+    BrowserService.getOpenTabs();
     if(chrome.runtime.lastError) {
       //Could be triggered if tab has been closed before delay
       console.warn("TabNavigation Error: " + chrome.runtime.lastError.message);
@@ -14,11 +14,15 @@ export default class BrowserService {
     }
   }
 
+  static getOpenTabs() {
+    console.log('getOpenTabs');
+  }
+
   static getExtensionUrl(filename) {
     return chrome.extension.getURL(filename);  
   }
 
-  static getTab(tabId, callback, blacklistEntry) {
+  static getTab(tabId, callback) {
     chrome.tabs.get(tabId, callback);      
   }
 
@@ -40,6 +44,10 @@ export default class BrowserService {
 
   static getAllTabs(windowId, callback) {
     chrome.tabs.getAllInWindow(windowId, callback)
+  }
+
+  static isTabOpen(tabId) {
+
   }
 
 }
