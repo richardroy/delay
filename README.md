@@ -6,5 +6,5 @@ Create a list of URL's and they will have a delay before the websites displayed.
 Once the tabs delay has expired you can continue browsing blacklisted websites within that tab.
 
 <p align="center">
-  <img src="https://chrome.google.com/webstore/detail/delay/fbhbfbladmbgakfkccbfjpbabagjcmid"/>
+  <img src="https://lh3.googleusercontent.com/RMXoN8SddGnbCaCECVSj49Ujf5XXQo6JL0GlZ2cnRm-o89-niVM2DFGQXtuv4xkhsy-80uaEoA=w640-h400-e365"/>
 </p>
