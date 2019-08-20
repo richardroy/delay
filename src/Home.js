@@ -1,10 +1,7 @@
 import NavEventChart from './NavEventChart';
 import Blacklist from "./Blacklist";
-import NavEvents from "./NavEvents";
 import Config from "./Config";
-import Chart from 'chart.js';
 import Element from './Element'
-import BrowserService from './services/BrowserService';
 
 const BLACKLIST_ID = "urlBlacklist";
 const BLACKLIST_INPUT_ID = "blacklistInput";

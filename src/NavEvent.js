@@ -4,6 +4,7 @@ export const LOADED = "loaded";
 export const NAVIGATED = "navigated"; 
 
 export default class NavEvent {
+
   static create(type) {
     const shortId = shortid.generate();
     const navEvent =  {
@@ -13,4 +14,5 @@ export default class NavEvent {
     };
     return navEvent;
   }
+  
 }

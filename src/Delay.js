@@ -1,5 +1,4 @@
 import LocalStorageService from "./services/LocalStorageService";
-import Config from "./Config";
 const DELAY = "delay";
 
 /**
