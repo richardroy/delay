@@ -76,16 +76,13 @@ export default class Delay {
       }
     }
     
-    for(var index in sitesToRemove) {
-      this.removeDelayEntryWithTabId(sitesToRemove[index]);
-    }
+    this.removeDelayEntryWithTabId(sitesToRemove);
   }
 
-  static removeDelayEntryWithTabId(tabId) {
+  static removeDelayEntryWithTabId(sitesToRemove) {
     const delay = this.load();    
     for(var siteIndex in delay.sites) {
-      const site = delay.sites[siteIndex];
-      if (site.tabId === tabId) {
+      if (sitesToRemove.containes(tabId)) {
         delay.sites.splice(siteIndex, 1);
         break;
       }
