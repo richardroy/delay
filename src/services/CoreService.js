@@ -1,4 +1,3 @@
-import BrowserService from "./BrowserService.js"
 import TabNavigation from "../TabNavigation.js"
 import Blacklist from "../Blacklist.js"
 import Config from "../Config.js"
@@ -14,8 +13,8 @@ export default class CoreService {
   static onNavigationEventTrigged (data) {
     if (CoreService.isTopLevelFrame(data)) {
       const blacklistEntry = Blacklist.getWithUrl(data.url);
-      if(CoreService.existsInBlacklist(blacklistEntry)) {
-        CoreService.navigatedToBlacklistEntry(data, blacklistEntry);
+      if(Blacklist.existsInBlacklist(blacklistEntry)) {
+        CoreService.navigateToBlacklistEntry(data, blacklistEntry);
       }
     }
     CoreService.cleanDelay();
@@ -33,12 +32,8 @@ export default class CoreService {
   static isTopLevelFrame(data) {
     return data.parentFrameId === -1;
   }
-  
-  static existsInBlacklist(blacklistEntry) {
-    return blacklistEntry && !(Object.keys(blacklistEntry).length === 0 && blacklistEntry.constructor === Object)
-  }
 
-  static navigatedToBlacklistEntry(data, blacklistEntry) {
+  static navigateToBlacklistEntry(data, blacklistEntry) {
     var tabId = data.tabId;
     if(!Delay.isTabIdAllowed(tabId)){
       CoreService.initiateDelay(data.url, tabId, blacklistEntry);
@@ -53,7 +48,7 @@ export default class CoreService {
     window["interval"+parseInt(tabId)] = setTimeout( () => CoreService.intervalCompleted(tabId, blacklistEntry), Config.getDelayTime() * 1000 )
   }
 
-  static onTabClosed(tabId, removeInfo) {
+  static onTabClosed(tabId) {
     if(Delay.isTabIdInDelay(tabId))
       Delay.removeDelayEntryWithTabId(tabId);
   }

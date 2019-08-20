@@ -14,14 +14,24 @@ const DELAY = "delay";
  */
 export default class Delay {
 
-  static getSite(tabId) {
+  static createDelayEntry(actualUrl, tabId) {
+    const created = Date.now();
+    return { 
+      actualUrl, 
+      tabId, 
+      created, 
+      allowed: false
+    }
+  }
+
+  static getSiteByTabId(tabId) {
     let delay = Delay.load();    
     for(var siteIndex in delay.sites) {
       const site = delay.sites[siteIndex];
       if (site.tabId === tabId)
         return site;
     }
-    return {};
+    return null;
   }
 
   static save(delay) {
@@ -33,42 +43,26 @@ export default class Delay {
   }
 
   static isTabIdInDelay(tabId) {
-    const delay = this.load();
-    for(var siteIndex in delay.sites) {
-      const site = delay.sites[siteIndex];
-      if (site.tabId === tabId)
-        return true;
-    }
-    return false;
+    const site = this.getSiteByTabId(tabId);
+    return site != null;
   }
 
   static isTabIdAllowed(tabId) {
-    const delay = this.load();
-    for(var siteIndex in delay.sites) {
-      const site = delay.sites[siteIndex];
-      if (site.tabId === tabId){
-        return site.allowed;
-      }
-    }
-    return false;
+    const site = this.getSiteByTabId(tabId);
+    return site.allowed;
   }
 
   static setAllowed(tabId) {
-    const delay = this.load();
-    for(var siteIndex in delay.sites) {
-      const site = delay.sites[siteIndex];
-      if (site.tabId === tabId){
-        site.allowed = true;
-        break;
-      }
-    }
-    this.save(delay);
+    const site = this.getSiteByTabId(tabId);
+    site.allowed = true;
+
+    this.save(site);
   }
 
   static addNewTabToDelay(actualUrl, tabId) {
-    const created = Date.now();
     const delay = this.load();
-    delay.sites.push({actualUrl, tabId, created, allowed: false});  
+    const site = this.createDelayEntry(actualUrl, tabId);
+    delay.sites.push(site);  
     this.save(delay);
   }
 

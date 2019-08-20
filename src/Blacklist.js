@@ -6,6 +6,11 @@ import shortId from "shortid";
 const BLACKLIST = "blacklist";
 
 export default class Blacklist {
+  
+  static existsInBlacklist(blacklistEntry) {
+    return blacklistEntry && !(Object.keys(blacklistEntry).length === 0 && blacklistEntry.constructor === Object)
+  }
+
   static containsUrl(url) {
     const blacklist = this.load();
     for(const listIndex in blacklist) {

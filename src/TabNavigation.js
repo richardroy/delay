@@ -40,7 +40,7 @@ export default class TabNavigation {
   }
 
   static redirectToOriginalUrl(tabId) {
-    const site = Delay.getSite(tabId);
+    const site = Delay.getSiteByTabId(tabId);
     BrowserService.updateTabUrl(tabId, site.actualUrl);
   }
 
