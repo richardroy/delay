@@ -40,9 +40,4 @@ export default class BrowserService {
   static getAllTabs(windowId, callback) {
     chrome.tabs.getAllInWindow(windowId, callback)
   }
-
-  static isTabOpen(tabId) {
-
-  }
-
 }
