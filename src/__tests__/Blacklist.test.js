@@ -17,19 +17,6 @@ const UPDATED_BLACKLIST = [...BLACKLIST, URL_TWITTER];
 const CLICKED_BLACKLIST = [URL_REDDIT_CLICKED, URL_FACEBOOK];
 const LOADED_BLACKLIST = [URL_REDDIT_CLICKED, URL_FACEBOOK];
 
-test("containsUrl: Does contain the url", () => {
-  LocalStorageService.loadObject = jest.fn().mockReturnValue(BLACKLIST);
-  const containsUrl = Blacklist.containsUrl(URL_REDDIT.url);
-  expect(containsUrl).toBeTruthy();
-
-});
-
-test("containsUrl: Does not contain the url", () => {
-  LocalStorageService.loadObject = jest.fn().mockReturnValue([BLACKLIST]);
-  const containsUrl = Blacklist.containsUrl(URL_TWITTER.url);
-  expect(containsUrl).toBeFalsy();
-});
-
 test("getWithUrl: Does contain the url", () => {
   LocalStorageService.loadObject = jest.fn().mockReturnValue([...BLACKLIST]);
   const blacklistEntry = Blacklist.getWithUrl(URL_REDDIT.url);

@@ -21,7 +21,6 @@ export default class Config {
   static getDelayTime() {
     const config = this.load();
     const delayTimeSeconds = config.delayTime;
-    const delayTimeMillis = delayTimeSeconds * 1000;
     return delayTimeSeconds;
   }
 
@@ -31,7 +30,7 @@ export default class Config {
     this.save(config);
   }
 
-  static getLastCleanDelay(time) {
+  static getLastCleanDelay() {
     const config = this.load();
     const cleanDelay = config.cleanDelay;
     return cleanDelay;

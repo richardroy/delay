@@ -1,4 +1,5 @@
 import NavEvents from "./NavEvents"
+import Chart from 'chart.js';
 
 export default class NavEventChart {
 

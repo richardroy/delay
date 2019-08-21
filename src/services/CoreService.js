@@ -13,7 +13,7 @@ export default class CoreService {
   static onNavigationEventTrigged (data) {
     if (CoreService.isTopLevelFrame(data)) {
       const blacklistEntry = Blacklist.getByUrl(data.url);
-      if(Blacklist.existsInBlacklist(blacklistEntry)) {
+      if(blacklistEntry) {
         CoreService.navigateToBlacklistEntry(data, blacklistEntry);
       }
     }
