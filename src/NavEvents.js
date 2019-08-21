@@ -38,8 +38,6 @@ export default class NavEvents {
 
   static addFilteredEvent(eventTime, filteredEvent) {
     const uniqueDate = this.getDateString(eventTime);
-    console.log(eventTime);
-    console.log(uniqueDate);
     if(filteredEvent[uniqueDate]) {
       filteredEvent[uniqueDate].count += 1;
     } else {
