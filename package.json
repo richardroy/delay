@@ -13,15 +13,15 @@
   "license": "ISC",
   "devDependencies": {
     "@babel/preset-env": "^7.5.5",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
-    "babel-preset-env": "^1.6.1",
+    "@babel/core": "^7.5.5",
+    "babel-loader": "^8.0.6",
+    "babel-preset-env": "^1.7.0",
     "jest": "^24.9.0",
     "webpack": "^3.10.0"
   },
   "dependencies": {
     "chart.js": "^2.8.0",
     "moment": "^2.20.1",
-    "shortid": "^2.2.8"
+    "shortid": "^2.2.14"
   }
 }

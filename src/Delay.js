@@ -25,7 +25,7 @@ export default class Delay {
   }
 
   static getSiteByTabId(tabId) {
-    let delay = Delay.load();    
+    let delay = Delay.load();
     for(var siteIndex in delay.sites) {
       const site = delay.sites[siteIndex];
       if (site.tabId === tabId)
@@ -49,14 +49,14 @@ export default class Delay {
 
   static isTabIdAllowed(tabId) {
     const site = this.getSiteByTabId(tabId);
-    return site.allowed;
+    return site && site.allowed;
   }
 
   static setAllowed(tabId) {
-    const site = this.getSiteByTabId(tabId);
-    site.allowed = true;
-
-    this.save(site);
+    let delay = Delay.load();
+    const objIndex = delay.sites.findIndex((delay => delay.tabId === tabId));
+    delay.sites[objIndex].allowed = true;
+    this.save(delay);
   }
 
   static addNewTabToDelay(actualUrl, tabId) {
@@ -76,18 +76,16 @@ export default class Delay {
       }
     }
     
-    this.removeDelayEntryWithTabId(sitesToRemove);
+    this.removeDelayEntriesWithTabIds(sitesToRemove);
   }
 
-  static removeDelayEntryWithTabId(sitesToRemove) {
-    const delay = this.load();    
-    for(var siteIndex in delay.sites) {
-      if (sitesToRemove.containes(tabId)) {
-        delay.sites.splice(siteIndex, 1);
-        break;
-      }
-    }
-    this.save(delay);
+  static removeDelayEntriesWithTabIds(sitesToRemove) {
+    const delay = this.load();
+    const filteredSites = delay.sites.filter(function(site){
+      return !sitesToRemove.includes(site.tabId);
+    });
+    const updatedDelay = { ...delay, sites: filteredSites };
+    this.save(updatedDelay);
   }
 
 }

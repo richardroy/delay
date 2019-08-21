@@ -50,7 +50,7 @@ export default class CoreService {
 
   static onTabClosed(tabId) {
     if(Delay.isTabIdInDelay(tabId))
-      Delay.removeDelayEntryWithTabId(tabId);
+      Delay.removeDelayEntriesWithTabIds(tabId);
   }
   
 }
