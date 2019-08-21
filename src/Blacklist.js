@@ -5,6 +5,18 @@ import shortId from "shortid";
 
 const BLACKLIST = "blacklist";
 
+/**
+ * Blacklist is saved in the LocalStorage
+ * Is an array of BalcklistEntries:
+ *    [
+ *      {
+ *        id: "HkJ4lUKQV",
+ *        navEvents: ["BJCPxUKQ4", "Bkydg8FQN", "BJfuxLKm4", "SkpulUtX4", "B12YxLtQE", "SyX9G4DYQ4", "Syx7NPYQ4",…],
+ *        url: "reddit.com"
+ *      },
+ *      ...
+ *    ]
+ */
 export default class Blacklist {
   
   static existsInBlacklist(blacklistEntry) {
@@ -20,13 +32,13 @@ export default class Blacklist {
     return false;
   }
 
-  static getWithUrl(url) {
+  static getByUrl(url) {
     const blacklist = this.load();
     for(const listIndex in blacklist) {
       if(url.includes(blacklist[listIndex].url))
         return blacklist[listIndex];
     }
-    return {};
+    return null;
   }
 
   static updateEntry(blacklistEntry) {
