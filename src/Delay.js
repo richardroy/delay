@@ -75,7 +75,6 @@ export default class Delay {
         sitesToRemove.push(site.tabId);
       }
     }
-    
     this.removeDelayEntriesWithTabIds(sitesToRemove);
   }
 

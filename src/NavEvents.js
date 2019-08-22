@@ -1,5 +1,5 @@
 import LocalStorageService from "./services/LocalStorageService";
-import NavEvent from "./NavEvent";
+import {LOADED, NAVIGATED} from "./NavEvent";
 
 const NAV_EVENTS = "navEvents";
 
@@ -26,9 +26,9 @@ export default class NavEvents {
     
     for(const index in navEvents) {
       const event = navEvents[index];
-      if(event.type === NavEvent.NAVIGATED) {
+      if(event.type === NAVIGATED) {
         this.addFilteredEvent(event.time, loadedEvents);
-      } else if(event.type === NavEvent.LOADED) {
+      } else if(event.type === LOADED) {
         this.addFilteredEvent(event.time, navigatedEvents);
       }
     }
