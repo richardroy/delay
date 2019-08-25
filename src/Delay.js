@@ -7,7 +7,7 @@ const DELAY = "delay";
  *    - {
  *        actualUrl: "https://www.reddit.com/",
  *        tabId: 445,
- *        created: 1529737770815,
+ *        created: 15297377 70815,
  *        allowed: false
  *      }
  * 

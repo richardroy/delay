@@ -4,7 +4,7 @@
   "description": "",
   "main": "Browser.js",
   "scripts": {
-    "build": "zip -r --exclude=.git* --exclude=node_modules* ../delay.zip ./",
+    "build": "webpack && rm ../delay.zip && cd ./dist && zip -r ../../delay.zip ./",
     "watch": "webpack --watch",
     "test": "jest --coverage",
     "test-watch": "jest --watch --coverage"
@@ -12,12 +12,14 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@babel/preset-env": "^7.5.5",
     "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
     "babel-loader": "^8.0.6",
     "babel-preset-env": "^1.7.0",
+    "copy-webpack-plugin": "^5.0.4",
     "jest": "^24.9.0",
-    "webpack": "^3.10.0"
+    "webpack": "^4.39.2",
+    "webpack-cli": "^3.3.7"
   },
   "dependencies": {
     "chart.js": "^2.8.0",
