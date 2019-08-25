@@ -67,3 +67,17 @@ test("addNewUrl", () => {
   expect(LocalStorageService.saveObject).toHaveBeenCalledTimes(1);
   expect(LocalStorageService.saveObject).toHaveBeenCalledWith("blacklist", UPDATED_BLACKLIST);
 })
+
+test("getByUrl: has blacklist entry with url", () => {
+  LocalStorageService.loadObject = jest.fn()
+  .mockReturnValue([...BLACKLIST]);
+  const returnedBlacklistEntry = Blacklist.getByUrl(URL_REDDIT.url);
+  expect(returnedBlacklistEntry).toEqual(URL_REDDIT)
+})
+
+test("getByUrl: does not have blacklist entry with url", () => {
+  LocalStorageService.loadObject = jest.fn()
+  .mockReturnValue([...BLACKLIST]);
+  const returnedBlacklistEntry = Blacklist.getByUrl(URL_TWITTER.url);
+  expect(returnedBlacklistEntry).toEqual(null)
+})
