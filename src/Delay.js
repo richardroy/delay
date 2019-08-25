@@ -55,8 +55,10 @@ export default class Delay {
   static setAllowed(tabId) {
     let delay = Delay.load();
     const objIndex = delay.sites.findIndex((delay => delay.tabId === tabId));
-    delay.sites[objIndex].allowed = true;
-    this.save(delay);
+    if(objIndex != -1){
+      delay.sites[objIndex].allowed = true;
+      this.save(delay);
+    }
   }
 
   static addNewTabToDelay(actualUrl, tabId) {
