@@ -1,4 +1,6 @@
 import shortid from "shortid";
+import NavEvents from "./NavEvents";
+import Blacklist from "./Blacklist";
 
 export const LOADED = "loaded"; 
 export const NAVIGATED = "navigated"; 
@@ -17,18 +19,18 @@ export default class NavEvent {
 
   static addNavigatedEvent(blacklistEntry) {
     const navEvent = NavEvent.create(LOADED);
-    this.addEvent(navEvent);
+    this.addEvent(blacklistEntry, navEvent);
   }
 
   static addLoadedEvent(blacklistEntry) {
     const navEvent = NavEvent.create(NAVIGATED);
-    this.addEvent(navEvent);
+    this.addEvent(blacklistEntry, navEvent);
   }
 
-  static addEvent() {
+  static addEvent(blacklistEntry, navEvent) {
     NavEvents.add(navEvent);
     blacklistEntry.navEvents.push(navEvent.id);
-    this.updateEntry(blacklistEntry);
+    Blacklist.updateEntry(blacklistEntry);
   }
   
 }
