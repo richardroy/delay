@@ -14,5 +14,21 @@ export default class NavEvent {
     };
     return navEvent;
   }
+
+  static addNavigatedEvent(blacklistEntry) {
+    const navEvent = NavEvent.create(LOADED);
+    this.addEvent(navEvent);
+  }
+
+  static addLoadedEvent(blacklistEntry) {
+    const navEvent = NavEvent.create(NAVIGATED);
+    this.addEvent(navEvent);
+  }
+
+  static addEvent() {
+    NavEvents.add(navEvent);
+    blacklistEntry.navEvents.push(navEvent.id);
+    this.updateEntry(blacklistEntry);
+  }
   
 }

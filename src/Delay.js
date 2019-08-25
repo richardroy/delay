@@ -68,21 +68,25 @@ export default class Delay {
     this.save(delay);
   }
 
-  static clean() {
+  static removeInvalidTabs() {
     const sitesToRemove = [];
     const delay = this.load();
     for(var siteIndex in delay.sites) {
       const site = delay.sites[siteIndex];
-      if ((Date.now() - site.created) > 1000 * 60 * 15) {
+      if (this.isOlderThan15Minutes(site.created)) {
         sitesToRemove.push(site.tabId);
       }
     }
     this.removeDelayEntriesWithTabIds(sitesToRemove);
   }
 
+  static isOlderThan15Minutes(creationDate) {
+    return (Date.now() - creationDate) > 1000 * 60 * 15
+  }
+
   static removeDelayEntriesWithTabIds(sitesToRemove) {
     const delay = this.load();
-    const filteredSites = delay.sites.filter(function(site){
+    const filteredSites = delay.sites.filter((site) => {
       return !sitesToRemove.includes(site.tabId);
     });
     const updatedDelay = { ...delay, sites: filteredSites };

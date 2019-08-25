@@ -30,7 +30,7 @@ export default class Config {
     this.save(config);
   }
 
-  static getLastCleanDelay() {
+  static getLastDelayClean() {
     const config = this.load();
     const cleanDelay = config.cleanDelay;
     return cleanDelay;

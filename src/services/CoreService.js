@@ -1,5 +1,6 @@
 import TabNavigation from "../TabNavigation.js"
 import Blacklist from "../Blacklist.js"
+import NavEvent from "../NavEvent.js"
 import Config from "../Config.js"
 import Delay from "../Delay.js"
 
@@ -17,18 +18,9 @@ export default class CoreService {
         CoreService.navigateToBlacklistEntry(data, blacklistEntry);
       }
     }
-    CoreService.cleanDelay();
+    Delay.removeInvalidTabs();
   }
 
-  static cleanDelay() {
-    const cleanTime = Config.getLastCleanDelay();
-    if(!cleanTime) {
-      Config.setCleanDelay(Date.now());
-    } else if(((new Date().getTime()) - cleanTime) > 1000 * 60 * 15){
-      Delay.clean();
-    }
-  }
-  
   static isTopLevelFrame(data) {
     return data.parentFrameId === -1;
   }
@@ -42,7 +34,7 @@ export default class CoreService {
 
   static initiateDelay(url, tabId, blacklistEntry) {
     TabNavigation.redirectTabToBackground(tabId);
-    Blacklist.addNavigatedEvent(blacklistEntry);           
+    NavEvent.addNavigatedEvent(blacklistEntry);           
     if(Delay.isTabIdInDelay(tabId)) return;
     Delay.addNewTabToDelay(url, tabId);
     window["interval"+parseInt(tabId)] = setTimeout( () => CoreService.intervalCompleted(tabId, blacklistEntry), Config.getDelayTime() * 1000 )

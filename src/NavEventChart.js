@@ -4,20 +4,17 @@ import Chart from 'chart.js';
 export default class NavEventChart {
 
   static initialiseGraph() {
-
-    let { loadedEvents, navigatedEvents } = NavEvents.filterEventList();
+    const { loadedEvents, navigatedEvents } = NavEvents.filterEventList();
     const loadedLineData = [];
-    const loadedEventKeys = Object.keys(loadedEvents);
-    for(const index in loadedEventKeys){
-      const roundedEventDate = new Date(loadedEvents[loadedEventKeys[index]].date).setHours(0,0,0,0);
-      loadedLineData.push({x: roundedEventDate, y: loadedEvents[loadedEventKeys[index]].count});
+    for (const [date, count] of Object.entries(loadedEvents)) {
+      const roundedEventDate = new Date(date);
+      loadedLineData.push({x: roundedEventDate, y: count});
     }
 
     const navigatedLineData = [];
-    const navigatedEventKeys = Object.keys(navigatedEvents);
-    for(const index in navigatedEventKeys){
-      const roundedEventDate = new Date(navigatedEvents[navigatedEventKeys[index]].date).setHours(0,0,0,0);    
-      navigatedLineData.push({x: roundedEventDate, y: navigatedEvents[navigatedEventKeys[index]].count});
+    for (const [date, count] of Object.entries(navigatedEvents)) {
+      const roundedEventDate = new Date(date);
+      navigatedLineData.push({x: roundedEventDate, y: count});
     }
 
     var ctx = document.getElementById("eventChart");

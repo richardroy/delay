@@ -32,27 +32,23 @@ export default class NavEvents {
         this.addFilteredEvent(event.time, navigatedEvents);
       }
     }
-
     return { loadedEvents, navigatedEvents };
   }
 
   static addFilteredEvent(eventTime, filteredEvent) {
     const uniqueDate = this.getDateString(eventTime);
-    if(filteredEvent[uniqueDate]) {
-      filteredEvent[uniqueDate].count += 1;
-    } else {
-      filteredEvent[""+uniqueDate] = {}
-      filteredEvent[""+uniqueDate].date = eventTime;
-      filteredEvent[""+uniqueDate].count = 1;
-    }
+    if(filteredEvent[uniqueDate]) 
+      filteredEvent[uniqueDate] += 1
+    else 
+      filteredEvent[uniqueDate] = 1;
   }
 
   static getDateString(millis) {
     const date = new Date(+millis);
     const dateString = 
-      String("0" + date.getFullYear().toString()).slice(-2) +
-      String("0" + date.getMonth().toString()).slice(-2) +
-      String("0" + date.getDate().toString()).slice(-2);
+      String(date.getFullYear().toString()) + '-' +
+      String(date.getMonth().toString()).slice(-2) + '-' +
+      String(date.getDate().toString()).slice(-2);
     return dateString;
   }
 }

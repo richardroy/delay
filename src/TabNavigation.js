@@ -1,5 +1,5 @@
 import BrowserService from "./services/BrowserService"
-import Blacklist from "./Blacklist"
+import NavEvent from "./NavEvent";
 import Delay from "./Delay"
 
 export const BACKGROUND_FILE = "/src/background.html";
@@ -21,7 +21,7 @@ export default class TabNavigation {
         console.warn("TabNavigation Error: " + chrome.runtime.lastError.message);
       } else {
         if(tab && tab.url === backgroundUrl){
-          Blacklist.addLoadedEvent(blacklistEntry);
+          NavEvent.addLoadedEvent(blacklistEntry);
           TabNavigation.redirectToOriginalUrl(tabId);
         }
       }
