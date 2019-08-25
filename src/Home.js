@@ -1,7 +1,7 @@
 import NavEventChart from './NavEventChart';
 import Blacklist from "./Blacklist";
 import Config from "./Config";
-import Element from './Element'
+import Element from './Element';
 
 const BLACKLIST_ID = "urlBlacklist";
 const BLACKLIST_INPUT_ID = "blacklistInput";
@@ -11,7 +11,7 @@ const DELAY_TIME_OUTPUT_ID = "delayTimeOutput";
 export default class Home {
 
   static clearBlacklistUrlInput() {
-    const blackListInput = Element.getElementById(BLACKLIST_INPUT_ID);
+    const blackListInput = Element.getById(BLACKLIST_INPUT_ID);
     blackListInput.value = '';
   }
   

@@ -4,18 +4,13 @@ import NavEvent from "../NavEvent.js"
 import Config from "../Config.js"
 import Delay from "../Delay.js"
 
-export default class CoreService {
-  static intervalCompleted(tabId, blacklistEntry) {
-    Delay.setAllowed(tabId);
-    TabNavigation.redirectToOriginal(tabId, blacklistEntry);
-    clearTimeout(window["interval"+parseInt(tabId)]);
-  }
+export default class NavigationService {
 
   static onNavigationEventTrigged (data) {
-    if (CoreService.isTopLevelFrame(data)) {
+    if (NavigationService.isTopLevelFrame(data)) {
       const blacklistEntry = Blacklist.getByUrl(data.url);
       if(blacklistEntry) {
-        CoreService.navigateToBlacklistEntry(data, blacklistEntry);
+        NavigationService.navigateToBlacklistEntry(data, blacklistEntry);
       }
     }
     Delay.removeInvalidTabs();
@@ -28,7 +23,7 @@ export default class CoreService {
   static navigateToBlacklistEntry(data, blacklistEntry) {
     var tabId = data.tabId;
     if(!Delay.isTabIdAllowed(tabId)){
-      CoreService.initiateDelay(data.url, tabId, blacklistEntry);
+      NavigationService.initiateDelay(data.url, tabId, blacklistEntry);
     }
   }
 
@@ -37,7 +32,13 @@ export default class CoreService {
     NavEvent.addNavigatedEvent(blacklistEntry);           
     if(Delay.isTabIdInDelay(tabId)) return;
     Delay.addNewTabToDelay(url, tabId);
-    window["interval"+parseInt(tabId)] = setTimeout( () => CoreService.intervalCompleted(tabId, blacklistEntry), Config.getDelayTime() * 1000 )
+    window["interval"+parseInt(tabId)] = setTimeout( () => NavigationService.intervalCompleted(tabId, blacklistEntry), Config.getDelayTime() * 1000 )
+  }
+
+  static intervalCompleted(tabId, blacklistEntry) {
+    Delay.setAllowed(tabId);
+    TabNavigation.redirectToOriginal(tabId, blacklistEntry);
+    clearTimeout(window["interval"+parseInt(tabId)]);
   }
 
   static onTabClosed(tabId) {

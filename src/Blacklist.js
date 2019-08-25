@@ -28,15 +28,13 @@ export default class Blacklist {
 
   static updateEntry(blacklistEntry) {
     const blacklist = this.load();
-    let updated = false;
     for(const listIndex in blacklist) {
       if(blacklist[listIndex].id === blacklistEntry.id){
         blacklist[listIndex] = blacklistEntry;
-        updated = true;
+        this.save(blacklist);
         break;
       }
     }
-    if(updated) this.save(blacklist);
   }
 
   static load() {

@@ -1,9 +1,9 @@
 import BrowserService from "./services/BrowserService";
-import CoreService from "./services/CoreService";
+import NavigationService from "./services/NavigationService";
 import TabNavigation from "./TabNavigation";
 
 (function setupBrowserListeners () {
-  BrowserService.setNavigationTriggerEvent(CoreService.onNavigationEventTrigged);
+  BrowserService.setNavigationTriggerEvent(NavigationService.onNavigationEventTrigged);
   BrowserService.setOnExtensionClickedEvent((tab) => TabNavigation.redirectTabToHome(tab.id));
-  BrowserService.setOnClosedEvent(CoreService.onTabClosed);
+  BrowserService.setOnClosedEvent(NavigationService.onTabClosed);
 })()
