@@ -2,8 +2,8 @@ import BrowserService from "./services/BrowserService"
 import NavEvent from "./NavEvent";
 import Delay from "./Delay"
 
-export const BACKGROUND_FILE = "./background.html";
-export const HOME_FILE = "./home.html";
+export const BACKGROUND_FILE = "background.html";
+export const HOME_FILE = "home.html";
 
 /**
  * Controls the navigation events.
