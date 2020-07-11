@@ -11,7 +11,7 @@ const INITIAL_DELAY_TIME = 15;
 export default class Config {
 
   static load() {
-    return LocalStorageService.loadObject(CONFIG, {delayTime: INITIAL_DELAY_TIME});
+    return LocalStorageService.loadObject(CONFIG, {delayTime: INITIAL_DELAY_TIME, enabled: true});
   }
   
   static save(blacklist) {
@@ -27,6 +27,21 @@ export default class Config {
   static setDelayTime(time) {
     const config = this.load();
     config.delayTime = time;
+    this.save(config);
+  }
+
+  static getEnabled() {
+    const config = this.load();
+    const enabled = config.enabled;
+    if(enabled == undefined)
+      return true
+    else
+      return enabled
+  }
+
+  static setEnabledStatus(enabled) {
+    const config = this.load();
+    config.enabled = enabled;
     this.save(config);
   }
 

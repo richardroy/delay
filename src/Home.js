@@ -7,6 +7,8 @@ const BLACKLIST_ID = "urlBlacklist";
 const BLACKLIST_INPUT_ID = "blacklistInput";
 const DELAY_TIME_INPUT_ID = "delayTimeInput";
 const DELAY_TIME_OUTPUT_ID = "delayTimeOutput";
+const ENABLED_INPUT_ID = "enabled";
+const DISABLED_INPUT_ID = "disabled";
 
 const DELAY_TIME_MIN = 1;
 const DELAY_TIME_MAX = 300;
@@ -32,6 +34,14 @@ export default class Home {
     deleteButton.textContent = "Delete";
     deleteButton.addEventListener("click", (event) => this.onDeleteClicked(event))
     return deleteButton;
+  }
+
+  static setEnabledStatus() {
+    const enabledValue = document.querySelector('input[name="active"]:checked').value;
+    if(enabledValue)
+      Config.setEnabledStatus(enabledValue)
+    else 
+      Config.setEnabledStatus(disabledValue)
   }
   
   static createNewBlacklistLiElement(url) {
@@ -100,6 +110,8 @@ export default class Home {
 document.getElementById("blacklistSubmit").addEventListener("click", () => Home.submitNewUrl());
 document.getElementById("blacklistInput").addEventListener("keypress", (e) => {if(e.keyCode === 13) Home.submitNewUrl();});
 document.getElementById("delayTimeSubmit").addEventListener("click", () => Home.setDelayTime());
+document.getElementById("enabledSubmit").addEventListener("click", () => Home.setEnabledStatus());
+
 
 window.addEventListener("load", function load(event){ 
   Home.buildInitialBlacklist();
