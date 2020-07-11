@@ -8,6 +8,11 @@ const BLACKLIST_INPUT_ID = "blacklistInput";
 const DELAY_TIME_INPUT_ID = "delayTimeInput";
 const DELAY_TIME_OUTPUT_ID = "delayTimeOutput";
 
+const DELAY_TIME_MIN = 1;
+const DELAY_TIME_MAX = 300;
+
+const URL_MIN_LENGTH = 5;
+
 export default class Home {
 
   static clearBlacklistUrlInput() {
@@ -16,10 +21,8 @@ export default class Home {
   }
   
   static onDeleteClicked(event) {
-    const blacklist = Blacklist.load();
-    const index = blacklist.indexOf(event.srcElement.previousSibling)
-    blacklist.splice(index, 1);
-    Blacklist.save(blacklist);
+    const url = event.srcElement.previousSibling.textContent
+    Blacklist.deleteByUrl(url);
     delete event.srcElement.parentNode.remove();  
   }
   
@@ -47,15 +50,33 @@ export default class Home {
   
   static submitNewUrl() {
     const url = Element.getValueFromId(BLACKLIST_INPUT_ID);
-    this.addNewUrlElementToBlacklist(url);
-    Blacklist.addNewUrl(url);  
-    this.clearBlacklistUrlInput();
+    const isValid = this.validateURL(url)
+    if(isValid) {
+      Blacklist.addNewUrl(url);  
+      this.addNewUrlElementToBlacklist(url);
+      this.clearBlacklistUrlInput();
+    } else {
+      alert("The URL should be atleast 5 characters long");
+    }
+  }
+
+  static validateURL(url) {
+    return (url.length >= 5)
   }
 
   static setDelayTime() {
     const time = Element.getValueFromId(DELAY_TIME_INPUT_ID);
-    Config.setDelayTime(time);
-    this.setDelayTimeOutputElement(time);
+    const valid = this.validateDelayTime(time);
+    if(valid) {
+      Config.setDelayTime(time);
+      this.setDelayTimeOutputElement(time);
+    } else {
+      alert("Delay must be between "+DELAY_TIME_MIN+" and "+DELAY_TIME_MAX+" seconds")
+    }
+  }
+
+  static validateDelayTime(time) {
+    return (time >= DELAY_TIME_MIN && time <= DELAY_TIME_MAX)
   }
 
   static buildInitialBlacklist() {

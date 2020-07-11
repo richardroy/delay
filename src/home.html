@@ -21,7 +21,7 @@
     </div>
     <ul id="urlBlacklist">
     </ul>
-    <input name="urlInput" id="blacklistInput" type="text">
+    <input name="urlInput" id="blacklistInput" type="text" minlength="5">
     <button id="blacklistSubmit">Add</button>
     <p id="description">Url's added to the above list  will have a delay each time they are opened..</p>
     <p id="description">e.g. www.facebook.com</p>
@@ -29,7 +29,7 @@
     <div>
       <h3>Delay Time</h3>
       <div><span id="delayTimeOutput"></span> Seconds</div>
-      <input name="delayTimeInput" id="delayTimeInput" type="number">
+      <input name="delayTimeInput" id="delayTimeInput" type="number" min="1" max="300">
       <button id="delayTimeSubmit">Update</button>
     </div>
     <canvas id="eventChart" max-width="400" max-height="400"></canvas>

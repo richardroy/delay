@@ -26,6 +26,16 @@ export default class Blacklist {
     return null;
   }
 
+  static deleteByUrl(url) {
+    const blacklist = this.load();
+    for(const listIndex in blacklist) {
+      if(url.includes(blacklist[listIndex].url)) {
+        blacklist.splice(listIndex, 1)
+        this.save(blacklist);
+      }
+    }
+  }
+
   static updateEntry(blacklistEntry) {
     const blacklist = this.load();
     for(const listIndex in blacklist) {
