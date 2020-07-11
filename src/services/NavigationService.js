@@ -7,8 +7,8 @@ import Delay from "../Delay.js"
 export default class NavigationService {
 
   static onNavigationEventTrigged (data) {
-    if (NavigationService.isTopLevelFrame(data)) {
-      chrome.tabs.getSelected(null, function(tab){
+    if (JSON.parse(Config.getEnabledStatus()) && NavigationService.isTopLevelFrame(data)) {
+      chrome.tabs.getSelected(null, function(tab) {
         const tabId = data.tabId;
         if(tabId === tab.id) {
           const blacklistEntry = Blacklist.getByUrl(data.url);
