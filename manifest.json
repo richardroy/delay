@@ -1,8 +1,12 @@
 {
-  "name":           "delay",
+  "name":           "Delay",
+  "description":    "Delay is used to break habitual browsing, by having the moment to reflect you'll decide if you actually want to navigate to the website.",
   "author":         "roy",
-  "version":        "0.1.12",
+  "version":        "0.1.13",
   "description":    "Delay certain urls from displaying",
+  "icons": {
+    "128": "icon.png"
+  },
   "background": {
     "persistent": false,
     "page": "./background.html"

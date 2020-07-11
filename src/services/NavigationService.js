@@ -8,12 +8,17 @@ export default class NavigationService {
 
   static onNavigationEventTrigged (data) {
     if (NavigationService.isTopLevelFrame(data)) {
-      const blacklistEntry = Blacklist.getByUrl(data.url);
-      if(blacklistEntry) {
-        NavigationService.navigateToBlacklistEntry(data, blacklistEntry);
-      }
+      chrome.tabs.getSelected(null, function(tab){
+        const tabId = data.tabId;
+        if(tabId === tab.id) {
+          const blacklistEntry = Blacklist.getByUrl(data.url);
+          if(blacklistEntry) {
+            NavigationService.navigateToBlacklistEntry(data, blacklistEntry);
+          }
+          Delay.removeInvalidTabs();
+        }
+      });
     }
-    Delay.removeInvalidTabs();
   }
 
   static isTopLevelFrame(data) {

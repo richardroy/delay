@@ -7,7 +7,7 @@ export default class BrowserService {
   static updateTabUrl(tabId, url) {
     if(chrome.runtime.lastError) {
       //Could be triggered if tab has been closed before delay
-      console.warn("TabNavigation Error: " + chrome.runtime.lastError.message);
+      console.warn("BrowserService Error: " + chrome.runtime.lastError.message);
     } else {
       chrome.tabs.update(tabId, {url});
     }
