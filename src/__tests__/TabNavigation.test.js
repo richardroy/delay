@@ -2,8 +2,7 @@ jest.mock("../services/BrowserService");
 
 import TabNavigation, {BACKGROUND_FILE, HOME_FILE} from "../TabNavigation";
 import BrowserService from "../services/BrowserService";
-import Blacklist from "../Blacklist";
-import Delay from "../Delay";
+import Blacklist from "../model/Blacklist";
 
 const TAB_ID = 1;
 const BACKGROUND_URL = "background.url";
@@ -11,11 +10,14 @@ const HOME_URL = "home.url";
 const ORIGINAL_URL = "home.url";
 
 const BLACKLIST_ENTRY_REDDIT = {id: 1, url: ORIGINAL_URL, navigatedCount: 0, loadedCount: 0};
-const DELAY_ENTRY_REDDIT = {"actualUrl":"https://www.reddit.com/","tabId":1405};
 
 beforeEach(() => {
   jest.clearAllMocks();
 });
+
+test("create", () => {
+  
+})
 
 test("redirectToOriginal", () => {
   BrowserService.ExtensionUrl = jest.fn().mockReturnValue(ORIGINAL_URL);

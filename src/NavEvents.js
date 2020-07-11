@@ -1,5 +1,5 @@
-import LocalStorageService from "./services/LocalStorageService";
-import {LOADED, NAVIGATED} from "./NavEvent";
+import LocalStorageService from "./services/LocalStorageService.js";
+import { LOADED, NAVIGATED } from "./model/NavEvent.js";
 
 const NAV_EVENTS = "navEvents";
 
@@ -38,7 +38,7 @@ export default class NavEvents {
   static addFilteredEvent(eventTime, filteredEvent) {
     const uniqueDate = this.getDateString(eventTime);
     if(filteredEvent[uniqueDate]) 
-      filteredEvent[uniqueDate] += 1
+      filteredEvent[uniqueDate] += 1;
     else 
       filteredEvent[uniqueDate] = 1;
   }

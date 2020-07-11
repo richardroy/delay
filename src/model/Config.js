@@ -1,4 +1,4 @@
-import LocalStorageService from "./services/LocalStorageService";
+import LocalStorageService from "../services/LocalStorageService.js";
 
 const CONFIG = "config";
 const INITIAL_DELAY_TIME = 15;
@@ -7,6 +7,7 @@ const INITIAL_DELAY_TIME = 15;
  * Config is saved in the LocalStorage
  * Used to control:
  *    - delayTime: The time a delay persists
+ *    - enabled: Whether the extension is currently enabled or disabled.
  */
 export default class Config {
 
@@ -42,18 +43,6 @@ export default class Config {
   static setEnabledStatus(enabled) {
     const config = this.load();
     config.enabled = enabled;
-    this.save(config);
-  }
-
-  static getLastDelayClean() {
-    const config = this.load();
-    const cleanDelay = config.cleanDelay;
-    return cleanDelay;
-  }
-
-  static setCleanDelay(time) {
-    const config = this.load();
-    config.cleanDelay = time;
     this.save(config);
   }
 

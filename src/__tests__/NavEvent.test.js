@@ -1,7 +1,7 @@
 import LocalStorageService from '../services/LocalStorageService';
 import NavEvents from '../NavEvents';
-import NavEvent from '../NavEvent';
-
+import NavEvent, { LOADED, NAVIGATED } from '../model/NavEvent';
+import shortid from "shortid";
 
 const URL_REDDIT = {id: 1, url: "wwww.reddit.com", navEvents: []};
 const URL_REDDIT_CLICKED = {...URL_REDDIT};
@@ -11,6 +11,19 @@ const CLICKED_BLACKLIST = [URL_REDDIT_CLICKED, URL_FACEBOOK];
 const LOADED_BLACKLIST = [URL_REDDIT_CLICKED, URL_FACEBOOK];
 
 const BLACKLIST = [URL_REDDIT, URL_FACEBOOK];
+
+test("create", () => {
+  const creationDate = new Date();
+  const expectedEventType = LOADED;
+  const generatedId = "abcdefgh";
+  Date.now = jest.fn().mockReturnValue(creationDate);
+  shortid.generate = jest.fn().mockReturnValue(generatedId);
+
+  const navEvent = NavEvent.create(expectedEventType);
+  expect(navEvent.time).toEqual(creationDate);
+  expect(navEvent.type).toEqual(expectedEventType);
+  expect(navEvent.id).toEqual(generatedId);
+})
 
 test("addNavigatedEvent", () => {
   LocalStorageService.loadObject = jest.fn().mockReturnValue([...BLACKLIST]);  

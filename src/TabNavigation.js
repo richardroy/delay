@@ -1,6 +1,6 @@
 import BrowserService from "./services/BrowserService"
-import NavEvent from "./NavEvent";
-import Delay from "./Delay"
+import NavEvent from "./model/NavEvent";
+import Delay from "./model/Delay"
 
 export const BACKGROUND_FILE = "background.html";
 export const HOME_FILE = "home.html";

@@ -1,14 +1,12 @@
-import NavEventChart from './NavEventChart';
-import Blacklist from "./Blacklist";
-import Config from "./Config";
-import Element from './Element';
+import NavEventChart from './NavEventChart.js';
+import Blacklist from "./model/Blacklist.js";
+import Config from "./model/Config.js";
+import Element from './Element.js';
 
 const BLACKLIST_ID = "urlBlacklist";
 const BLACKLIST_INPUT_ID = "blacklistInput";
 const DELAY_TIME_INPUT_ID = "delayTimeInput";
 const DELAY_TIME_OUTPUT_ID = "delayTimeOutput";
-const ENABLED_INPUT_ID = "enabled";
-const DISABLED_INPUT_ID = "disabled";
 
 const DELAY_TIME_MIN = 1;
 const DELAY_TIME_MAX = 300;
@@ -69,7 +67,7 @@ export default class Home {
   }
 
   static validateURL(url) {
-    return (url.length >= 5)
+    return (url.length >= URL_MIN_LENGTH)
   }
 
   static setDelayTime() {

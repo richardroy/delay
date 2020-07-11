@@ -1,8 +1,8 @@
 import TabNavigation from "../TabNavigation.js"
-import Blacklist from "../Blacklist.js"
-import NavEvent from "../NavEvent.js"
-import Config from "../Config.js"
-import Delay from "../Delay.js"
+import Blacklist from "../model/Blacklist.js"
+import NavEvent from "../model/NavEvent.js"
+import Config from "../model/Config.js"
+import Delay from "../model/Delay.js"
 
 export default class NavigationService {
 

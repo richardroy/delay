@@ -1,15 +1,16 @@
-import LocalStorageService from "./services/LocalStorageService";
+import LocalStorageService from "../services/LocalStorageService.js";
 const DELAY = "delay";
 
 /**
  * Delay is saved in the LocalStorage
- * Used to list status of tabs, contains array, sites:
- *    - {
- *        actualUrl: "https://www.reddit.com/",
- *        tabId: 445,
- *        created: 15297377 70815,
- *        allowed: false
- *      }
+ * Used to list status of tabs. It contains array, sites:
+ *    - "sites": [{
+ *          actualUrl: "https://www.reddit.com/",
+ *          tabId: 445,
+ *          created: 15297377 70815,
+ *          allowed: false
+ *        },...
+ *      ]
  * 
  */
 export default class Delay {

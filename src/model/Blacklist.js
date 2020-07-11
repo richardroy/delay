@@ -1,7 +1,7 @@
-import LocalStorageService from "./services/LocalStorageService";
+import LocalStorageService from "../services/LocalStorageService.js";
 import shortId from "shortid";
 
-const BLACKLIST = "blacklist";
+export const BLACKLIST = "blacklist";
 
 /**
  * Blacklist is saved in the LocalStorage
