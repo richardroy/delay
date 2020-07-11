@@ -3,8 +3,34 @@
   height: 100%;
   
   background: #FFE3E4;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to top, #FFDDFF, #FFE3E4);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to top, #FFDDFF, #FFE3E4); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+  background: linear-gradient(180deg, #f3aef3, #000e45);
+  background-size: 400% 400%;
+
+  -webkit-animation: backound-animation 14s ease infinite;
+  -moz-animation: backound-animation 14s ease infinite;
+  -o-animation: backound-animation 14s ease infinite;
+  animation: backound-animation 14s ease infinite;
+}
+
+@-webkit-keyframes backound-animation {
+    0%{background-position:0% 84%}
+    50%{background-position:100% 17%}
+    100%{background-position:0% 84%}
+}
+@-moz-keyframes backound-animation {
+    0%{background-position:0% 84%}
+    50%{background-position:100% 17%}
+    100%{background-position:0% 84%}
+}
+@-o-keyframes backound-animation {
+    0%{background-position:0% 84%}
+    50%{background-position:100% 17%}
+    100%{background-position:0% 84%}
+}
+@keyframes backound-animation {
+    0%{background-position:0% 84%}
+    50%{background-position:100% 17%}
+    100%{background-position:0% 84%}
 }
 
 .home-body {
