@@ -11,6 +11,8 @@ const DELAY_TIME_OUTPUT_ID = "delayTimeOutput";
 const DELAY_TIME_MIN = 1;
 const DELAY_TIME_MAX = 300;
 
+const URL_MIN_LENGTH = 5;
+
 export default class Home {
 
   static clearBlacklistUrlInput() {
@@ -50,9 +52,18 @@ export default class Home {
   
   static submitNewUrl() {
     const url = Element.getValueFromId(BLACKLIST_INPUT_ID);
-    this.addNewUrlElementToBlacklist(url);
-    Blacklist.addNewUrl(url);  
-    this.clearBlacklistUrlInput();
+    const isValid = this.validateURL(url)
+    if(isValid) {
+      Blacklist.addNewUrl(url);  
+      this.addNewUrlElementToBlacklist(url);
+      this.clearBlacklistUrlInput();
+    } else {
+      alert("The URL should be atleast 5 characters long");
+    }
+  }
+
+  static validateURL(url) {
+    return (url.length >= 5)
   }
 
   static setDelayTime() {
