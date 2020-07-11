@@ -40,8 +40,6 @@ export default class Home {
     const enabledValue = document.querySelector('input[name="active"]:checked').value;
     if(enabledValue)
       Config.setEnabledStatus(enabledValue)
-    else 
-      Config.setEnabledStatus(disabledValue)
   }
   
   static createNewBlacklistLiElement(url) {
@@ -105,6 +103,12 @@ export default class Home {
   static setInitalDelayTimeElement() {
     this.setDelayTimeOutputElement(Config.getDelayTime()); 
   }
+
+  static setInitialEnabledStatus() {
+    const enabled = Config.getEnabledStatus();
+    const enabledElement = document.querySelector('input[value="'+enabled+'"]');
+    enabledElement.checked = true;
+  }
 }
 
 document.getElementById("blacklistSubmit").addEventListener("click", () => Home.submitNewUrl());
@@ -116,6 +120,7 @@ document.getElementById("enabledSubmit").addEventListener("click", () => Home.se
 window.addEventListener("load", function load(event){ 
   Home.buildInitialBlacklist();
   Home.setInitalDelayTimeElement();
+  Home.setInitialEnabledStatus();
 });
 
 NavEventChart.initialiseGraph();

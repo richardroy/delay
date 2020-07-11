@@ -30,7 +30,7 @@ export default class Config {
     this.save(config);
   }
 
-  static getEnabled() {
+  static getEnabledStatus() {
     const config = this.load();
     const enabled = config.enabled;
     if(enabled == undefined)
