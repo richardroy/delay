@@ -21,10 +21,8 @@ export default class Home {
   }
   
   static onDeleteClicked(event) {
-    const blacklist = Blacklist.load();
-    const index = blacklist.indexOf(event.srcElement.previousSibling)
-    blacklist.splice(index, 1);
-    Blacklist.save(blacklist);
+    const url = event.srcElement.previousSibling.textContent
+    Blacklist.deleteByUrl(url);
     delete event.srcElement.parentNode.remove();  
   }
   
