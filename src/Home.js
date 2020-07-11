@@ -8,6 +8,9 @@ const BLACKLIST_INPUT_ID = "blacklistInput";
 const DELAY_TIME_INPUT_ID = "delayTimeInput";
 const DELAY_TIME_OUTPUT_ID = "delayTimeOutput";
 
+const DELAY_TIME_MIN = 1;
+const DELAY_TIME_MAX = 300;
+
 export default class Home {
 
   static clearBlacklistUrlInput() {
@@ -54,8 +57,17 @@ export default class Home {
 
   static setDelayTime() {
     const time = Element.getValueFromId(DELAY_TIME_INPUT_ID);
-    Config.setDelayTime(time);
-    this.setDelayTimeOutputElement(time);
+    const valid = this.validateDelayTime(time);
+    if(valid) {
+      Config.setDelayTime(time);
+      this.setDelayTimeOutputElement(time);
+    } else {
+      alert("Delay must be between "+DELAY_TIME_MIN+" and "+DELAY_TIME_MAX+" seconds")
+    }
+  }
+
+  static validateDelayTime(time) {
+    return (time >= DELAY_TIME_MIN && time <= DELAY_TIME_MAX)
   }
 
   static buildInitialBlacklist() {
