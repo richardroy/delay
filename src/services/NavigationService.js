@@ -7,7 +7,7 @@ import Delay from "../model/Delay.js"
 export default class NavigationService {
 
   static onNavigationEventTrigged (data) {
-    if (JSON.parse(Config.getEnabledStatus()) && NavigationService.isTopLevelFrame(data)) {
+    if (JSON.parse(Config.isExtensionEnabled()) && NavigationService.isTopLevelFrame(data)) {
       chrome.tabs.getSelected(null, function(tab) {
         const tabId = data.tabId;
         if(tabId === tab.id) {
@@ -15,7 +15,7 @@ export default class NavigationService {
           if(blacklistEntry) {
             NavigationService.navigateToBlacklistEntry(data, blacklistEntry);
           }
-          Delay.removeInvalidTabs();
+          Delay.removeTimedOutTabs();
         }
       });
     }
@@ -27,7 +27,7 @@ export default class NavigationService {
 
   static navigateToBlacklistEntry(data, blacklistEntry) {
     var tabId = data.tabId;
-    if(!Delay.isTabIdAllowed(tabId)){
+    if(!Delay.isTabIdInDelay(tabId) && !Delay.isTabIdAllowed(tabId)){
       NavigationService.initiateDelay(data.url, tabId, blacklistEntry);
     }
   }
@@ -35,7 +35,6 @@ export default class NavigationService {
   static initiateDelay(url, tabId, blacklistEntry) {
     TabNavigation.redirectTabToBackground(tabId);
     NavEvent.addNavigatedEvent(blacklistEntry);           
-    if(Delay.isTabIdInDelay(tabId)) return;
     Delay.addNewTabToDelay(url, tabId);
     window["interval"+parseInt(tabId)] = setTimeout( () => NavigationService.intervalCompleted(tabId, blacklistEntry), Config.getDelayTime() * 1000 )
   }
@@ -48,7 +47,7 @@ export default class NavigationService {
 
   static onTabClosed(tabId) {
     if(Delay.isTabIdInDelay(tabId))
-      Delay.removeDelayEntriesWithTabIds([tabId]);
+      Delay.removeTabIdFromDelay([tabId]);
   }
   
 }

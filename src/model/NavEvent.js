@@ -1,5 +1,5 @@
 import shortid from "shortid";
-import NavEvents from "../NavEvents.js";
+import NavEvents from "./NavEvents.js";
 import Blacklist from "./Blacklist.js";
 
 export const LOADED = "loaded"; 

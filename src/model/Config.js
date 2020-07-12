@@ -31,13 +31,10 @@ export default class Config {
     this.save(config);
   }
 
-  static getEnabledStatus() {
+  static isExtensionEnabled() {
     const config = this.load();
-    const enabled = config.enabled;
-    if(enabled == undefined)
-      return true
-    else
-      return enabled
+    const enabled = config.enabled ?? true;
+    return enabled;
   }
 
   static setEnabledStatus(enabled) {

@@ -1,6 +1,6 @@
 import LocalStorageService from "../services/LocalStorageService.js";
 const DELAY = "delay";
-
+const MINUTES_15 = 1000 * 60 * 0.25;
 /**
  * Delay is saved in the LocalStorage
  * Used to list status of tabs. It contains array, sites:
@@ -69,29 +69,26 @@ export default class Delay {
     this.save(delay);
   }
 
-  static removeInvalidTabs() {
-    const sitesToRemove = [];
-    const delay = this.load();
-    for(var siteIndex in delay.sites) {
-      const site = delay.sites[siteIndex];
-      if (this.isOlderThan15Minutes(site.created)) {
-        sitesToRemove.push(site.tabId);
-      }
-    }
-    this.removeDelayEntriesWithTabIds(sitesToRemove);
-  }
-
-  static isOlderThan15Minutes(creationDate) {
-    return (Date.now() - creationDate) > 1000 * 60 * 15
-  }
-
-  static removeDelayEntriesWithTabIds(sitesToRemove) {
+  static removeTimedOutTabs() {
     const delay = this.load();
     const filteredSites = delay.sites.filter((site) => {
-      return !sitesToRemove.includes(site.tabId);
+      return this.wasCreatedLessThanXMinutesAgo(MINUTES_15, site.created);
     });
-    const updatedDelay = { ...delay, sites: filteredSites };
-    this.save(updatedDelay);
+
+    this.save({...delay, sites: filteredSites})
+  }
+
+  static removeTabIdFromDelay(tabId) {
+    const delay = this.load();
+    const filteredSites = delay.sites.filter((site) => {
+      return site.tabId != tabId;
+    });
+
+    this.save({...delay, sites: filteredSites})    
+  }
+
+  static wasCreatedLessThanXMinutesAgo(timeInSeconds, creationDate) {
+    return (Date.now() - creationDate) < timeInSeconds;
   }
 
 }

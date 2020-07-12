@@ -20,18 +20,18 @@ export default class Home {
     blackListInput.value = '';
   }
   
-  static onDeleteClicked(event) {
-    const url = event.srcElement.previousSibling.textContent
-    Blacklist.deleteByUrl(url);
-    delete event.srcElement.parentNode.remove();  
-  }
-  
   static createDeleteButton() {
     const deleteButton = document.createElement("Button");
     deleteButton.id = "deleteButton";
     deleteButton.textContent = "Delete";
     deleteButton.addEventListener("click", (event) => this.onDeleteClicked(event))
     return deleteButton;
+  }
+
+  static onDeleteClicked(event) {
+    const url = event.srcElement.previousSibling.textContent
+    Blacklist.deleteByUrl(url);
+    delete event.srcElement.parentNode.remove();  
   }
 
   static setEnabledStatus() {

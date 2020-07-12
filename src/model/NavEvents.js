@@ -1,5 +1,5 @@
-import LocalStorageService from "./services/LocalStorageService.js";
-import { LOADED, NAVIGATED } from "./model/NavEvent.js";
+import LocalStorageService from "../services/LocalStorageService.js";
+import { LOADED, NAVIGATED } from "./NavEvent.js";
 
 const NAV_EVENTS = "navEvents";
 

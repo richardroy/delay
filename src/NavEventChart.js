@@ -1,4 +1,4 @@
-import NavEvents from "./NavEvents"
+import NavEvents from "./model/NavEvents"
 import Chart from 'chart.js';
 
 export default class NavEventChart {

@@ -1,5 +1,5 @@
 import LocalStorageService from '../services/LocalStorageService';
-import NavEvents from '../NavEvents';
+import NavEvents from '../model/NavEvents';
 import NavEvent, { LOADED, NAVIGATED } from '../model/NavEvent';
 import shortid from "shortid";
 
