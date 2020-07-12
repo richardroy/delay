@@ -11,7 +11,7 @@ export const HOME_FILE = "home.html";
  */
 export default class TabNavigation {
 
-  static redirectToOriginal(tabId, blacklistEntry) {
+  static loadDelayedUrl(tabId, blacklistEntry) {
     const backgroundUrl = this.getBackgroundUrl();
 
     //https://stackoverflow.com/questions/28431505/unchecked-runtime-lasterror-when-using-chrome-api
@@ -21,8 +21,8 @@ export default class TabNavigation {
         console.warn("TabNavigation Error: " + chrome.runtime.lastError.message);
       } else {
         if(tab && tab.url === backgroundUrl){
+          TabNavigation.redirectTabToDelayedUrl(tabId);
           NavEvent.addLoadedEvent(blacklistEntry);
-          TabNavigation.redirectToOriginalUrl(tabId);
         }
       }
     }
@@ -39,7 +39,7 @@ export default class TabNavigation {
     BrowserService.updateTabUrl(tabId, homePageUrl);    
   }
 
-  static redirectToOriginalUrl(tabId) {
+  static redirectTabToDelayedUrl(tabId) {
     const site = Delay.getSiteByTabId(tabId);
     BrowserService.updateTabUrl(tabId, site.actualUrl);
   }

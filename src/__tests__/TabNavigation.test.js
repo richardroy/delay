@@ -19,12 +19,12 @@ test("create", () => {
   
 })
 
-test("redirectToOriginal", () => {
+test("loadDelayedUrl", () => {
   BrowserService.ExtensionUrl = jest.fn().mockReturnValue(ORIGINAL_URL);
   BrowserService.getTab = jest.fn();
   Blacklist.addLoadedEvent = jest.fn();
 
-  TabNavigation.redirectToOriginal(TAB_ID, BLACKLIST_ENTRY_REDDIT);
+  TabNavigation.loadDelayedUrl(TAB_ID, BLACKLIST_ENTRY_REDDIT);
 
   expect(BrowserService.getExtensionUrl).toHaveBeenCalledWith(BACKGROUND_FILE);
   expect(BrowserService.getExtensionUrl).toHaveBeenCalledTimes(1);  

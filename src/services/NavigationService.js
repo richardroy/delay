@@ -41,7 +41,7 @@ export default class NavigationService {
 
   static intervalCompleted(tabId, blacklistEntry) {
     Delay.setAllowed(tabId);
-    TabNavigation.redirectToOriginal(tabId, blacklistEntry);
+    TabNavigation.loadDelayedUrl(tabId, blacklistEntry);
     clearTimeout(window["interval"+parseInt(tabId)]);
   }
 
