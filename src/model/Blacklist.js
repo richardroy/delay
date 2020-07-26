@@ -17,8 +17,8 @@ export const BLACKLIST = "blacklist";
  */
 export default class Blacklist {
 
-  static getByUrl(url) {
-    const blacklist = this.load();
+  static async getByUrl(url) {
+    const blacklist = await this.load();
     for(const listIndex in blacklist) {
       if(url.includes(blacklist[listIndex].url))
         return blacklist[listIndex];
@@ -26,8 +26,8 @@ export default class Blacklist {
     return null;
   }
 
-  static deleteByUrl(url) {
-    const blacklist = this.load();
+  static async deleteByUrl(url) {
+    const blacklist = await this.load();
     for(const listIndex in blacklist) {
       if(url.includes(blacklist[listIndex].url)) {
         blacklist.splice(listIndex, 1)
@@ -36,8 +36,8 @@ export default class Blacklist {
     }
   }
 
-  static updateEntry(blacklistEntry) {
-    const blacklist = this.load();
+  static async updateEntry(blacklistEntry) {
+    const blacklist = await this.load();
     for(const listIndex in blacklist) {
       if(blacklist[listIndex].id === blacklistEntry.id){
         blacklist[listIndex] = blacklistEntry;
@@ -47,8 +47,8 @@ export default class Blacklist {
     }
   }
 
-  static load() {
-    const blacklist = LocalStorageService.loadObject(BLACKLIST, []);
+  static async load() {
+    const blacklist = await LocalStorageService.loadObject(BLACKLIST, []);
     return blacklist;
   }
   
@@ -56,8 +56,8 @@ export default class Blacklist {
     LocalStorageService.saveObject(BLACKLIST, blacklist);
   }
 
-  static addNewUrl(url) {
-    const blacklist = this.load();
+  static async addNewUrl(url) {
+    const blacklist = await this.load();
     blacklist.push({
       url, 
       id: shortId.generate(),

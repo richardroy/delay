@@ -26,6 +26,7 @@ export default class TabNavigation {
         }
       }
     }
+
     BrowserService.getTab(tabId, callback)
   }
 
@@ -35,12 +36,12 @@ export default class TabNavigation {
   }
   
   static redirectTabToHome(tabId) {
-    const homePageUrl = this.getHomeUrl(); 
+    const homePageUrl = this.getHomeUrl();
     BrowserService.updateTabUrl(tabId, homePageUrl);    
   }
 
-  static redirectTabToDelayedUrl(tabId) {
-    const site = Delay.getSiteByTabId(tabId);
+  static async redirectTabToDelayedUrl(tabId) {
+    const site = await Delay.getSiteByTabId(tabId);
     BrowserService.updateTabUrl(tabId, site.actualUrl);
   }
 

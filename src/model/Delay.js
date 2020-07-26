@@ -25,8 +25,8 @@ export default class Delay {
     }
   }
 
-  static getSiteByTabId(tabId) {
-    let delay = Delay.load();
+  static async getSiteByTabId(tabId) {
+    let delay = await Delay.load();
     for(var siteIndex in delay.sites) {
       const site = delay.sites[siteIndex];
       if (site.tabId === tabId)
@@ -39,22 +39,22 @@ export default class Delay {
     LocalStorageService.saveObject(DELAY, delay)
   }
 
-  static load() {
-    return LocalStorageService.loadObject(DELAY, {sites: []});
+  static async load() {
+    return await LocalStorageService.loadObject(DELAY, {sites: []});
   }
 
-  static isTabIdInDelay(tabId) {
-    const site = this.getSiteByTabId(tabId);
+  static async isTabIdInDelay(tabId) {
+    const site = await this.getSiteByTabId(tabId);
     return site != null;
   }
 
-  static isTabIdAllowed(tabId) {
-    const site = this.getSiteByTabId(tabId);
+  static async isTabIdAllowed(tabId) {
+    const site = await this.getSiteByTabId(tabId);
     return site && site.allowed;
   }
 
-  static setAllowed(tabId) {
-    let delay = Delay.load();
+  static async setAllowed(tabId) {
+    let delay = await Delay.load();
     const objIndex = delay.sites.findIndex((delay => delay.tabId === tabId));
     if(objIndex != -1){
       delay.sites[objIndex].allowed = true;
@@ -62,15 +62,15 @@ export default class Delay {
     }
   }
 
-  static addNewTabToDelay(actualUrl, tabId) {
-    const delay = this.load();
+  static async addNewTabToDelay(actualUrl, tabId) {
+    const delay = await this.load();
     const site = this.createDelayEntry(actualUrl, tabId);
     delay.sites.push(site);  
     this.save(delay);
   }
 
-  static removeTimedOutTabs() {
-    const delay = this.load();
+  static async removeTimedOutTabs() {
+    const delay = await this.load();
     const filteredSites = delay.sites.filter((site) => {
       return this.wasCreatedLessThanXMinutesAgo(MINUTES_15, site.created);
     });
@@ -78,8 +78,8 @@ export default class Delay {
     this.save({...delay, sites: filteredSites})
   }
 
-  static removeTabIdFromDelay(tabId) {
-    const delay = this.load();
+  static async removeTabIdFromDelay(tabId) {
+    const delay = await this.load();
     const filteredSites = delay.sites.filter((site) => {
       return site.tabId != tabId;
     });

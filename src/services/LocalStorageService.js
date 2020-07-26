@@ -1,17 +1,28 @@
+
 export default class LocalStorageService {
 
-  static loadObject(identifier, baseObject) {
-    let loadedObject = localStorage.getItem(identifier);
-    if(!loadedObject) {
-      loadedObject = baseObject;
-    } else {
-      loadedObject = JSON.parse(loadedObject);
-    }
-    return loadedObject;
-  }
+  static async loadObject(identifier, baseObject) {
+    return await new Promise((resolve, reject) => {
+      chrome.storage.sync.get(identifier, function (obj) {
+      if(chrome.runtime.lastError) {
+        //Could be triggered if tab has been closed before delay
+        console.warn("LocalStorageService Error: " + chrome.runtime.lastError.message);
+      }
+      if(obj[identifier])
+        resolve(obj[identifier]);
+      else 
+        resolve(baseObject);
+    });
+  })
+}
 
   static saveObject(identifier, object) {
-    localStorage.setItem(identifier, JSON.stringify(object));
+    chrome.storage.sync.set({[[identifier]]: object}, function(result) {
+      if(chrome.runtime.lastError) {
+        //Could be triggered if tab has been closed before delay
+        console.warn("LocalStorageServer Error: " + chrome.runtime.lastError.message);
+      }
+    });
   }
   
 }

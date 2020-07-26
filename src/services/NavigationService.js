@@ -8,10 +8,10 @@ export default class NavigationService {
 
   static onNavigationEventTrigged (data) {
     if (JSON.parse(Config.isExtensionEnabled()) && NavigationService.isTopLevelFrame(data)) {
-      chrome.tabs.getSelected(null, function(tab) {
+      chrome.tabs.getSelected(null, async function(tab) {
         const tabId = data.tabId;
         if(tabId === tab.id) {
-          const blacklistEntry = Blacklist.getByUrl(data.url);
+          const blacklistEntry = await Blacklist.getByUrl(data.url);
           if(blacklistEntry) {
             NavigationService.navigateToBlacklistEntry(data, blacklistEntry);
           }
@@ -25,18 +25,18 @@ export default class NavigationService {
     return data.parentFrameId === -1;
   }
 
-  static navigateToBlacklistEntry(data, blacklistEntry) {
+  static async navigateToBlacklistEntry(data, blacklistEntry) {
     var tabId = data.tabId;
-    if(!Delay.isTabIdInDelay(tabId) && !Delay.isTabIdAllowed(tabId)){
+    if(!(await Delay.isTabIdInDelay(tabId)) && !(await Delay.isTabIdAllowed(tabId))){
       NavigationService.initiateDelay(data.url, tabId, blacklistEntry);
     }
   }
 
-  static initiateDelay(url, tabId, blacklistEntry) {
+  static async initiateDelay(url, tabId, blacklistEntry) {
     TabNavigation.redirectTabToBackground(tabId);
     NavEvent.addNavigatedEvent(blacklistEntry);           
     Delay.addNewTabToDelay(url, tabId);
-    window["interval"+parseInt(tabId)] = setTimeout( () => NavigationService.intervalCompleted(tabId, blacklistEntry), Config.getDelayTime() * 1000 )
+    window["interval"+parseInt(tabId)] = setTimeout( () => NavigationService.intervalCompleted(tabId, blacklistEntry), await Config.getDelayTime() * 1000 )
   }
 
   static intervalCompleted(tabId, blacklistEntry) {

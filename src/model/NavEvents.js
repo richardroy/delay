@@ -5,8 +5,8 @@ const NAV_EVENTS = "navEvents";
 
 export default class NavEvents {
 
-  static add(navEvent) {
-    const navEvents = this.load();
+  static async add(navEvent) {
+    const navEvents = await this.load();
     navEvents.push(navEvent);
     this.save(navEvents);
   }
