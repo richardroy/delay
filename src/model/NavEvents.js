@@ -15,12 +15,12 @@ export default class NavEvents {
     LocalStorageService.saveObject(NAV_EVENTS, navEvents)
   }
 
-  static load() {
-    return LocalStorageService.loadObject(NAV_EVENTS, []);
+  static async load() {
+    return await LocalStorageService.loadObject(NAV_EVENTS, []);
   }
 
-  static filterEventList() {
-    const navEvents = this.load();
+  static async filterEventList() {
+    const navEvents = await this.load();
     const loadedEvents = {};
     const navigatedEvents = {};
     

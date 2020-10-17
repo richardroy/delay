@@ -3,8 +3,8 @@ import Chart from 'chart.js';
 
 export default class NavEventChart {
 
-  static initialiseGraph() {
-    const { loadedEvents, navigatedEvents } = NavEvents.filterEventList();
+  static async initialiseGraph() {
+    const { loadedEvents, navigatedEvents } = await NavEvents.filterEventList();
     const loadedLineData = [];
     for (const [date, count] of Object.entries(loadedEvents)) {
       const roundedEventDate = new Date(date);
