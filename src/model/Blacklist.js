@@ -4,15 +4,9 @@ import shortId from "shortid";
 export const BLACKLIST = "blacklist";
 
 /**
- * Blacklist is saved in the LocalStorage
- * Is an array of BalcklistEntries:
+ * Is an array of urls:
  *    [
- *      {
- *        id: "HkJ4lUKQV",
- *        navEvents: ["BJCPxUKQ4", "Bkydg8FQN", "BJfuxLKm4", "SkpulUtX4", "B12YxLtQE", "SyX9G4DYQ4", "Syx7NPYQ4",…],
- *        url: "reddit.com"
- *      },
- *      ...
+ *      "reddit.com"
  *    ]
  */
 export default class Blacklist {
