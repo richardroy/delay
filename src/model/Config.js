@@ -11,16 +11,16 @@ const INITIAL_DELAY_TIME = 15;
  */
 export default class Config {
 
-  static load() {
-    return LocalStorageService.loadObject(CONFIG, {delayTime: INITIAL_DELAY_TIME, enabled: true});
+  static async load() {
+    return await LocalStorageService.loadObject(CONFIG, {delayTime: INITIAL_DELAY_TIME, enabled: true});
   }
   
   static save(blacklist) {
     LocalStorageService.saveObject(CONFIG, blacklist);
   }
 
-  static getDelayTime() {
-    const config = this.load();
+  static async getDelayTime() {
+    const config = await this.load();
     const delayTimeSeconds = config.delayTime;
     return delayTimeSeconds;
   }

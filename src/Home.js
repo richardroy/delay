@@ -85,25 +85,25 @@ export default class Home {
     return (time >= DELAY_TIME_MIN && time <= DELAY_TIME_MAX)
   }
 
-  static buildInitialBlacklist() {
-    const blacklist = Blacklist.load();
+  static async buildInitialBlacklist() {
+    const blacklist = await Blacklist.load();
     for(let index in blacklist) {
       const url = blacklist[index].url;
       this.addNewUrlElementToBlacklist(url);
     }
   }
 
-  static setDelayTimeOutputElement(time) {
+  static async setDelayTimeOutputElement(time) {
     const delayTimeElement = Element.getById(DELAY_TIME_OUTPUT_ID);
     delayTimeElement.textContent = time;  
   }
 
-  static setInitalDelayTimeElement() {
-    this.setDelayTimeOutputElement(Config.getDelayTime()); 
+  static async setInitalDelayTimeElement() {
+    this.setDelayTimeOutputElement(await Config.getDelayTime()); 
   }
 
   static setInitialEnabledStatus() {
-    const enabled = Config.getEnabledStatus();
+    const enabled = Config.isExtensionEnabled();
     const enabledElement = document.querySelector('input[value="'+enabled+'"]');
     enabledElement.checked = true;
   }
