@@ -1,5 +1,4 @@
 import LocalStorageService from "../services/LocalStorageService.js";
-import shortId from "shortid";
 
 export const BLACKLIST = "blacklist";
 
@@ -14,7 +13,7 @@ export default class Blacklist {
   static async getByUrl(url) {
     const blacklist = await this.load();
     for(const listIndex in blacklist) {
-      if(url.includes(blacklist[listIndex].url))
+      if(url.includes(blacklist[listIndex]))
         return blacklist[listIndex];
     }
     return null;
@@ -23,20 +22,9 @@ export default class Blacklist {
   static async deleteByUrl(url) {
     const blacklist = await this.load();
     for(const listIndex in blacklist) {
-      if(url.includes(blacklist[listIndex].url)) {
+      if(url.includes(blacklist[listIndex])) {
         blacklist.splice(listIndex, 1)
         this.save(blacklist);
-      }
-    }
-  }
-
-  static async updateEntry(blacklistEntry) {
-    const blacklist = await this.load();
-    for(const listIndex in blacklist) {
-      if(blacklist[listIndex].id === blacklistEntry.id){
-        blacklist[listIndex] = blacklistEntry;
-        this.save(blacklist);
-        break;
       }
     }
   }
@@ -52,11 +40,7 @@ export default class Blacklist {
 
   static async addNewUrl(url) {
     const blacklist = await this.load();
-    blacklist.push({
-      url, 
-      id: shortId.generate(),
-      navEvents: []
-    });
+    blacklist.push(url);
     this.save(blacklist);
   }
 } 
