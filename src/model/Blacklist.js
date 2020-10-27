@@ -12,21 +12,15 @@ export default class Blacklist {
 
   static async getByUrl(url) {
     const blacklist = await this.load();
-    for(const listIndex in blacklist) {
-      if(url.includes(blacklist[listIndex]))
-        return blacklist[listIndex];
-    }
+    if(blacklist.includes(url))
+      return url;
     return null;
   }
 
   static async deleteByUrl(url) {
     const blacklist = await this.load();
-    for(const listIndex in blacklist) {
-      if(url.includes(blacklist[listIndex])) {
-        blacklist.splice(listIndex, 1)
-        this.save(blacklist);
-      }
-    }
+    const updatedBlacklist = blacklist.filter( blacklistUrl => blacklistUrl != url)
+    this.save(updatedBlacklist);
   }
 
   static async load() {

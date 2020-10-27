@@ -22,6 +22,6 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
-    "chart.js": "^2.9.3",
+    "chart.js": "^2.9.3"
   }
 }
