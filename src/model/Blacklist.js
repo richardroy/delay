@@ -1,50 +1,26 @@
 import LocalStorageService from "../services/LocalStorageService.js";
-import shortId from "shortid";
 
 export const BLACKLIST = "blacklist";
 
 /**
- * Blacklist is saved in the LocalStorage
- * Is an array of BalcklistEntries:
+ * Is an array of urls:
  *    [
- *      {
- *        id: "HkJ4lUKQV",
- *        navEvents: ["BJCPxUKQ4", "Bkydg8FQN", "BJfuxLKm4", "SkpulUtX4", "B12YxLtQE", "SyX9G4DYQ4", "Syx7NPYQ4",…],
- *        url: "reddit.com"
- *      },
- *      ...
+ *      "reddit.com"
  *    ]
  */
 export default class Blacklist {
 
   static async getByUrl(url) {
     const blacklist = await this.load();
-    for(const listIndex in blacklist) {
-      if(url.includes(blacklist[listIndex].url))
-        return blacklist[listIndex];
-    }
+    if(blacklist.find(blacklistUrl => url.includes(blacklistUrl)))
+      return url;
     return null;
   }
 
   static async deleteByUrl(url) {
     const blacklist = await this.load();
-    for(const listIndex in blacklist) {
-      if(url.includes(blacklist[listIndex].url)) {
-        blacklist.splice(listIndex, 1)
-        this.save(blacklist);
-      }
-    }
-  }
-
-  static async updateEntry(blacklistEntry) {
-    const blacklist = await this.load();
-    for(const listIndex in blacklist) {
-      if(blacklist[listIndex].id === blacklistEntry.id){
-        blacklist[listIndex] = blacklistEntry;
-        this.save(blacklist);
-        break;
-      }
-    }
+    const updatedBlacklist = blacklist.filter( blacklistUrl => blacklistUrl != url)
+    this.save(updatedBlacklist);
   }
 
   static async load() {
@@ -58,11 +34,7 @@ export default class Blacklist {
 
   static async addNewUrl(url) {
     const blacklist = await this.load();
-    blacklist.push({
-      url, 
-      id: shortId.generate(),
-      navEvents: []
-    });
+    blacklist.push(url);
     this.save(blacklist);
   }
 } 

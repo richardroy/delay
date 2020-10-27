@@ -12,9 +12,9 @@ export default class LocalStorageService {
         resolve(obj[identifier]);
       else 
         resolve(baseObject);
-    });
-  })
-}
+      });
+    })
+  }
 
   static saveObject(identifier, object) {
     chrome.storage.sync.set({[[identifier]]: object}, function(result) {

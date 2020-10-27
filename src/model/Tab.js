@@ -1,8 +1,7 @@
 import LocalStorageService from "../services/LocalStorageService.js";
-const DELAY = "delay";
+const TAB = "tab";
 const MINUTES_15 = 1000 * 60 * 0.25;
 /**
- * Delay is saved in the LocalStorage
  * Used to list status of tabs. It contains array, sites:
  *    - "sites": [{
  *          actualUrl: "https://www.reddit.com/",
@@ -13,9 +12,10 @@ const MINUTES_15 = 1000 * 60 * 0.25;
  *      ]
  * 
  */
-export default class Delay {
 
-  static createDelayEntry(actualUrl, tabId) {
+export default class Tab {
+
+  static createTabEntry(actualUrl, tabId) {
     const created = Date.now();
     return { 
       actualUrl, 
@@ -26,24 +26,24 @@ export default class Delay {
   }
 
   static async getSiteByTabId(tabId) {
-    let delay = await Delay.load();
-    for(var siteIndex in delay.sites) {
-      const site = delay.sites[siteIndex];
+    let tab = await Tab.load();
+    for(var siteIndex in tab.sites) {
+      const site = tab.sites[siteIndex];
       if (site.tabId === tabId)
         return site;
     }
     return null;
   }
 
-  static save(delay) {
-    LocalStorageService.saveObject(DELAY, delay)
+  static save(tab) {
+    LocalStorageService.saveObject(TAB, tab)
   }
 
   static async load() {
-    return await LocalStorageService.loadObject(DELAY, {sites: []});
+    return await LocalStorageService.loadObject(TAB, {sites: []});
   }
 
-  static async isTabIdInDelay(tabId) {
+  static async isTabIdStored(tabId) {
     const site = await this.getSiteByTabId(tabId);
     return site != null;
   }
@@ -54,37 +54,37 @@ export default class Delay {
   }
 
   static async setAllowed(tabId) {
-    let delay = await Delay.load();
-    const objIndex = delay.sites.findIndex((delay => delay.tabId === tabId));
+    let tab = await Tab.load();
+    const objIndex = tab.sites.findIndex((tab => tab.tabId === tabId));
     if(objIndex != -1){
-      delay.sites[objIndex].allowed = true;
-      this.save(delay);
+      tab.sites[objIndex].allowed = true;
+      this.save(tab);
     }
   }
 
-  static async addNewTabToDelay(actualUrl, tabId) {
-    const delay = await this.load();
-    const site = this.createDelayEntry(actualUrl, tabId);
-    delay.sites.push(site);  
-    this.save(delay);
+  static async addNewTab(actualUrl, tabId) {
+    const tab = await this.load();
+    const site = this.createTabEntry(actualUrl, tabId);
+    tab.sites.push(site);  
+    this.save(tab);
   }
 
   static async removeTimedOutTabs() {
-    const delay = await this.load();
-    const filteredSites = delay.sites.filter((site) => {
+    const tab = await this.load();
+    const filteredSites = tab.sites.filter((site) => {
       return this.wasCreatedLessThanXMinutesAgo(MINUTES_15, site.created);
     });
 
-    this.save({...delay, sites: filteredSites})
+    this.save({...tab, sites: filteredSites})
   }
 
-  static async removeTabIdFromDelay(tabId) {
-    const delay = await this.load();
-    const filteredSites = delay.sites.filter((site) => {
+  static async removeTabById(tabId) {
+    const tab = await this.load();
+    const filteredSites = tab.sites.filter((site) => {
       return site.tabId != tabId;
     });
 
-    this.save({...delay, sites: filteredSites})    
+    this.save({...tab, sites: filteredSites})    
   }
 
   static wasCreatedLessThanXMinutesAgo(timeInSeconds, creationDate) {

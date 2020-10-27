@@ -1,6 +1,6 @@
+import NavEvents, { EVENT } from "./model/NavEvents";
 import BrowserService from "./services/BrowserService"
-import NavEvent from "./model/NavEvent";
-import Delay from "./model/Delay"
+import Tab from "./model/Tab"
 
 export const BACKGROUND_FILE = "background.html";
 export const HOME_FILE = "home.html";
@@ -22,7 +22,7 @@ export default class TabNavigation {
       } else {
         if(tab && tab.url === backgroundUrl){
           TabNavigation.redirectTabToDelayedUrl(tabId);
-          NavEvent.addLoadedEvent(blacklistEntry);
+          NavEvents.add(EVENT.LOADED);
         }
       }
     }
@@ -41,7 +41,7 @@ export default class TabNavigation {
   }
 
   static async redirectTabToDelayedUrl(tabId) {
-    const site = await Delay.getSiteByTabId(tabId);
+    const site = await Tab.getSiteByTabId(tabId);
     BrowserService.updateTabUrl(tabId, site.actualUrl);
   }
 
