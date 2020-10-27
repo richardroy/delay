@@ -4,15 +4,15 @@ import Chart from 'chart.js';
 export default class NavEventChart {
 
   static async initialiseGraph() {
-    const { loadedEvents, navigatedEvents } = await NavEvents.filterEventList();
+    const { loaded, navigated } = await NavEvents.load();
     const loadedLineData = [];
-    for (const [date, count] of Object.entries(loadedEvents)) {
+    for (const [date, count] of Object.entries(loaded)) {
       const roundedEventDate = new Date(date);
       loadedLineData.push({x: roundedEventDate, y: count});
     }
 
     const navigatedLineData = [];
-    for (const [date, count] of Object.entries(navigatedEvents)) {
+    for (const [date, count] of Object.entries(navigated)) {
       const roundedEventDate = new Date(date);
       navigatedLineData.push({x: roundedEventDate, y: count});
     }

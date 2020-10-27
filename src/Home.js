@@ -88,7 +88,7 @@ export default class Home {
   static async buildInitialBlacklist() {
     const blacklist = await Blacklist.load();
     for(let index in blacklist) {
-      const url = blacklist[index].url;
+      const url = blacklist[index];
       this.addNewUrlElementToBlacklist(url);
     }
   }
