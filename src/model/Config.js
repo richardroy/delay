@@ -12,33 +12,37 @@ const INITIAL_DELAY_TIME = 15;
 export default class Config {
 
   static async load() {
-    return await LocalStorageService.loadObject(CONFIG, {delayTime: INITIAL_DELAY_TIME, enabled: true});
+    console.log("Load Config")
+    return await LocalStorageService.loadObject(CONFIG, {delayTime: INITIAL_DELAY_TIME, enabled: 'true'});
   }
   
-  static save(blacklist) {
-    LocalStorageService.saveObject(CONFIG, blacklist);
+  static save(config) {
+    LocalStorageService.saveObject(CONFIG, config);
   }
 
   static async getDelayTime() {
     const config = await this.load();
+    console.log(config)
     const delayTimeSeconds = config.delayTime;
     return delayTimeSeconds;
   }
 
-  static setDelayTime(time) {
-    const config = this.load();
+  static async setDelayTime(time) {
+    const config = await this.load();
+    console.log('setDelayTime')
+    console.log(config)
     config.delayTime = time;
     this.save(config);
   }
 
-  static isExtensionEnabled() {
-    const config = this.load();
+  static async isExtensionEnabled() {
+    const config = await this.load();
     const enabled = config.enabled ?? true;
     return enabled;
   }
 
-  static setEnabledStatus(enabled) {
-    const config = this.load();
+  static async setEnabledStatus(enabled) {
+    const config = await this.load();
     config.enabled = enabled;
     this.save(config);
   }

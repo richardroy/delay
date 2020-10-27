@@ -102,8 +102,8 @@ export default class Home {
     this.setDelayTimeOutputElement(await Config.getDelayTime()); 
   }
 
-  static setInitialEnabledStatus() {
-    const enabled = Config.isExtensionEnabled();
+  static async setInitialEnabledStatus() {
+    const enabled = await Config.isExtensionEnabled();
     const enabledElement = document.querySelector('input[value="'+enabled+'"]');
     enabledElement.checked = true;
   }

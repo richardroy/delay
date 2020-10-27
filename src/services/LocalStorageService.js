@@ -17,9 +17,6 @@ export default class LocalStorageService {
   }
 
   static saveObject(identifier, object) {
-    console.log('save')
-    console.log(identifier)
-    console.log(object)
     chrome.storage.sync.set({[[identifier]]: object}, function(result) {
       if(chrome.runtime.lastError) {
         //Could be triggered if tab has been closed before delay

@@ -12,7 +12,7 @@ export default class Blacklist {
 
   static async getByUrl(url) {
     const blacklist = await this.load();
-    if(blacklist.includes(url))
+    if(blacklist.find(blacklistUrl => url.includes(blacklistUrl)))
       return url;
     return null;
   }

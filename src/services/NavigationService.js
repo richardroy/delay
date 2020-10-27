@@ -2,16 +2,15 @@ import TabNavigation from "../TabNavigation.js"
 import Blacklist from "../model/Blacklist.js"
 import Config from "../model/Config.js"
 import Tab from "../model/Tab.js"
-import NavEvents, { EVENT } from "../model/NavEvents.js";
+import NavEvents, { EVENT } from "../model/NavEvents";
 
 export default class NavigationService {
 
-  static onNavigationEventTrigged (data) {
-    if (JSON.parse(Config.isExtensionEnabled()) && NavigationService.isTopLevelFrame(data)) {
+  static async onNavigationEventTrigged (data) {
+    if (JSON.parse(await Config.isExtensionEnabled()) && NavigationService.isTopLevelFrame(data)) {
       chrome.tabs.getSelected(null, async function(tab) {
         const tabId = data.tabId;
         if(tabId === tab.id) {
-          console.log('here')
           const blacklistEntry = await Blacklist.getByUrl(data.url);
           if(blacklistEntry) {
             NavigationService.navigateToBlacklistEntry(data, blacklistEntry);
