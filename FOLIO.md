@@ -1,6 +1,6 @@
 # Project Features
 Delay is a project created to experience creating something within browsers that wasn't another SPA project.
-Using js and minimal npm libraries its minimal soltion to show basic development and build processes.
+Using js and minimal npm libraries its solution to show basic development and build processes.
 
 ## Project Structure  
 Files are broken into:
@@ -21,7 +21,11 @@ When a pull request is made, circleci triggers a build and will block the pull-r
 ##### npm build
 package.json build script will package the req. files into a zip, this zip is whats uploaded to the chrome webstore when updating the extension.
 
+### User Adoption
+A benifit of building a chrome extension is you immediatly get access to some metrics reguarding, impressions in the store, installations, uninstallations and daily users.
+
+
 ## Next Steps
 The next step would be to create a firefox extension, all chrome browser interfaces are within the BrowserService. This can be renamed so that a FirefoxBrowserService can be created and during the build process a selected browser can be passed in to determine which BrowserService file to include.
 
-
+Add google analytics, there was a period where impressioned spiked to over 2k a day, google analytics may have given the required information to see where the extension was referenced.
