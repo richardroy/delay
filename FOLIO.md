@@ -24,6 +24,7 @@ package.json build script will package the req. files into a zip, this zip is wh
 ### User Adoption
 A benifit of building a chrome extension is you immediatly get access to some metrics reguarding, impressions in the store, installations, uninstallations and daily users.
 
+Having users interacting with something I made was one of the highlights of this project. Being able to see the reviews, take in the feedback and add those features is something I hope to keep doing as this project slowly crawls along.
 
 ## Next Steps
 The next step would be to create a firefox extension, all chrome browser interfaces are within the BrowserService. This can be renamed so that a FirefoxBrowserService can be created and during the build process a selected browser can be passed in to determine which BrowserService file to include.
