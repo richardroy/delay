@@ -1,4 +1,4 @@
-import LocalStorageService from "../services/LocalStorageService.js";
+import BrowserService from "../services/BrowserService.js";
 
 export const BLACKLIST = "blacklist";
 
@@ -24,12 +24,12 @@ export default class Blacklist {
   }
 
   static async load() {
-    const blacklist = await LocalStorageService.loadObject(BLACKLIST, []);
+    const blacklist = await BrowserService.loadObject(BLACKLIST, []);
     return blacklist;
   }
   
   static save(blacklist) {
-    LocalStorageService.saveObject(BLACKLIST, blacklist);
+    BrowserService.saveObject(BLACKLIST, blacklist);
   }
 
   static async addNewUrl(url) {

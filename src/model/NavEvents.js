@@ -1,4 +1,4 @@
-import LocalStorageService from "../services/LocalStorageService.js";
+import BrowserService from "../services/BrowserService.js";
 
 const NAV_EVENTS = "navEvents";
 export const EVENT = {
@@ -21,11 +21,11 @@ export default class NavEvents {
   }
 
   static save(navEvents) {
-    LocalStorageService.saveObject(NAV_EVENTS, navEvents)
+    BrowserService.saveObject(NAV_EVENTS, navEvents)
   }
 
   static async load() {
-    return await LocalStorageService.loadObject(NAV_EVENTS, {[EVENT.NAVIGATED]: {}, [EVENT.LOADED]: {}});
+    return await BrowserService.loadObject(NAV_EVENTS, {[EVENT.NAVIGATED]: {}, [EVENT.LOADED]: {}});
   }
 
   static async getDateString() {

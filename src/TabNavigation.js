@@ -11,7 +11,7 @@ export const HOME_FILE = "home.html";
  */
 export default class TabNavigation {
 
-  static loadDelayedUrl(tabId, blacklistEntry) {
+  static loadDelayedUrl(tabId) {
     const backgroundUrl = this.getBackgroundUrl();
 
     //https://stackoverflow.com/questions/28431505/unchecked-runtime-lasterror-when-using-chrome-api

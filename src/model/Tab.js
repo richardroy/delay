@@ -1,4 +1,4 @@
-import LocalStorageService from "../services/LocalStorageService.js";
+import BrowserService from "../services/BrowserService.js";
 const TAB = "tab";
 const MINUTES_15 = 1000 * 60 * 0.25;
 /**
@@ -36,11 +36,11 @@ export default class Tab {
   }
 
   static save(tab) {
-    LocalStorageService.saveObject(TAB, tab)
+    BrowserService.saveObject(TAB, tab)
   }
 
   static async load() {
-    return await LocalStorageService.loadObject(TAB, {sites: []});
+    return await BrowserService.loadObject(TAB, {sites: []});
   }
 
   static async isTabIdStored(tabId) {

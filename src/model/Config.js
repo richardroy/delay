@@ -1,4 +1,4 @@
-import LocalStorageService from "../services/LocalStorageService.js";
+import BrowserService from "../services/BrowserService.js";
 
 const CONFIG = "config";
 const INITIAL_DELAY_TIME = 15;
@@ -12,11 +12,11 @@ const INITIAL_DELAY_TIME = 15;
 export default class Config {
 
   static async load() {
-    return await LocalStorageService.loadObject(CONFIG, {delayTime: INITIAL_DELAY_TIME, enabled: 'true'});
+    return await BrowserService.loadObject(CONFIG, {delayTime: INITIAL_DELAY_TIME, enabled: 'true'});
   }
   
   static save(config) {
-    LocalStorageService.saveObject(CONFIG, config);
+    BrowserService.saveObject(CONFIG, config);
   }
 
   static async getDelayTime() {
