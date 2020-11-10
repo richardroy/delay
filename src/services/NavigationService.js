@@ -7,7 +7,7 @@ import NavEvents, { EVENT } from "../model/NavEvents";
 export default class NavigationService {
 
   static async onNavigationEventTrigged (data) {
-    if (JSON.parse(await Config.isExtensionEnabled()) && NavigationService.isTopLevelFrame(data)) {
+    if (await Config.isExtensionEnabled() && NavigationService.isTopLevelFrame(data)) {
       chrome.tabs.getSelected(null, async function(tab) {
         const tabId = data.tabId;
         if(tabId === tab.id) {
