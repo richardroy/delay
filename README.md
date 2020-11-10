@@ -25,3 +25,6 @@ Select the directory you just cloned the repository into, then the `dist` direct
 Now within the extension selection screen you will see to Delay extensions available, one will be marked with the unpacked extension logo, disable the official version so your using the unpacked version.
 
 For changes to code to apply, if `npm run watch` is running, you have to refresh the unpacked extension via the extension manager
+
+### Additional Project Info
+[FOLIO.md](./FOLIO.md)

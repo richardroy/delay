@@ -12,6 +12,7 @@ Files are broken into:
 
 ### Tests
 There are some very basic Unit Tests. These are to show how they can be utilised during the build process, in particular blocking pull-requests.
+The npm script, `npm run test-watch` can be triggered so that test are constantly triggered in the background so you immediately know if you have removed tested functionality.
 
 ### Build Process
 ##### Github
