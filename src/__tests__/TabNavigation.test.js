@@ -1,6 +1,6 @@
 jest.mock("../services/BrowserService");
 
-import TabNavigation, {BACKGROUND_FILE, HOME_FILE} from "../TabNavigation";
+import TabNavigationService, {BACKGROUND_FILE, HOME_FILE} from "../TabNavigationService";
 import BrowserService from "../services/BrowserService";
 import Blacklist from "../model/Blacklist";
 
@@ -24,7 +24,7 @@ test("loadDelayedUrl", () => {
   BrowserService.getTab = jest.fn();
   Blacklist.addLoadedEvent = jest.fn();
 
-  TabNavigation.loadDelayedUrl(TAB_ID, BLACKLIST_ENTRY_REDDIT);
+  TabNavigationService.loadDelayedUrl(TAB_ID, BLACKLIST_ENTRY_REDDIT);
 
   expect(BrowserService.getExtensionUrl).toHaveBeenCalledWith(BACKGROUND_FILE);
   expect(BrowserService.getExtensionUrl).toHaveBeenCalledTimes(1);  
@@ -34,7 +34,7 @@ test("loadDelayedUrl", () => {
 test("redirectTabToBackground", () => {
   BrowserService.getExtensionUrl = jest.fn().mockReturnValue(BACKGROUND_URL);
   BrowserService.updateTabUrl = jest.fn();
-  TabNavigation.redirectTabToBackground(TAB_ID);
+  TabNavigationService.redirectTabToBackground(TAB_ID);
   
   expect(BrowserService.getExtensionUrl).toHaveBeenCalledWith(BACKGROUND_FILE);
   expect(BrowserService.getExtensionUrl).toHaveBeenCalledTimes(1);  
@@ -45,7 +45,7 @@ test("redirectTabToBackground", () => {
 test("redirectTabToHome", () => {
   BrowserService.getExtensionUrl = jest.fn().mockReturnValue(HOME_URL);
   BrowserService.updateTabUrl = jest.fn();
-  TabNavigation.redirectTabToHome(TAB_ID);
+  TabNavigationService.redirectTabToHome(TAB_ID);
 
   expect(BrowserService.getExtensionUrl).toHaveBeenCalledWith(HOME_FILE);
   expect(BrowserService.getExtensionUrl).toHaveBeenCalledTimes(1);  

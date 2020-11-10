@@ -11,7 +11,8 @@ Once the tabs delay has expired you can continue browsing blacklisted websites w
 
 
 ## Running Locally
-Clone the repository. Within your teminal run:
+Clone the repository.  
+Within your teminal run:
 ```
 npm install
 npm run watch
@@ -20,5 +21,7 @@ npm run watch
 From within chrome, right click your extensions, within the dropdown select `Manage Extensions`. You'll now be on `chrome://extensions/`.  
 At this point you may need to enable `Developer mode` there should be a input in the top right of the screen to enable it.  
 Now there should be a button on the upper left of the screen `Load Unpacked`
-Select the directory you just cloned the repository into.  
-Now the local Delay extension will be using the local version.
+Select the directory you just cloned the repository into, then the `dist` directory.  
+Now within the extension selection screen you will see to Delay extensions available, one will be marked with the unpacked extension logo, disable the official version so your using the unpacked version.
+
+For changes to code to apply, if `npm run watch` is running, you have to refresh the unpacked extension via the extension manager

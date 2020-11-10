@@ -1,4 +1,4 @@
-import TabNavigation from "../TabNavigation.js"
+import TabNavigationService from "../TabNavigationService.js"
 import Blacklist from "../model/Blacklist.js"
 import Config from "../model/Config.js"
 import Tab from "../model/Tab.js"
@@ -41,7 +41,7 @@ export default class NavigationService {
   }
 
   static async initiateDelay(url, tabId, blacklistEntry) {
-    TabNavigation.redirectTabToBackground(tabId);
+    TabNavigationService.redirectTabToBackground(tabId);
     NavEvents.add(EVENT.NAVIGATED);
     Tab.addNewTab(url, tabId);
     window["interval"+parseInt(tabId)] = setTimeout( () => NavigationService.intervalCompleted(tabId, blacklistEntry), await Config.getDelayTime() * 1000 )
@@ -49,7 +49,7 @@ export default class NavigationService {
 
   static intervalCompleted(tabId, blacklistEntry) {
     Tab.setAllowed(tabId);
-    TabNavigation.loadDelayedUrl(tabId, blacklistEntry);
+    TabNavigationService.loadDelayedUrl(tabId, blacklistEntry);
     clearTimeout(window["interval"+parseInt(tabId)]);
   }
 
