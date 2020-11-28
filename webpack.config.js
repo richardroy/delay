@@ -3,7 +3,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 module.exports = {
   entry: {
     background: './src/background.js',
-    home: './src/Home.js'
+    home: './src/home.js'
   },
   output: {
     filename: './[name].js'

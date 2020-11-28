@@ -1,4 +1,4 @@
-import TabNavigationService from "../TabNavigationService.js"
+import TabNavigationService from "./TabNavigationService.js"
 import Blacklist from "../model/Blacklist.js"
 import Config from "../model/Config.js"
 import Tab from "../model/Tab.js"
@@ -44,7 +44,22 @@ export default class NavigationService {
     TabNavigationService.redirectTabToBackground(tabId);
     NavEvents.add(EVENT.NAVIGATED);
     Tab.addNewTab(url, tabId);
-    window["interval"+parseInt(tabId)] = setTimeout( () => NavigationService.intervalCompleted(tabId, blacklistEntry), await Config.getDelayTime() * 1000 )
+    const totalDelayTime =  await Config.getDelayTime() * 1000;
+    window["interval"+parseInt(tabId)] = setTimeout( () => NavigationService.processInterval(tabId, blacklistEntry, totalDelayTime, 0), 250 )
+  }
+
+  static processInterval(tabId, blacklistEntry, totalDelayTime, intervalTime) {
+    BrowserService.getTab(tabId, (tab) => {
+      if(tab.active) {
+        intervalTime += 250;
+        if(intervalTime >= totalDelayTime) {
+          NavigationService.intervalCompleted(tabId, blacklistEntry)
+          return;
+        }
+      }
+        
+      window["interval"+parseInt(tabId)] = setTimeout( () => NavigationService.processInterval(tabId, blacklistEntry, totalDelayTime, intervalTime), 250 )
+    })
   }
 
   static intervalCompleted(tabId, blacklistEntry) {
