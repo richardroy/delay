@@ -1,7 +1,6 @@
 .delay-body {
   margin: 0;
   height: 100%;
-  
   background: #FFE3E4;  /* fallback for old browsers */
   background: linear-gradient(180deg, #f3aef3, #000e45);
   background-size: 400% 400%;

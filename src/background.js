@@ -1,6 +1,6 @@
 import BrowserService from "./services/BrowserService";
 import NavigationService from "./services/NavigationService";
-import TabNavigationService from "./TabNavigationService";
+import TabNavigationService from "./services/TabNavigationService";
 
 (function setupBrowserListeners () {
   BrowserService.setNavigationTriggerEvent(NavigationService.onNavigationEventTrigged);

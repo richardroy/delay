@@ -1,6 +1,6 @@
 import BrowserService from "../services/BrowserService.js";
 const TAB = "tab";
-const MINUTES_15 = 1000 * 60 * 0.25;
+const MINUTES_15 = 1000 * 60 * 15;
 /**
  * Used to list status of tabs. It contains array, sites:
  *    - "sites": [{
