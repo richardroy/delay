@@ -1,4 +1,4 @@
-import TabNavigationService from "../TabNavigationService.js"
+import TabNavigationService from "./TabNavigationService.js"
 import Blacklist from "../model/Blacklist.js"
 import Config from "../model/Config.js"
 import Tab from "../model/Tab.js"

@@ -12,11 +12,16 @@ export default class NavEvents {
     const navEvents = await this.load();
     const eventDateTime = await this.getDateString();
 
-    if(navEvents[navEvent][[eventDateTime]])
+    if(navEvents[navEvent][[eventDateTime]]) {
       navEvents[navEvent][[eventDateTime]] += 1;
-    else
-      navEvents[navEvent][[eventDateTime]] = 1;
-
+    } else {
+      if(navEvent == EVENT.NAVIGATED) {
+        navEvents[navEvent][[eventDateTime]] = 1;
+        navEvents[EVENT.LOADED][[eventDateTime]] = 0;
+      } else if(navEvent == EVENT.LOADED){
+        navEvents[navEvent][[eventDateTime]] = 1;
+      }
+    }
     this.save(navEvents);
   }
 
