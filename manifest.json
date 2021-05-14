@@ -2,7 +2,7 @@
   "name":           "Delay",
   "description":    "Delay is used to break habitual browsing, by having the moment to reflect you'll decide if you want to navigate to the website.",
   "author":         "roy",
-  "version":        "0.2.01",
+  "version":        "0.2.02",
   "icons": {
     "128": "icon.png"
   },
