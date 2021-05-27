@@ -9,7 +9,6 @@ const DELAY_TIME_INPUT_ID = "delayTimeInput";
 const DELAY_TIME_OUTPUT_ID = "delayTimeOutput";
 
 const DELAY_TIME_MIN = 1;
-const DELAY_TIME_MAX = 300;
 
 const URL_MIN_LENGTH = 5;
 
@@ -77,12 +76,12 @@ export default class Home {
       Config.setDelayTime(time);
       this.setDelayTimeOutputElement(time);
     } else {
-      alert("Delay must be between "+DELAY_TIME_MIN+" and "+DELAY_TIME_MAX+" seconds")
+      alert("Delay must be more than "+DELAY_TIME_MIN+" seconds")
     }
   }
 
   static validateDelayTime(time) {
-    return (time >= DELAY_TIME_MIN && time <= DELAY_TIME_MAX)
+    return (time >= DELAY_TIME_MIN)
   }
 
   static async buildInitialBlacklist() {
