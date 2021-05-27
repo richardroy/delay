@@ -1,6 +1,6 @@
 jest.mock("../services/BrowserService");
 
-import TabNavigationService, {BACKGROUND_FILE, HOME_FILE} from "../TabNavigationService";
+import TabNavigationService, {BACKGROUND_FILE, HOME_FILE} from "../services/TabNavigationService";
 import BrowserService from "../services/BrowserService";
 import Blacklist from "../model/Blacklist";
 

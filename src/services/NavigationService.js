@@ -10,19 +10,16 @@ export default class NavigationService {
   static async onNavigationEventTrigged (eventData) {
     if(!eventData) return;
     if (await Config.isExtensionEnabled() && NavigationService.isTopLevelFrame(eventData)) {
-      BrowserService.getSelectedTab(null, (tab) => NavigationService.processSelectedTab(tab, eventData));
+      NavigationService.processTab(eventData);
     }
   }
 
-  static async processSelectedTab(tab, eventData) {
-    const tabId = eventData.tabId;
-    if(tabId === tab.id) {
-      const blacklistEntry = await Blacklist.getByUrl(eventData.url);
-      if(blacklistEntry) {
-        NavigationService.navigateToBlacklistEntry(eventData, blacklistEntry);
-      }
-      Tab.removeTimedOutTabs();
+  static async processTab(eventData) {
+    const blacklistEntry = await Blacklist.getByUrl(eventData.url);
+    if(blacklistEntry) {
+      NavigationService.navigateToBlacklistEntry(eventData, blacklistEntry);
     }
+    Tab.removeTimedOutTabs();
   }
 
   static isTopLevelFrame(eventData) {
@@ -31,12 +28,12 @@ export default class NavigationService {
 
   static async navigateToBlacklistEntry(eventData, blacklistEntry) {
     var tabId = eventData.tabId;
-    if(await NavigationService.shoudlTabBeDelayed(tabId)){
+    if(await NavigationService.shouldTabBeDelayed(tabId)){
       NavigationService.initiateDelay(eventData.url, tabId, blacklistEntry);
     }
   }
 
-  static async shoudlTabBeDelayed(tabId) {
+  static async shouldTabBeDelayed(tabId) {
     return !(await Tab.isTabIdStored(tabId) && await Tab.isTabIdAllowed(tabId))
   }
 
