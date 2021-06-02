@@ -121,3 +121,5 @@ window.addEventListener("load", function load(event){
 });
 
 NavEventChart.initialiseGraph();
+
+// ga('send', 'pageview', '/home'); // Set page, avoiding rejection due to chrome-extension protocol 
