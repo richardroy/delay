@@ -106,18 +106,39 @@ export default class Home {
     const enabledElement = document.querySelector('input[value="'+enabled+'"]');
     enabledElement.checked = true;
   }
+
+  static async displayModal() {
+    var modal = document.getElementById("myModal");
+    modal.style.display = "block";
+  }
+
+  static async closeModalIfNotSelected(event) {
+    var modal = document.getElementById("myModal");
+    if (event.target == modal) {
+      Home.closeModal();
+    }
+  }
+
+  static async closeModal() {
+    var modal = document.getElementById("myModal");
+    modal.style.display = "none";
+  }
 }
 
 document.getElementById("blacklistSubmit").addEventListener("click", () => Home.submitNewUrl());
 document.getElementById("blacklistInput").addEventListener("keypress", (e) => {if(e.keyCode === 13) Home.submitNewUrl();});
 document.getElementById("delayTimeSubmit").addEventListener("click", () => Home.setDelayTime());
 document.getElementById("enabledSubmit").addEventListener("click", () => Home.setEnabledStatus());
-
+document.getElementById("bulkBlock").addEventListener("click", () => Home.displayModal());
 
 window.addEventListener("load", function load(event){ 
   Home.buildInitialBlacklist();
   Home.setInitalDelayTimeElement();
   Home.setInitialEnabledStatus();
+});
+
+window.addEventListener("click", function(event) {
+  Home.closeModalIfNotSelected(event);
 });
 
 NavEventChart.initialiseGraph();
