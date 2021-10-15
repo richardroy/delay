@@ -4,6 +4,7 @@ import Config from "../model/Config.js"
 import Tab from "../model/Tab.js"
 import NavEvents, { EVENT } from "../model/NavEvents";
 import BrowserService from "./BrowserService.js";
+import BulkBlockList from "../model/BulkBlockList.js";
 
 export default class NavigationService {
 
@@ -16,7 +17,8 @@ export default class NavigationService {
 
   static async processTab(eventData) {
     const blacklistEntry = await Blacklist.getByUrl(eventData.url);
-    if(blacklistEntry) {
+    const inBulkList = BulkBlockList.contains(eventData.url);
+    if(blacklistEntry || inBulkList) {
       NavigationService.navigateToBlacklistEntry(eventData, blacklistEntry);
     }
     Tab.removeTimedOutTabs();

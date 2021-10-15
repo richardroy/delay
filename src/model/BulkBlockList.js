@@ -15,6 +15,11 @@ export default class BulkBlockList {
     return bulkBlockList;
   }
 
+  static async contains(url) {
+    const bulkBlockList = this.get();
+    return bulkBlockList.contains(url);
+  }
+
   static async load() {
     const bulkBlockList = await BrowserService.loadObject(BULKBLOCKLIST, "www.google.com,www.yahoo.com,www.bing.com");
     return bulkBlockList;
