@@ -16,12 +16,12 @@ export default class BulkBlockList {
   }
 
   static async contains(url) {
-    const bulkBlockList = this.get();
-    return bulkBlockList.contains(url);
+    const bulkBlockList = await this.load();
+    return (bulkBlockList.split(',').find(blacklistUrl => url.includes(blacklistUrl)))
   }
 
   static async load() {
-    const bulkBlockList = await BrowserService.loadObject(BULKBLOCKLIST, "www.google.com,www.yahoo.com,www.bing.com");
+    const bulkBlockList = await BrowserService.loadObject(BULKBLOCKLIST, "");
     return bulkBlockList;
   }
   

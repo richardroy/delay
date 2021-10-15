@@ -17,7 +17,7 @@ export default class NavigationService {
 
   static async processTab(eventData) {
     const blacklistEntry = await Blacklist.getByUrl(eventData.url);
-    const inBulkList = BulkBlockList.contains(eventData.url);
+    const inBulkList = await BulkBlockList.contains(eventData.url);
     if(blacklistEntry || inBulkList) {
       NavigationService.navigateToBlacklistEntry(eventData, blacklistEntry);
     }

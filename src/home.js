@@ -93,12 +93,6 @@ export default class Home {
     }
   }
 
-  static async setInitialBulkBlockList() {
-    const bulkBlockList = await BulkBlockList.load();
-    var modalContent = document.getElementById("bulkBlockList");
-    modalContent.textContent = bulkBlockList;
-  }
-
   static async setDelayTimeOutputElement(time) {
     const delayTimeElement = Element.getById(DELAY_TIME_OUTPUT_ID);
     delayTimeElement.textContent = time;  
@@ -115,6 +109,7 @@ export default class Home {
   }
 
   static async displayModal() {
+    this.loadBulkBlockList();
     var modal = document.getElementById("myModal");
     modal.style.display = "block";
   }
@@ -130,6 +125,16 @@ export default class Home {
     var modal = document.getElementById("myModal");
     modal.style.display = "none";
   }
+
+  static async updateBulkBlockList() {
+    var bulkList = document.getElementById("bulkBlockList").value;
+    BulkBlockList.save(bulkList);
+  }
+
+  static async loadBulkBlockList() {
+    const bulkBlockList = await BulkBlockList.load();
+    document.getElementById("bulkBlockList").value = bulkBlockList;
+  }
 }
 
 document.getElementById("blacklistSubmit").addEventListener("click", () => Home.submitNewUrl());
@@ -137,12 +142,13 @@ document.getElementById("blacklistInput").addEventListener("keypress", (e) => {i
 document.getElementById("delayTimeSubmit").addEventListener("click", () => Home.setDelayTime());
 document.getElementById("enabledSubmit").addEventListener("click", () => Home.setEnabledStatus());
 document.getElementById("bulkBlock").addEventListener("click", () => Home.displayModal());
+document.getElementById("bulkBlockUpdate").addEventListener("click", () => Home.updateBulkBlockList());
+
 
 window.addEventListener("load", function load(event){ 
   Home.buildInitialBlacklist();
   Home.setInitalDelayTimeElement();
   Home.setInitialEnabledStatus();
-  Home.setInitialBulkBlockList();
 });
 
 window.addEventListener("click", function(event) {
