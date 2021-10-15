@@ -2,6 +2,7 @@ import NavEventChart from './NavEventChart.js';
 import Blacklist from "./model/Blacklist.js";
 import Config from "./model/Config.js";
 import Element from './Element.js';
+import BulkBlockList from './model/BulkBlockList.js';
 
 const BLACKLIST_ID = "urlBlacklist";
 const BLACKLIST_INPUT_ID = "blacklistInput";
@@ -92,6 +93,12 @@ export default class Home {
     }
   }
 
+  static async setInitialBulkBlockList() {
+    const bulkBlockList = await BulkBlockList.load();
+    var modalContent = document.getElementById("bulkBlockList");
+    modalContent.textContent = bulkBlockList;
+  }
+
   static async setDelayTimeOutputElement(time) {
     const delayTimeElement = Element.getById(DELAY_TIME_OUTPUT_ID);
     delayTimeElement.textContent = time;  
@@ -135,6 +142,7 @@ window.addEventListener("load", function load(event){
   Home.buildInitialBlacklist();
   Home.setInitalDelayTimeElement();
   Home.setInitialEnabledStatus();
+  Home.setInitialBulkBlockList();
 });
 
 window.addEventListener("click", function(event) {
