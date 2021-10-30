@@ -15,6 +15,14 @@
   </head>
 
   <body class="home-body">
+
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <textarea id="bulkBlockList"></textarea>
+        <button id="bulkBlockUpdate">Update</button>
+      </div>
+    </div>
+
     <div>
       <img src="../icon.png" />
       <h2>Delay</h2>
@@ -23,9 +31,15 @@
     </ul>
     <input name="urlInput" id="blacklistInput" type="text" minlength="5">
     <button id="blacklistSubmit">Add</button>
-    <p id="description">Url's added to the above list  will have a delay each time they are opened..</p>
+    <p id="description">Url's added to the above list  will have a delay each time they are opened.</p>
     <p id="description">e.g. www.facebook.com</p>
     <br/>
+    <div>
+      <h3>Bulk Block</h3>
+      <p>If you have a large number of URL's you can add them here as a comma seperated list.</p>
+      <button id="bulkBlock">Bulk Block</button>
+    </div>
+    <br />
     <div>
       <h3>Delay Time</h3>
       <div><span id="delayTimeOutput"></span> Seconds</div>

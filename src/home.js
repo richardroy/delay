@@ -2,6 +2,7 @@ import NavEventChart from './NavEventChart.js';
 import Blacklist from "./model/Blacklist.js";
 import Config from "./model/Config.js";
 import Element from './Element.js';
+import BulkBlockList from './model/BulkBlockList.js';
 
 const BLACKLIST_ID = "urlBlacklist";
 const BLACKLIST_INPUT_ID = "blacklistInput";
@@ -106,18 +107,52 @@ export default class Home {
     const enabledElement = document.querySelector('input[value="'+enabled+'"]');
     enabledElement.checked = true;
   }
+
+  static async displayModal() {
+    this.loadBulkBlockList();
+    var modal = document.getElementById("myModal");
+    modal.style.display = "block";
+  }
+
+  static async closeModalIfNotSelected(event) {
+    var modal = document.getElementById("myModal");
+    if (event.target == modal) {
+      Home.closeModal();
+    }
+  }
+
+  static async closeModal() {
+    var modal = document.getElementById("myModal");
+    modal.style.display = "none";
+  }
+
+  static async updateBulkBlockList() {
+    var bulkList = document.getElementById("bulkBlockList").value;
+    BulkBlockList.save(bulkList);
+  }
+
+  static async loadBulkBlockList() {
+    const bulkBlockList = await BulkBlockList.load();
+    document.getElementById("bulkBlockList").value = bulkBlockList;
+  }
 }
 
 document.getElementById("blacklistSubmit").addEventListener("click", () => Home.submitNewUrl());
 document.getElementById("blacklistInput").addEventListener("keypress", (e) => {if(e.keyCode === 13) Home.submitNewUrl();});
 document.getElementById("delayTimeSubmit").addEventListener("click", () => Home.setDelayTime());
 document.getElementById("enabledSubmit").addEventListener("click", () => Home.setEnabledStatus());
+document.getElementById("bulkBlock").addEventListener("click", () => Home.displayModal());
+document.getElementById("bulkBlockUpdate").addEventListener("click", () => Home.updateBulkBlockList());
 
 
 window.addEventListener("load", function load(event){ 
   Home.buildInitialBlacklist();
   Home.setInitalDelayTimeElement();
   Home.setInitialEnabledStatus();
+});
+
+window.addEventListener("click", function(event) {
+  Home.closeModalIfNotSelected(event);
 });
 
 NavEventChart.initialiseGraph();
