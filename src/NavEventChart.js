@@ -3,18 +3,35 @@ import Chart from 'chart.js';
 
 export default class NavEventChart {
 
+  static getDaysInMonth = (year, month) => new Date(year, month, 0).getDate()
+
+  static addMonths = (input, months) => {
+    const date = new Date(input)
+    date.setDate(1)
+    date.setMonth(date.getMonth() + months)
+    date.setDate(Math.min(input.getDate(), this.getDaysInMonth(date.getFullYear(), date.getMonth()+1)))
+    return date
+  }
+  
+
   static async initialiseGraph() {
     const { loaded, navigated } = await NavEvents.load();
     const loadedLineData = [];
     for (const [date, count] of Object.entries(loaded)) {
       const roundedEventDate = new Date(date);
-      loadedLineData.push({x: roundedEventDate, y: count});
+      const increasedDate = this.addMonths(roundedEventDate, 6)
+
+      if(new Date() < increasedDate)
+        loadedLineData.push({x: roundedEventDate, y: count});
     }
 
     const navigatedLineData = [];
     for (const [date, count] of Object.entries(navigated)) {
       const roundedEventDate = new Date(date);
-      navigatedLineData.push({x: roundedEventDate, y: count});
+      const increasedDate = this.addMonths(roundedEventDate, 6)
+
+      if(new Date() < increasedDate)
+        navigatedLineData.push({x: roundedEventDate, y: count});
     }
 
     var ctx = document.getElementById("eventChart");
