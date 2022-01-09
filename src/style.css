@@ -51,6 +51,11 @@ button {
   margin-left: 10px;
   margin-bottom: 3px;
   border: none;
+  cursor: pointer;
+}
+
+input[type="radio"] {
+  cursor: pointer;
 }
 
 canvas {
