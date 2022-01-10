@@ -34,7 +34,8 @@ export default class NavEvents {
   }
 
   static async getDateString() {
-    const dateString = new Date().toISOString().substring(0, 10);
-    return dateString;
+    const tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
+    const localISOTime = (new Date(Date.now() - tzoffset)).toISOString().split('T')[0]
+    return localISOTime;
   }
 }
