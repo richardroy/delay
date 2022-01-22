@@ -50,6 +50,7 @@ export default class Tab {
 
   static async isTabIdAllowed(tabId) {
     const site = await this.getSiteByTabId(tabId);
+    // console.log('Tab ID is: allowed === ', (site && site.allowed))
     return site && site.allowed;
   }
 
