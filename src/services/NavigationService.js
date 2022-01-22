@@ -47,7 +47,7 @@ export default class NavigationService {
   }
 
   static async initiateDelay(url, tabId, blacklistEntry) {
-    TabNavigationService.redirectTabToBackground(tabId);
+    TabNavigationService.redirectTabToBackground(tabId, blacklistEntry);
     NavEvents.add(EVENT.NAVIGATED);
     Tab.addNewTab(url, tabId);
     const totalDelayTime =  await Config.getDelayTime() * 1000;
