@@ -12,7 +12,7 @@ const INITIAL_DELAY_TIME = 15;
 export default class Config {
 
   static async load() {
-    return await BrowserService.loadObject(CONFIG, {delayTime: INITIAL_DELAY_TIME, enabled: 'true'});
+    return await BrowserService.loadObject(CONFIG, {delayTime: INITIAL_DELAY_TIME, enabled: 'true', incEnabled: 'true'});
   }
   
   static save(config) {
@@ -40,6 +40,12 @@ export default class Config {
   static async setEnabledStatus(enabled) {
     const config = await this.load();
     config.enabled = enabled;
+    this.save(config);
+  }
+
+  static async setIncEnabledStatus(incEnabled) {
+    const config = await this.load();
+    config.incEnabled = incEnabled;
     this.save(config);
   }
 

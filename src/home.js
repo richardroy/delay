@@ -39,6 +39,12 @@ export default class Home {
     if(enabledValue)
       Config.setEnabledStatus(enabledValue)
   }
+
+  static setIncEnabledStatus() {
+    const incEnabledValue = document.querySelector('input[name="incActive"]:checked').value;
+    if(incEnabledValue)
+      Config.setIncEnabledStatus(incEnabledValue)
+  }
   
   static createNewBlacklistLiElement(url) {
     const newUrlLi = document.createElement("li");
@@ -141,6 +147,7 @@ document.getElementById("blacklistSubmit").addEventListener("click", () => Home.
 document.getElementById("blacklistInput").addEventListener("keypress", (e) => {if(e.keyCode === 13) Home.submitNewUrl();});
 document.getElementById("delayTimeSubmit").addEventListener("click", () => Home.setDelayTime());
 document.getElementById("enabledSubmit").addEventListener("click", () => Home.setEnabledStatus());
+document.getElementById("incEnabledSubmit").addEventListener("click", () => Home.setIncEnabledStatus());
 document.getElementById("bulkBlock").addEventListener("click", () => Home.displayModal());
 document.getElementById("bulkBlockUpdate").addEventListener("click", () => Home.updateBulkBlockList());
 
