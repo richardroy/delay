@@ -37,6 +37,12 @@ export default class Config {
     return enabled;
   }
 
+  static async isIncEnabled() {
+    const config = await this.load();
+    const enabled = JSON.parse(config.incEnabled) ?? true;
+    return enabled;
+  }
+
   static async setEnabledStatus(enabled) {
     const config = await this.load();
     config.enabled = enabled;
