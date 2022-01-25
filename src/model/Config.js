@@ -29,9 +29,7 @@ export default class Config {
   static async getTotalDelay() {
     const config = await this.load();
     const delayTimeSeconds = config.delayTime;
-    const incTime = config.incTime;
-    console.log('getTotalDelay')
-    console.log(delayTimeSeconds+incTime)
+    const incTime = await Config.isIncEnabled() ? config.incTime : 0;
     return delayTimeSeconds + incTime;
   }
 
