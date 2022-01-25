@@ -2,6 +2,7 @@ import BrowserService from "../services/BrowserService.js";
 
 const CONFIG = "config";
 const INITIAL_DELAY_TIME = 15;
+const INITIAL_INC_TIME = 0;
 
 /**
  * Config is saved in the LocalStorage
@@ -12,7 +13,7 @@ const INITIAL_DELAY_TIME = 15;
 export default class Config {
 
   static async load() {
-    return await BrowserService.loadObject(CONFIG, {delayTime: INITIAL_DELAY_TIME, enabled: 'true', incEnabled: 'true'});
+    return await BrowserService.loadObject(CONFIG, {delayTime: INITIAL_DELAY_TIME, enabled: 'true', incEnabled: 'true', incTime: INITIAL_INC_TIME});
   }
   
   static save(config) {
@@ -21,8 +22,9 @@ export default class Config {
 
   static async getDelayTime() {
     const config = await this.load();
-    const delayTimeSeconds = config.delayTime;
-    return delayTimeSeconds;
+    const delayTimeSeconds = config.delayTime * 1000;
+    const incTime = config.incTime;
+    return delayTimeSeconds + incTime;
   }
 
   static async setDelayTime(time) {
