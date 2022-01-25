@@ -50,8 +50,9 @@ export default class NavigationService {
     TabNavigationService.redirectTabToBackground(tabId, blacklistEntry);
     NavEvents.add(EVENT.NAVIGATED);
     Tab.addNewTab(url, tabId);
-    const totalDelayTime =  await Config.getDelayTime();
-    window["interval"+parseInt(tabId)] = setTimeout( () => NavigationService.processInterval(tabId, blacklistEntry, totalDelayTime, 0), 250 )
+    const totalDelayTime =  await Config.getTotalDelay();
+    window["interval"+parseInt(tabId)] = setTimeout( () => NavigationService.processInterval(tabId, blacklistEntry, totalDelayTime * 1000, 0), 250 )
+    Config.increaseIncTime();
   }
 
   static processInterval(tabId, blacklistEntry, totalDelayTime, intervalTime) {

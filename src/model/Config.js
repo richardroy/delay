@@ -22,14 +22,23 @@ export default class Config {
 
   static async getDelayTime() {
     const config = await this.load();
-    const delayTimeSeconds = config.delayTime * 1000;
+    const delayTimeSeconds = config.delayTime;
+    return delayTimeSeconds;
+  }
+
+  static async getTotalDelay() {
+    const config = await this.load();
+    const delayTimeSeconds = config.delayTime;
     const incTime = config.incTime;
+    console.log('getTotalDelay')
+    console.log(delayTimeSeconds+incTime)
     return delayTimeSeconds + incTime;
   }
 
   static async setDelayTime(time) {
     const config = await this.load();
-    config.delayTime = time;
+    config.delayTime = parseInt(time);
+    console.log(config.delayTime)
     this.save(config);
   }
 
@@ -43,6 +52,13 @@ export default class Config {
     const config = await this.load();
     const enabled = JSON.parse(config.incEnabled) ?? true;
     return enabled;
+  }
+
+  static async increaseIncTime() {
+    const config = await this.load();
+    const incTime = config.incTime;
+    config.incTime = incTime+1;
+    this.save(config);
   }
 
   static async setEnabledStatus(enabled) {
