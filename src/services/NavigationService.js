@@ -15,6 +15,13 @@ export default class NavigationService {
     }
   }
 
+  static async onTabUpdated (tabId, update, tabInfo) {
+    if(await Config.isExtensionEnabled() && update.status && update.status == 'complete') {
+      NavigationService.processTab({url: tabInfo.url, tabId: tabInfo.id});
+      Tab.removeTimedOutTabs();
+    }
+  }
+
   static async processTab(eventData) {
     const blacklistEntry = await Blacklist.getByUrl(eventData.url);
     const inBulkList = await BulkBlockList.contains(eventData.url);
