@@ -12,7 +12,7 @@ export default class Blacklist {
 
   static async getByUrl(url) {
     const blacklist = await this.load();
-    if(blacklist.find(blacklistUrl => url.includes(blacklistUrl)))
+    if(blacklist.find(blacklistUrl => url.includes(blacklistUrl) && !url.includes('chrome-extension://')))
       return url;
     return null;
   }
