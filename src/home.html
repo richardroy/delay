@@ -39,23 +39,33 @@
       <p>If you have a large number of URL's you can add them here as a comma seperated list.</p>
       <button id="bulkBlock">Bulk Block</button>
     </div>
+    <canvas id="eventChart" max-width="400" max-height="400"></canvas>
     <br />
     <div>
       <h3>Delay Time</h3>
       <div><span id="delayTimeOutput"></span> Seconds</div>
       <input name="delayTimeInput" id="delayTimeInput" type="number" min="1" max="300">
       <button id="delayTimeSubmit">Update</button>
+      <h5>Increment</h5>
+      <p>Each time you navigate to a Blacklisted website, the delay will increase by 1 second. This resets every day.</p>
+      <div>
+        <input type="radio" id="incEnabled" name="incActive" value="true">
+        <label for="incEnabled">Enabled</label><br>
+        <input type="radio" id="incDisabled" name="incActive" value="false">
+        <label for="incDisabled">Disabled</label><br>
+        <button id="incEnabledSubmit">Update</button>
+      </div>
     </div>
     <br/>
+    <hr/>
     <div>
-      <h3>Enabled</h3>
+      <h3>Extension</h3>
       <input type="radio" id="enabled" name="active" value="true">
       <label for="enabled">Enabled</label><br>
       <input type="radio" id="disabled" name="active" value="false">
       <label for="disabled">Disabled</label><br>
       <button id="enabledSubmit">Update</button>
     </div>
-    <canvas id="eventChart" max-width="400" max-height="400"></canvas>
-    <script src="./home.js"></script>    
+    <script src="./home.js"></script>
   </body>
 </html>

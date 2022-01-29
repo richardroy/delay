@@ -39,6 +39,38 @@ export default class Home {
     if(enabledValue)
       Config.setEnabledStatus(enabledValue)
   }
+
+  static async initialiseEnabledRadio() {
+    const enabled = await Config.isExtensionEnabled();
+    if(enabled) {
+      const input = document.querySelector('input[id="enabled"]');
+      input.checked = true;
+    } else { 
+      const input = document.querySelector('input[id="disabled"]');
+      input.checked = true;
+    }
+  }
+
+  static async initialiseIncEnabledRadio() {
+    const enabled = await Config.isIncEnabled();
+    if(enabled) {
+      const input = document.querySelector('input[id="incEnabled"]');
+      input.checked = true;
+    } else { 
+      const input = document.querySelector('input[id="incDisabled"]');
+      input.checked = true;
+    }
+  }
+
+  static setIncEnabledStatus() {
+    const incEnabledValue = document.querySelector('input[name="incActive"]:checked').value;
+    if(incEnabledValue)
+      Config.setIncEnabledStatus(incEnabledValue)
+  }
+
+  static initialiseIncEnabled() {
+    const incEnabledValue = document.querySelector('input[id="incActive"]').value;
+  }
   
   static createNewBlacklistLiElement(url) {
     const newUrlLi = document.createElement("li");
@@ -102,12 +134,6 @@ export default class Home {
     this.setDelayTimeOutputElement(await Config.getDelayTime()); 
   }
 
-  static async setInitialEnabledStatus() {
-    const enabled = await Config.isExtensionEnabled();
-    const enabledElement = document.querySelector('input[value="'+enabled+'"]');
-    enabledElement.checked = true;
-  }
-
   static async displayModal() {
     this.loadBulkBlockList();
     var modal = document.getElementById("myModal");
@@ -141,6 +167,7 @@ document.getElementById("blacklistSubmit").addEventListener("click", () => Home.
 document.getElementById("blacklistInput").addEventListener("keypress", (e) => {if(e.keyCode === 13) Home.submitNewUrl();});
 document.getElementById("delayTimeSubmit").addEventListener("click", () => Home.setDelayTime());
 document.getElementById("enabledSubmit").addEventListener("click", () => Home.setEnabledStatus());
+document.getElementById("incEnabledSubmit").addEventListener("click", () => Home.setIncEnabledStatus());
 document.getElementById("bulkBlock").addEventListener("click", () => Home.displayModal());
 document.getElementById("bulkBlockUpdate").addEventListener("click", () => Home.updateBulkBlockList());
 
@@ -148,7 +175,8 @@ document.getElementById("bulkBlockUpdate").addEventListener("click", () => Home.
 window.addEventListener("load", function load(event){ 
   Home.buildInitialBlacklist();
   Home.setInitalDelayTimeElement();
-  Home.setInitialEnabledStatus();
+  Home.initialiseEnabledRadio();
+  Home.initialiseIncEnabledRadio();
 });
 
 window.addEventListener("click", function(event) {
