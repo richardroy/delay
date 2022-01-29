@@ -13,7 +13,7 @@ const INITIAL_INC_TIME = 0;
 export default class Config {
 
   static async load() {
-    return await BrowserService.loadObject(CONFIG, {delayTime: INITIAL_DELAY_TIME, enabled: 'true', incEnabled: 'true', incTime: INITIAL_INC_TIME});
+    return await BrowserService.loadObject(CONFIG, {delayTime: INITIAL_DELAY_TIME, enabled: 'true', incEnabled: 'true', incTime: INITIAL_INC_TIME, incStartDate: '0-0-0'});
   }
   
   static save(config) {
@@ -27,6 +27,8 @@ export default class Config {
   }
 
   static async getTotalDelay() {
+    await Config.initiliaseIncTime();
+
     const config = await this.load();
     const delayTimeSeconds = config.delayTime;
     const incTime = await Config.isIncEnabled() ? config.incTime : 0;
@@ -36,7 +38,6 @@ export default class Config {
   static async setDelayTime(time) {
     const config = await this.load();
     config.delayTime = parseInt(time);
-    console.log(config.delayTime)
     this.save(config);
   }
 
@@ -57,6 +58,18 @@ export default class Config {
     const incTime = config.incTime;
     config.incTime = incTime+1;
     this.save(config);
+  }
+
+  static async initiliaseIncTime() {
+    const config = await this.load();
+    const tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
+    const startDate = (new Date(Date.now() - tzoffset)).toISOString().split('T')[0]
+    if(config.incStartDate != startDate) {
+      config.incStartDate = startDate 
+      config.incTime = 0;
+    }
+    this.save(config);
+    return config.incTime;
   }
 
   static async setEnabledStatus(enabled) {
