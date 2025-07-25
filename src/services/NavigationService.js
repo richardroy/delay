@@ -6,6 +6,9 @@ import NavEvents, { EVENT } from "../model/NavEvents";
 import BrowserService from "./BrowserService.js";
 import BulkBlockList from "../model/BulkBlockList.js";
 
+// Store timeout intervals (replaces window object storage for service worker compatibility)
+const activeIntervals = new Map();
+
 export default class NavigationService {
 
   static async onNavigationEventTrigged (eventData) {
@@ -51,7 +54,8 @@ export default class NavigationService {
     NavEvents.add(EVENT.NAVIGATED);
     Tab.addNewTab(url, tabId);
     const totalDelayTime =  await Config.getTotalDelay();
-    window["interval"+parseInt(tabId)] = setTimeout( () => NavigationService.processInterval(tabId, blacklistEntry, totalDelayTime * 1000, 0), 250 )
+    const intervalId = setTimeout( () => NavigationService.processInterval(tabId, blacklistEntry, totalDelayTime * 1000, 0), 250 );
+    activeIntervals.set(tabId, intervalId);
     Config.increaseIncTime();
   }
 
@@ -65,19 +69,31 @@ export default class NavigationService {
         }
       }
         
-      window["interval"+parseInt(tabId)] = setTimeout( () => NavigationService.processInterval(tabId, blacklistEntry, totalDelayTime, intervalTime), 250 )
+      const intervalId = setTimeout( () => NavigationService.processInterval(tabId, blacklistEntry, totalDelayTime, intervalTime), 250 );
+      activeIntervals.set(tabId, intervalId);
     })
   }
 
   static intervalCompleted(tabId, blacklistEntry) {
     Tab.setAllowed(tabId);
     TabNavigationService.loadDelayedUrl(tabId, blacklistEntry);
-    clearTimeout(window["interval"+parseInt(tabId)]);
+    const intervalId = activeIntervals.get(tabId);
+    if (intervalId) {
+      clearTimeout(intervalId);
+      activeIntervals.delete(tabId);
+    }
   }
 
   static onTabClosed(tabId) {
     if(Tab.isTabIdStored(tabId))
       Tab.removeTabById([tabId]);
+    
+    // Clean up any active intervals for the closed tab
+    const intervalId = activeIntervals.get(tabId);
+    if (intervalId) {
+      clearTimeout(intervalId);
+      activeIntervals.delete(tabId);
+    }
   }
   
 }

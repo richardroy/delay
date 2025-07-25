@@ -14,19 +14,23 @@ export default class BrowserService {
   }
 
   static getExtensionUrl(filename) {
-    return chrome.extension.getURL(filename);  
+    return chrome.runtime.getURL(filename);  
   }
 
   static getTab(tabId, callback) {
     chrome.tabs.get(tabId, callback);      
   }
 
-  static getSelectedTab(tabId, callback) {
-    chrome.tabs.getSelected(tabId, callback);      
+  static getSelectedTab(callback) {
+    chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
+      if (tabs.length > 0) {
+        callback(tabs[0]);
+      }
+    });      
   }
 
   static setOnExtensionClickedEvent(listener) {
-    chrome.browserAction.onClicked.addListener(listener)
+    chrome.action.onClicked.addListener(listener)
   }
 
   static setNavigationTriggerEvent(listener) {
@@ -46,7 +50,7 @@ export default class BrowserService {
   }
 
   static getAllTabs(windowId, callback) {
-    chrome.tabs.getAllInWindow(windowId, callback)
+    chrome.tabs.query({windowId: windowId}, callback)
   }
 
   static async loadObject(identifier, baseObject) {

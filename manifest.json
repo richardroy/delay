@@ -7,16 +7,17 @@
     "128": "icon.png"
   },
   "background": {
-    "persistent": false,
-    "page": "./background.html"
+    "service_worker": "./background.js"
   },
   "incognito": "split",
-  "browser_action": {
+  "action": {
     "default_icon": "icon.png"
   },
   "permissions":    [
     "webNavigation", "storage", "tabs"
   ],
-  "manifest_version": 2,
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"  
+  "manifest_version": 3,
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
 }
