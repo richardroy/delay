@@ -19,7 +19,7 @@ export default class TabNavigationService {
         //Could be triggered if tab has been closed before delay
         console.warn("TabNavigationService Error: " + chrome.runtime.lastError.message);
       } else {
-        if(tab /*&& tab.url === backgroundUrl*/){
+        if(tab && tab.url.includes(backgroundUrl)){
           TabNavigationService.redirectTabToDelayedUrl(tabId);
           NavEvents.add(EVENT.LOADED);
         }
