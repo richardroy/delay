@@ -13,7 +13,6 @@ export default class TabNavigationService {
 
   static loadDelayedUrl(tabId) {
     const backgroundUrl = this.getBackgroundUrl();
-
     //https://stackoverflow.com/questions/28431505/unchecked-runtime-lasterror-when-using-chrome-api
     function callback(tab) {
       if(chrome.runtime.lastError) {

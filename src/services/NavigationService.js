@@ -35,7 +35,7 @@ export default class NavigationService {
   }
 
   static isTopLevelFrame(eventData) {
-    return eventData.parentFrameId === -1;
+    return eventData.parentFrameId === -1 && eventData.documentLifecycle == 'active';
   }
 
   static async navigateToBlacklistEntry(eventData, blacklistEntry) {
