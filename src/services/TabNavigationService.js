@@ -4,6 +4,7 @@ import Tab from "../model/Tab"
 
 export const BACKGROUND_FILE = "background.html";
 export const HOME_FILE = "home.html";
+export const TEST_FILE = "test.html";
 
 /**
  * Controls the navigation events.
@@ -45,7 +46,7 @@ export default class TabNavigationService {
   }
 
   static getBackgroundUrl() {
-    return BrowserService.getExtensionUrl(BACKGROUND_FILE);
+    return BrowserService.getExtensionUrl(TEST_FILE);
   }
   
   static getHomeUrl() {
