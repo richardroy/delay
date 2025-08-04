@@ -8,6 +8,7 @@ const BLACKLIST_ID = "urlBlacklist";
 const BLACKLIST_INPUT_ID = "blacklistInput";
 const DELAY_TIME_INPUT_ID = "delayTimeInput";
 const DELAY_TIME_OUTPUT_ID = "delayTimeOutput";
+const CUSTOM_MESSAGE_ID = "customMessageInput";
 
 const DELAY_TIME_MIN = 1;
 
@@ -32,6 +33,11 @@ export default class Home {
     const url = event.srcElement.previousSibling.textContent
     Blacklist.deleteByUrl(url);
     delete event.srcElement.parentNode.remove();  
+  }
+
+  static onSetMessageClicked() {
+    const customMessage = Element.getValueFromId(CUSTOM_MESSAGE_ID);
+    Config.setCustomMessage(customMessage);
   }
 
   static setEnabledStatus() {
@@ -164,6 +170,7 @@ export default class Home {
 }
 
 document.getElementById("blacklistSubmit").addEventListener("click", () => Home.submitNewUrl());
+document.getElementById("customMessage").addEventListener("click", () => Home.onSetMessageClicked());
 document.getElementById("blacklistInput").addEventListener("keypress", (e) => {if(e.keyCode === 13) Home.submitNewUrl();});
 document.getElementById("delayTimeSubmit").addEventListener("click", () => Home.setDelayTime());
 document.getElementById("enabledSubmit").addEventListener("click", () => Home.setEnabledStatus());

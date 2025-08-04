@@ -3,17 +3,19 @@ import BrowserService from "../services/BrowserService.js";
 const CONFIG = "config";
 const INITIAL_DELAY_TIME = 15;
 const INITIAL_INC_TIME = 0;
+const INITIAL_CUSTOM_MESSAGE = '';
 
 /**
  * Config is saved in the LocalStorage
  * Used to control:
  *    - delayTime: The time a delay persists
+ *    - customMessage: The cusomt message displayed on the home page
  *    - enabled: Whether the extension is currently enabled or disabled.
  */
 export default class Config {
 
   static async load() {
-    return await BrowserService.loadObject(CONFIG, {delayTime: INITIAL_DELAY_TIME, enabled: 'true', incEnabled: 'true', incTime: INITIAL_INC_TIME, incStartDate: '0-0-0'});
+    return await BrowserService.loadObject(CONFIG, {delayTime: INITIAL_DELAY_TIME, enabled: 'true', incEnabled: 'true', incTime: INITIAL_INC_TIME, incStartDate: '0-0-0', customMessage: INITIAL_CUSTOM_MESSAGE});
   }
   
   static save(config) {
@@ -33,6 +35,18 @@ export default class Config {
     const delayTimeSeconds = config.delayTime;
     const incTime = await Config.isIncEnabled() ? config.incTime : 0;
     return delayTimeSeconds + incTime;
+  }
+
+  static async getCustomMessage() {
+    const config = await this.load();
+    const customMessage = config.customMessage;
+    return customMessage; 
+  }
+
+  static async setCustomMessage(customMessage) {
+    const config = await this.load();
+    config.customMessage = customMessage;
+    this.save(config);
   }
 
   static async setDelayTime(time) {
