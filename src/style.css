@@ -9,8 +9,6 @@
   -moz-animation: backound-animation 14s ease infinite;
   -o-animation: backound-animation 14s ease infinite;
   animation: backound-animation 14s ease infinite;
-
-  content: 'Hello';
 }
 
 @-webkit-keyframes backound-animation {
