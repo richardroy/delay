@@ -46,7 +46,7 @@ export default class TabNavigationService {
   }
 
   static getBackgroundUrl() {
-    return BrowserService.getExtensionUrl(TEST_FILE);
+    return BrowserService.getExtensionUrl(BACKGROUND_FILE);
   }
   
   static getHomeUrl() {

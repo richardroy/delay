@@ -2,6 +2,7 @@ import BrowserService from "./services/BrowserService";
 import NavigationService from "./services/NavigationService";
 import TabNavigationService from "./services/TabNavigationService";
 import Element from './Element.js';
+import Config from './model/Config.js'
 
 const CUSTOM_MESSAGE_ID = "customMessageP";
 
@@ -9,10 +10,9 @@ export default class Background {
   
 
   static async setCustomMessage() {
-    console.log('setCustomMessageAgain');
+    const customMessage = await Config.getCustomMessage();
     const delayTimeElement = Element.getById(CUSTOM_MESSAGE_ID);
-    console.log(delayTimeElement);
-    delayTimeElement.textContent = 'hello';  
+    delayTimeElement.textContent = customMessage;  
   }
 };
 
@@ -23,7 +23,3 @@ export default class Background {
   BrowserService.setOnClosedEvent(NavigationService.onTabClosed);
   Background.setCustomMessage();
 })()
-
-// window.addEventListener("load", function load(event){ 
-  // Background.setCustomMessage();
-// });
