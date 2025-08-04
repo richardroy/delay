@@ -4,7 +4,6 @@ import Tab from "../model/Tab"
 
 export const BACKGROUND_FILE = "background.html";
 export const HOME_FILE = "home.html";
-export const TEST_FILE = "test.html";
 
 /**
  * Controls the navigation events.
