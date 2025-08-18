@@ -24,7 +24,8 @@ export default class Config {
         incTime: INITIAL_INC_TIME,
         incStartDate: '0-0-0',
         customMessage: INITIAL_CUSTOM_MESSAGE,
-        blockAll: 'false' // NEW: delay all sites by default
+        blockAll: 'false',
+        reDelayOnTyped: 'false' // NEW: default OFF (original behavior)
       }
     );
   }
@@ -120,6 +121,19 @@ export default class Config {
     const config = await this.load();
     // store as 'true'/'false' to match existing pattern
     config.blockAll = String(blockAll);
+    this.save(config);
+  }
+
+  // NEW: typed re-delay toggle
+  static async isTypedReDelayEnabled() {
+    const config = await this.load();
+    const enabled = JSON.parse(config.reDelayOnTyped) ?? false;
+    return enabled;
+  }
+
+  static async setTypedReDelayStatus(enabled) {
+    const config = await this.load();
+    config.reDelayOnTyped = String(!!enabled);
     this.save(config);
   }
 

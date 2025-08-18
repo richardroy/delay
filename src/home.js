@@ -10,6 +10,7 @@ const BLACKLIST_INPUT_ID = "blacklistInput";
 const WHITELIST_ID = "urlWhitelist";
 const WHITELIST_INPUT_ID = "whitelistInput";
 const BLOCK_ALL_CHECKBOX_ID = "blockAll";
+const TYPED_REDELAY_CHECKBOX_ID = "typedReDelay"; // NEW
 const DELAY_TIME_INPUT_ID = "delayTimeInput";
 const DELAY_TIME_OUTPUT_ID = "delayTimeOutput";
 const CUSTOM_MESSAGE_ID = "customMessageInput";
@@ -237,6 +238,19 @@ export default class Home {
       await Config.setBlockAllStatus(cb.checked);
     }
   }
+
+  // NEW: initialise typed re-delay checkbox
+  static async initialiseTypedReDelayCheckbox() {
+    const enabled = await Config.isTypedReDelayEnabled();
+    const cb = document.getElementById(TYPED_REDELAY_CHECKBOX_ID);
+    if (cb) cb.checked = !!enabled;
+  }
+
+  // NEW: set typed re-delay status
+  static async setTypedReDelayStatus() {
+    const cb = document.getElementById(TYPED_REDELAY_CHECKBOX_ID);
+    if (cb) await Config.setTypedReDelayStatus(cb.checked);
+  }
 }
 
 document.getElementById("blacklistSubmit").addEventListener("click", () => Home.submitNewUrl());
@@ -250,6 +264,7 @@ document.getElementById("bulkBlockUpdate").addEventListener("click", () => Home.
 document.getElementById("whitelistSubmit").addEventListener("click", () => Home.submitNewWhitelistUrl());
 document.getElementById("whitelistInput").addEventListener("keypress", (e) => { if(e.keyCode === 13) Home.submitNewWhitelistUrl(); });
 document.getElementById("blockAllSubmit").addEventListener("click", () => Home.setBlockAllStatus());
+document.getElementById("typedReDelaySubmit").addEventListener("click", () => Home.setTypedReDelayStatus()); // NEW
 
 window.addEventListener("load", function load(event){ 
   Home.buildInitialBlacklist();
@@ -258,6 +273,7 @@ window.addEventListener("load", function load(event){
   Home.initialiseEnabledRadio();
   Home.initialiseIncEnabledRadio();
   Home.initialiseBlockAllCheckbox();
+  Home.initialiseTypedReDelayCheckbox(); // NEW
 });
 
 window.addEventListener("click", function(event) {

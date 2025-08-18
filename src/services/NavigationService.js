@@ -5,7 +5,7 @@ import Tab from "../model/Tab.js"
 import NavEvents, { EVENT } from "../model/NavEvents";
 import BrowserService from "./BrowserService.js";
 import BulkBlockList from "../model/BulkBlockList.js";
-import Whitelist from "../model/Whitelist.js"; // NEW
+import Whitelist from "../model/Whitelist.js"; // already added earlier
 
 // Store timeout intervals (replaces window object storage for service worker compatibility)
 const activeIntervals = new Map();
@@ -125,4 +125,37 @@ export default class NavigationService {
     }
   }
   
+  // NEW: handle committed navigations with transition info
+  static async onNavigationCommitted(details) {
+    try {
+      if (!(await Config.isExtensionEnabled())) return;
+
+      // NEW: only act if toggle is enabled
+      if (!(await Config.isTypedReDelayEnabled())) return;
+
+      if (!NavigationService.isTopLevelCommitted(details)) return;
+      if (!NavigationService.isUserTyped(details)) return;
+      await Tab.removeTabById(details.tabId);
+      NavigationService.processTab({ url: details.url, tabId: details.tabId });
+    } catch (e) {
+      console.warn('onNavigationCommitted error', e);
+    }
+  }
+
+  static isTopLevelCommitted(details) {
+    // onCommitted gives frameId; 0 is the top frame
+    return details && details.frameId === 0;
+  }
+
+  static isUserTyped(details) {
+    // Prefer the qualifier Chrome sets when coming from the address bar
+    const q = details.transitionQualifiers || [];
+    if (q.includes('from_address_bar')) return true;
+
+    // Fallback to transitionType checks for omnibox types
+    // See: https://developer.chrome.com/docs/extensions/reference/webNavigation#transition_types
+    const t = details.transitionType;
+    return t === 'typed' || t === 'keyword' || t === 'keyword_generated';
+  }
+
 }
