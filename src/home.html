@@ -27,18 +27,38 @@
       <img src="../icon.png" />
       <h2>Delay</h2>
     </div>
+
+    <!-- Blacklist -->
     <ul id="urlBlacklist">
     </ul>
     <input name="urlInput" id="blacklistInput" type="text" minlength="5">
     <button id="blacklistSubmit">Add</button>
     <p id="description">Url's added to the above list  will have a delay each time they are opened.</p>
     <p id="description">e.g. www.facebook.com</p>
+
+    <!-- Whitelist (NEW) -->
+    <div>
+      <h3>Whitelist</h3>
+      <ul id="urlWhitelist"></ul>
+      <input name="whitelistInput" id="whitelistInput" type="text" minlength="5">
+      <button id="whitelistSubmit">Add</button>
+      <p>These URLs will not be delayed. Useful to allow subdomains or when “Delay all websites by default” is enabled.</p>
+    </div>
+
     <br/>
     <div>
       <h3>Bulk Block</h3>
       <p>If you have a large number of URL's you can add them here as a comma seperated list.</p>
       <button id="bulkBlock">Bulk Block</button>
+
+      <!-- Block all by default (NEW) -->
+      <div style="margin-top: 10px;">
+        <input type="checkbox" id="blockAll">
+        <label for="blockAll">Delay all websites by default</label>
+        <button id="blockAllSubmit">Update</button>
+      </div>
     </div>
+
     <canvas id="eventChart" max-width="400" max-height="400"></canvas>
     <br />
     <div>

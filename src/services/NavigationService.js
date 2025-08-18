@@ -5,6 +5,7 @@ import Tab from "../model/Tab.js"
 import NavEvents, { EVENT } from "../model/NavEvents";
 import BrowserService from "./BrowserService.js";
 import BulkBlockList from "../model/BulkBlockList.js";
+import Whitelist from "../model/Whitelist.js"; // NEW
 
 // Store timeout intervals (replaces window object storage for service worker compatibility)
 const activeIntervals = new Map();
@@ -25,11 +26,39 @@ export default class NavigationService {
     }
   }
 
+  static isInternalUrl(url) {
+    return url?.startsWith('chrome-extension://') || url?.startsWith('chrome://');
+  }
+
   static async processTab(eventData) {
-    const blacklistEntry = await Blacklist.getByUrl(eventData.url);
-    const inBulkList = await BulkBlockList.contains(eventData.url);
-    if(blacklistEntry || inBulkList) {
-      NavigationService.navigateToBlacklistEntry(eventData, blacklistEntry);
+    const url = eventData.url;
+    if (!url) return;
+    if (NavigationService.isInternalUrl(url)) {
+      // never delay internal chrome/extension pages
+      return;
+    }
+
+    // Whitelist overrides everything
+    const whitelisted = await Whitelist.getByUrl(url);
+    if (whitelisted) {
+      Tab.removeTimedOutTabs();
+      return;
+    }
+
+    const blockAll = await Config.isBlockAllEnabled();
+    let shouldDelay = false;
+
+    if (blockAll) {
+      shouldDelay = true;
+    } else {
+      const blacklistEntry = await Blacklist.getByUrl(url);
+      const inBulkList = await BulkBlockList.contains(url);
+      shouldDelay = !!blacklistEntry || !!inBulkList;
+    }
+
+    if (shouldDelay) {
+      // Pass the url through as the "desiredUrl" parameter (matches existing pattern)
+      NavigationService.navigateToBlacklistEntry(eventData, url);
     }
     Tab.removeTimedOutTabs();
   }

@@ -3,9 +3,13 @@ import Blacklist from "./model/Blacklist.js";
 import Config from "./model/Config.js";
 import Element from './Element.js';
 import BulkBlockList from './model/BulkBlockList.js';
+import Whitelist from './model/Whitelist.js';
 
 const BLACKLIST_ID = "urlBlacklist";
 const BLACKLIST_INPUT_ID = "blacklistInput";
+const WHITELIST_ID = "urlWhitelist";
+const WHITELIST_INPUT_ID = "whitelistInput";
+const BLOCK_ALL_CHECKBOX_ID = "blockAll";
 const DELAY_TIME_INPUT_ID = "delayTimeInput";
 const DELAY_TIME_OUTPUT_ID = "delayTimeOutput";
 const CUSTOM_MESSAGE_ID = "customMessageInput";
@@ -20,6 +24,11 @@ export default class Home {
     const blackListInput = Element.getById(BLACKLIST_INPUT_ID);
     blackListInput.value = '';
   }
+
+  static clearWhitelistUrlInput() {
+    const whitelistInput = Element.getById(WHITELIST_INPUT_ID);
+    whitelistInput.value = '';
+  }
   
   static createDeleteButton() {
     const deleteButton = document.createElement("Button");
@@ -29,10 +38,24 @@ export default class Home {
     return deleteButton;
   }
 
+  static createDeleteButtonWhitelist() {
+    const deleteButton = document.createElement("Button");
+    deleteButton.id = "deleteButtonWhitelist";
+    deleteButton.textContent = "Delete";
+    deleteButton.addEventListener("click", (event) => this.onDeleteClickedWhitelist(event))
+    return deleteButton;
+  }
+
   static onDeleteClicked(event) {
     const url = event.srcElement.previousSibling.textContent
     Blacklist.deleteByUrl(url);
     delete event.srcElement.parentNode.remove();  
+  }
+
+  static onDeleteClickedWhitelist(event) {
+    const url = event.srcElement.previousSibling.textContent
+    Whitelist.deleteByUrl(url);
+    delete event.srcElement.parentNode.remove();
   }
 
   static onSetMessageClicked() {
@@ -85,11 +108,25 @@ export default class Home {
     newUrlLi.appendChild(deleteButton);
     return newUrlLi;  
   }
+
+  static createNewWhitelistLiElement(url) {
+    const newUrlLi = document.createElement("li");
+    newUrlLi.textContent = url;
+    const deleteButton = this.createDeleteButtonWhitelist();
+    newUrlLi.appendChild(deleteButton);
+    return newUrlLi;
+  }
   
   static addNewUrlElementToBlacklist(url) {
     const urlBlacklist = Element.getById(BLACKLIST_ID);
     const newUrlLi = this.createNewBlacklistLiElement(url);
     urlBlacklist.appendChild(newUrlLi);
+  }
+
+  static addNewUrlElementToWhitelist(url) {
+    const urlWhitelist = Element.getById(WHITELIST_ID);
+    const newUrlLi = this.createNewWhitelistLiElement(url);
+    urlWhitelist.appendChild(newUrlLi);
   }
   
   static submitNewUrl() {
@@ -99,6 +136,18 @@ export default class Home {
       Blacklist.addNewUrl(url);  
       this.addNewUrlElementToBlacklist(url);
       this.clearBlacklistUrlInput();
+    } else {
+      alert("The URL should be atleast 5 characters long");
+    }
+  }
+
+  static submitNewWhitelistUrl() {
+    const url = Element.getValueFromId(WHITELIST_INPUT_ID);
+    const isValid = this.validateURL(url)
+    if(isValid) {
+      Whitelist.addNewUrl(url);
+      this.addNewUrlElementToWhitelist(url);
+      this.clearWhitelistUrlInput();
     } else {
       alert("The URL should be atleast 5 characters long");
     }
@@ -128,6 +177,14 @@ export default class Home {
     for(let index in blacklist) {
       const url = blacklist[index];
       this.addNewUrlElementToBlacklist(url);
+    }
+  }
+
+  static async buildInitialWhitelist() {
+    const whitelist = await Whitelist.load();
+    for (let index in whitelist) {
+      const url = whitelist[index];
+      this.addNewUrlElementToWhitelist(url);
     }
   }
 
@@ -167,6 +224,19 @@ export default class Home {
     const bulkBlockList = await BulkBlockList.load();
     document.getElementById("bulkBlockList").value = bulkBlockList;
   }
+
+  static async initialiseBlockAllCheckbox() {
+    const enabled = await Config.isBlockAllEnabled();
+    const cb = document.getElementById(BLOCK_ALL_CHECKBOX_ID);
+    if (cb) cb.checked = !!enabled;
+  }
+
+  static async setBlockAllStatus() {
+    const cb = document.getElementById(BLOCK_ALL_CHECKBOX_ID);
+    if (cb) {
+      await Config.setBlockAllStatus(cb.checked);
+    }
+  }
 }
 
 document.getElementById("blacklistSubmit").addEventListener("click", () => Home.submitNewUrl());
@@ -177,13 +247,17 @@ document.getElementById("enabledSubmit").addEventListener("click", () => Home.se
 document.getElementById("incEnabledSubmit").addEventListener("click", () => Home.setIncEnabledStatus());
 document.getElementById("bulkBlock").addEventListener("click", () => Home.displayModal());
 document.getElementById("bulkBlockUpdate").addEventListener("click", () => Home.updateBulkBlockList());
-
+document.getElementById("whitelistSubmit").addEventListener("click", () => Home.submitNewWhitelistUrl());
+document.getElementById("whitelistInput").addEventListener("keypress", (e) => { if(e.keyCode === 13) Home.submitNewWhitelistUrl(); });
+document.getElementById("blockAllSubmit").addEventListener("click", () => Home.setBlockAllStatus());
 
 window.addEventListener("load", function load(event){ 
   Home.buildInitialBlacklist();
+  Home.buildInitialWhitelist();
   Home.setInitalDelayTimeElement();
   Home.initialiseEnabledRadio();
   Home.initialiseIncEnabledRadio();
+  Home.initialiseBlockAllCheckbox();
 });
 
 window.addEventListener("click", function(event) {
