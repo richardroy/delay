@@ -5,7 +5,7 @@ import Tab from "../model/Tab.js"
 import NavEvents, { EVENT } from "../model/NavEvents";
 import BrowserService from "./BrowserService.js";
 import BulkBlockList from "../model/BulkBlockList.js";
-import Whitelist from "../model/Whitelist.js"; // already added earlier
+import Whitelist from "../model/Whitelist.js";
 
 // Store timeout intervals (replaces window object storage for service worker compatibility)
 const activeIntervals = new Map();
@@ -125,12 +125,11 @@ export default class NavigationService {
     }
   }
   
-  // NEW: handle committed navigations with transition info
+  // handle committed navigations with transition info
   static async onNavigationCommitted(details) {
     try {
       if (!(await Config.isExtensionEnabled())) return;
 
-      // NEW: only act if toggle is enabled
       if (!(await Config.isTypedReDelayEnabled())) return;
 
       if (!NavigationService.isTopLevelCommitted(details)) return;

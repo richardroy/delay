@@ -6,7 +6,7 @@ import TabNavigationService from "./services/TabNavigationService";
 (function setup () {
   BrowserService.setNavigationTriggerEvent(NavigationService.onNavigationEventTrigged);
   BrowserService.setTabUpdatedEvent(NavigationService.onTabUpdated);
-  BrowserService.setNavigationCommittedEvent(NavigationService.onNavigationCommitted); // NEW
+  BrowserService.setNavigationCommittedEvent(NavigationService.onNavigationCommitted);
   BrowserService.setOnExtensionClickedEvent((tab) => TabNavigationService.redirectTabToHome(tab.id));
   BrowserService.setOnClosedEvent(NavigationService.onTabClosed);
 })();
