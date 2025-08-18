@@ -1,4 +1,3 @@
-
 /**
  * Used to interact with Chrome Browser API
  */
@@ -35,6 +34,10 @@ export default class BrowserService {
 
   static setNavigationTriggerEvent(listener) {
     chrome.webNavigation["onBeforeNavigate"].addListener(listener);
+  }
+
+  static setNavigationCommittedEvent(listener) {
+    chrome.webNavigation.onCommitted.addListener(listener);
   }
 
   static setTabUpdatedEvent(listener) {

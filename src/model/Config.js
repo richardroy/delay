@@ -15,7 +15,19 @@ const INITIAL_CUSTOM_MESSAGE = '';
 export default class Config {
 
   static async load() {
-    return await BrowserService.loadObject(CONFIG, {delayTime: INITIAL_DELAY_TIME, enabled: 'true', incEnabled: 'true', incTime: INITIAL_INC_TIME, incStartDate: '0-0-0', customMessage: INITIAL_CUSTOM_MESSAGE});
+    return await BrowserService.loadObject(
+      CONFIG,
+      {
+        delayTime: INITIAL_DELAY_TIME,
+        enabled: 'true',
+        incEnabled: 'true',
+        incTime: INITIAL_INC_TIME,
+        incStartDate: '0-0-0',
+        customMessage: INITIAL_CUSTOM_MESSAGE,
+        blockAll: 'false',
+        reDelayOnTyped: 'false' // NEW: default OFF (original behavior)
+      }
+    );
   }
   
   static save(config) {
@@ -95,6 +107,33 @@ export default class Config {
   static async setIncEnabledStatus(incEnabled) {
     const config = await this.load();
     config.incEnabled = incEnabled;
+    this.save(config);
+  }
+
+  // NEW: Block all by default flag
+  static async isBlockAllEnabled() {
+    const config = await this.load();
+    const enabled = JSON.parse(config.blockAll) ?? false;
+    return enabled;
+  }
+
+  static async setBlockAllStatus(blockAll) {
+    const config = await this.load();
+    // store as 'true'/'false' to match existing pattern
+    config.blockAll = String(blockAll);
+    this.save(config);
+  }
+
+  // NEW: typed re-delay toggle
+  static async isTypedReDelayEnabled() {
+    const config = await this.load();
+    const enabled = JSON.parse(config.reDelayOnTyped) ?? false;
+    return enabled;
+  }
+
+  static async setTypedReDelayStatus(enabled) {
+    const config = await this.load();
+    config.reDelayOnTyped = String(!!enabled);
     this.save(config);
   }
 
