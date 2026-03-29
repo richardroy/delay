@@ -16,10 +16,10 @@
     "@babel/preset-env": "^7.15.8",
     "babel-loader": "^8.2.2",
     "babel-preset-env": "^1.7.0",
-    "copy-webpack-plugin": "^5.1.2",
+    "copy-webpack-plugin": "^14.0.0",
     "jest": "^24.9.0",
     "jest-cli": "^24.9.0",
-    "webpack": "^4.46.0",
+    "webpack": "^5.105.4",
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
