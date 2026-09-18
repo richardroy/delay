@@ -4,7 +4,7 @@
   "description": "",
   "main": "Browser.js",
   "scripts": {
-    "build": "webpack && cd ./dist && zip -r ../../delay.zip ./",
+    "build": "webpack && node scripts/package.cjs",
     "watch": "webpack --watch",
     "test": "jest --coverage",
     "test-watch": "jest --watch --coverage"

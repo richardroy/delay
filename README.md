@@ -21,10 +21,16 @@ npm run watch
 From within chrome, right click your extensions, within the dropdown select `Manage Extensions`. You'll now be on `chrome://extensions/`.  
 At this point you may need to enable `Developer mode` there should be a input in the top right of the screen to enable it.  
 Now there should be a button on the upper left of the screen `Load Unpacked`
-Select the directory you just cloned the repository into, then the `dist` directory.  
+Select the directory you just cloned the repository into, then the `dist/chrome` directory.  
 Now within the extension selection screen you will see to Delay extensions available, one will be marked with the unpacked extension logo, disable the official version so your using the unpacked version.
 
-For changes to code to apply, if `npm run watch` is running, you have to refresh the unpacked extension via the extension manager
+`npm run watch` rebuilds both Chrome and Firefox. For changes to code to apply, if `npm run watch` is running, you have to refresh the unpacked extension via the extension manager
+
+### Firefox
+
+Firefox 140 or later is required.
+
+`npm run build` builds both Chrome and Firefox and packages them as `../delay.zip` and `../delay-firefox.xpi`, respectively. To load Firefox, open `about:debugging#/runtime/this-firefox`, click **Load Temporary Add-on...**, and select `dist/firefox/manifest.json`. The add-on remains installed until Firefox restarts.
 
 ### Additional Project Info
 [FOLIO.md](./FOLIO.md)

@@ -26,6 +26,8 @@ export default class NavigationService {
   }
 
   static async processTab(eventData) {
+    if (eventData.url.startsWith('chrome-extension://') ||
+        eventData.url.startsWith('moz-extension://')) return;
     const blacklistEntry = await Blacklist.getByUrl(eventData.url);
     const inBulkList = await BulkBlockList.contains(eventData.url);
     if(blacklistEntry || inBulkList) {
@@ -35,7 +37,8 @@ export default class NavigationService {
   }
 
   static isTopLevelFrame(eventData) {
-    return eventData.parentFrameId === -1 && eventData.documentLifecycle == 'active';
+    return eventData.parentFrameId === -1 &&
+      (!eventData.documentLifecycle || eventData.documentLifecycle === 'active');
   }
 
   static async navigateToBlacklistEntry(eventData, blacklistEntry) {
